@@ -1,0 +1,6 @@
+{
+  "cmake.buildDirectory": "${workspaceFolder}/vscode-build",
+  "files.associations": {
+    "chrono": "cpp"
+  }
+}
