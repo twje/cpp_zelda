@@ -14,7 +14,7 @@ Features:
 
 ### Built With
 
-* [![SFML][SFML-icon]][SFML-url]
+[![SFML][SFML-icon]][SFML-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -44,7 +44,7 @@ Next, run the batch `scripts` from the scripts directory to configure and build 
 
 Configure:
 ```
->> configure.bat`
+>> configure.bat
 ```
 
 Build:
