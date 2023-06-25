@@ -16,8 +16,6 @@ Features:
 
 [![SFML][SFML-icon]][SFML-url]
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 ## Project Structure
 
 This project is structured into two executables and a shared static library. The reason for this structure is that Google Test, a testing framework, requires the application code to be in its own separate binary. To achieve this, it is recommended to encapsulate the application logic in a common library, which can be shared between the two executables. One executable is used for running the game itself, while the other executable is dedicated to running tests using Google Test. This approach ensures a clear separation between the application and the testing components.
