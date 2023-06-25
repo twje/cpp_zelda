@@ -1,0 +1,4 @@
+- Add Github Workflow
+  - Continuous Integration and Development
+  - Generate Build Artifact
+  - Run Tests
