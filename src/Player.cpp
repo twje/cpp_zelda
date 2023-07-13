@@ -1,21 +1,21 @@
-#include "Tile.h"
+#include "Player.h"
 #include "Sprite.h"
 #include "Rect.h"
 
-Tile::Tile(sf::Vector2f position)
+Player::Player(sf::Vector2f position)
     : Sprite(),
       mTexture(std::make_unique<sf::Texture>())
 {
-    assert(mTexture->loadFromFile("../graphics/test/rock.png"));
+    assert(mTexture->loadFromFile("../graphics/test/player.png"));
     mRect = Util::GetRect(mTexture->getSize(), position, Util::RectCorner::TOP_LEFT);
 }
 
-const sf::Texture &Tile::GetTexture() const
+const sf::Texture &Player::GetTexture() const
 {
     return *mTexture;
 }
 
-sf::FloatRect Tile::GetRect() const
+sf::FloatRect Player::GetRect() const
 {
     return mRect;
 }

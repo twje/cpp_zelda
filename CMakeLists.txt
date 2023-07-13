@@ -23,7 +23,7 @@ set(ZeldaIncludes
     src
 )
 
-add_library(ZeldaLibrary STATIC 
+add_library(ZeldaLibrary STATIC     
     src/Game.h
     src/Game.cpp
     src/Settings.h
@@ -33,8 +33,12 @@ add_library(ZeldaLibrary STATIC
     src/SpriteGroup.cpp
     src/Sprite.h
     src/Sprite.cpp
+    src/Player.h
+    src/Player.cpp
     src/Tile.h
     src/Tile.cpp
+    src/Rect.h
+    src/Rect.cpp
 )
 
 target_link_libraries(ZeldaLibrary PUBLIC

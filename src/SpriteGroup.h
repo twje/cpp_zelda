@@ -14,11 +14,12 @@ public:
 
     void Draw(sf::RenderWindow &window)
     {
-
-        for (const auto &sprite : mSprites)
+        for (const auto &internalSprite : mSprites)
         {
-            sf::Sprite foo(sprite->GetTexture());
-            window.draw(foo);
+            sf::FloatRect rect = internalSprite->GetRect();
+            sf::Sprite sprite(internalSprite->GetTexture());
+            sprite.setPosition(rect.getPosition());
+            window.draw(sprite);
         }
     }
 

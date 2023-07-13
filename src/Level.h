@@ -3,6 +3,7 @@
 #include "Settings.h"
 #include "SpriteGroup.h"
 #include "Tile.h"
+#include "Player.h"
 
 // Forward declare classes
 namespace sf
@@ -37,7 +38,14 @@ private:
                 size_t index = x + (y * COLS);
                 if (WORLD_MAP[index] == 'x')
                 {
-                    std::shared_ptr<Tile> tile = std::make_shared<Tile>();
+                    std::shared_ptr<Tile> tile = std::make_shared<Tile>(sf::Vector2f(xTile, yTile));
+                    mVisibleSprites.Add(tile);
+                    mObstacleSprites.Add(tile);
+                }
+
+                if (WORLD_MAP[index] == 'p')
+                {
+                    std::shared_ptr<Player> tile = std::make_shared<Player>(sf::Vector2f(xTile, yTile));
                     mVisibleSprites.Add(tile);
                 }
             }
