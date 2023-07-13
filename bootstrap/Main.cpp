@@ -1,6 +1,8 @@
-#include "Stub.cpp"
+#include "Game.cpp"
+#include "Settings.h"
 
 int main()
 {
-    run();
+    Game game;
+    game.Run();
 }

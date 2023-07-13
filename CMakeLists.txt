@@ -17,17 +17,25 @@ set(BUILD_SHARED_LIBS OFF CACHE INTERNAL "")
 add_subdirectory(vendor/SFML)
 
 # Configure project
-file(GLOB_RECURSE ZeldaHeaders "src/*.h")
-
-file(GLOB_RECURSE ZeldaSources "src/*.cpp")
-
 set(ZeldaIncludes
     vendor/SFML/include
     vendor/nlohmann/include
     src
 )
 
-add_library(ZeldaLibrary STATIC ${ZeldaHeaders} ${ZeldaSources})
+add_library(ZeldaLibrary STATIC 
+    src/Game.h
+    src/Game.cpp
+    src/Settings.h
+    src/Level.h
+    src/Level.cpp
+    src/SpriteGroup.h
+    src/SpriteGroup.cpp
+    src/Sprite.h
+    src/Sprite.cpp
+    src/Tile.h
+    src/Tile.cpp
+)
 
 target_link_libraries(ZeldaLibrary PUBLIC
     sfml-system
