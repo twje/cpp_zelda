@@ -24,6 +24,8 @@ set(ZeldaIncludes
 )
 
 add_library(ZeldaLibrary STATIC     
+    src/Debug.h
+    src/Debug.cpp    
     src/Game.h
     src/Game.cpp
     src/Settings.h
