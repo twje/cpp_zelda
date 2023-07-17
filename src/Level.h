@@ -30,7 +30,9 @@ public:
         mPlayer->DrawHitbox(mWindow);
         mVisibleSprites.Draw(mWindow);
         mVisibleSprites.Update();
+
         Debug(mWindow, ToString(mPlayer->GetDirection()));
+        Debug(mWindow, ToString(mPlayer->GetRect()), 10, 40);
     }
 
 private:

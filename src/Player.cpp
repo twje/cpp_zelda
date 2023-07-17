@@ -2,6 +2,7 @@
 #include "Sprite.h"
 #include "Rect.h"
 #include "SpriteGroup.h"
+#include "Debug.h"
 
 Player::Player(sf::Vector2f position, const SpriteGroup &obstacleSprites)
     : Sprite(),
@@ -107,3 +108,13 @@ void Player::Collision(Direction direction)
         }
     }
 }
+
+void Player::DrawHitbox(sf::RenderWindow &window)
+{
+    DrawTransparentRectangle(window, mHitbox, sf::Color::Red, 2);
+}
+
+void Player::DrawRect(sf::RenderWindow &window)
+{
+    DrawTransparentRectangle(window, mRect, sf::Color::White, 2);
+};
