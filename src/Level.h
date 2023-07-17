@@ -4,6 +4,10 @@
 #include "SpriteGroup.h"
 #include "Tile.h"
 #include "Player.h"
+#include "Debug.h"
+#include "OstreamOverloads.h"
+
+#include <sstream>
 
 // Forward declare classes
 namespace sf
@@ -22,7 +26,11 @@ public:
 
     void Run()
     {
+        mPlayer->DrawRect(mWindow);
+        mPlayer->DrawHitbox(mWindow);
         mVisibleSprites.Draw(mWindow);
+        mVisibleSprites.Update();
+        Debug(mWindow, ToString(mPlayer->GetDirection()));
     }
 
 private:
@@ -45,8 +53,8 @@ private:
 
                 if (WORLD_MAP[index] == 'p')
                 {
-                    std::shared_ptr<Player> tile = std::make_shared<Player>(sf::Vector2f(xTile, yTile));
-                    mVisibleSprites.Add(tile);
+                    mPlayer = std::make_shared<Player>(sf::Vector2f(xTile, yTile), mObstacleSprites);
+                    mVisibleSprites.Add(mPlayer);
                 }
             }
         }
@@ -56,4 +64,5 @@ private:
     sf::RenderWindow &mWindow;
     SpriteGroup mVisibleSprites;
     SpriteGroup mObstacleSprites;
+    std::shared_ptr<Player> mPlayer;
 };

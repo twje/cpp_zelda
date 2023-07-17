@@ -15,7 +15,7 @@ const sf::Texture &Tile::GetTexture() const
     return *mTexture;
 }
 
-sf::FloatRect Tile::GetRect() const
+Util::FloatRect Tile::GetRect() const
 {
     return mRect;
 }

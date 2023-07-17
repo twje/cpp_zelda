@@ -9,9 +9,9 @@ public:
 
 public:
     const sf::Texture &GetTexture() const override;
-    sf::FloatRect GetRect() const override;
+    Util::FloatRect GetRect() const override;
 
 private:
     std::unique_ptr<sf::Texture> mTexture;
-    sf::FloatRect mRect;
+    Util::FloatRect mRect;
 };

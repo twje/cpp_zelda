@@ -23,7 +23,9 @@ set(ZeldaIncludes
     src
 )
 
-add_library(ZeldaLibrary STATIC     
+add_library(ZeldaLibrary STATIC
+    src/OstreamOverloads.h
+    src/Constants.h
     src/Debug.h
     src/Debug.cpp    
     src/Game.h
