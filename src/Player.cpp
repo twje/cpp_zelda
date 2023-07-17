@@ -109,12 +109,8 @@ void Player::Collision(Direction direction)
     }
 }
 
-void Player::DrawHitbox(sf::RenderWindow &window)
-{
-    DrawTransparentRectangle(window, mHitbox, sf::Color::Red, 2);
-}
-
-void Player::DrawRect(sf::RenderWindow &window)
+void Player::DebugDraw(sf::RenderWindow &window)
 {
     DrawTransparentRectangle(window, mRect, sf::Color::White, 2);
-};
+    DrawTransparentRectangle(window, mHitbox, sf::Color::Red, 2);
+}

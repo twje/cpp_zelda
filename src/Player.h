@@ -21,15 +21,12 @@ public:
     void Input();
     void Move();
     void Collision(Direction direction);
+    void DebugDraw(sf::RenderWindow &window) override;
 
     // Getters
     const sf::Texture &GetTexture() const override { return *mTexture; }
     Util::FloatRect GetRect() const override { return mRect; }
     sf::Vector2f GetDirection() { return mDirection; }
-
-    // Debug
-    void DrawHitbox(sf::RenderWindow &window) override;
-    void DrawRect(sf::RenderWindow &window) override;
 
 private:
     bool IsMovingRight() { return mDirection.x > 0; }

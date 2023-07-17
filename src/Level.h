@@ -26,13 +26,10 @@ public:
 
     void Run()
     {
-        mPlayer->DrawRect(mWindow);
-        mPlayer->DrawHitbox(mWindow);
+        mPlayer->DebugDraw(mWindow);
         mVisibleSprites.Draw(mWindow);
         mVisibleSprites.Update();
-
         Debug(mWindow, ToString(mPlayer->GetDirection()));
-        Debug(mWindow, ToString(mPlayer->GetRect()), 10, 40);
     }
 
 private:

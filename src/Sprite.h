@@ -12,6 +12,5 @@ public:
     virtual const sf::Texture &GetTexture() const = 0;
     virtual Util::FloatRect GetRect() const = 0;
     virtual void Update(){};
-    virtual void DrawHitbox(sf::RenderWindow &window){};
-    virtual void DrawRect(sf::RenderWindow &window){};
+    virtual void DebugDraw(sf::RenderWindow &window){};
 };
