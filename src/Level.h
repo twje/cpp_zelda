@@ -18,19 +18,21 @@ namespace sf
 class Level
 {
 public:
-    Level(sf::RenderWindow &window)
-        : mWindow(window)
+    Level()
     {
         CreateMap();
     }
 
-    void Run()
+    void Update()
     {
-        mPlayer->DebugDraw(mWindow);
-        mVisibleSprites.Draw(mWindow);
+        // mPlayer->DebugDraw(mWindow);
+        // mVisibleSprites.Draw(mWindow);
         mVisibleSprites.Update();
-        Debug(mWindow, ToString(mPlayer->GetDirection()));
+        // Debug(mWindow, ToString(mPlayer->GetDirection()));
     }
+
+    const Player &GetPlayer() const { return *mPlayer; }
+    const SpriteGroup &GetVisibleSpriteGroup() const { return mVisibleSprites; }
 
 private:
     void CreateMap()
@@ -60,7 +62,6 @@ private:
     }
 
 private:
-    sf::RenderWindow &mWindow;
     SpriteGroup mVisibleSprites;
     SpriteGroup mObstacleSprites;
     std::shared_ptr<Player> mPlayer;

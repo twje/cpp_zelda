@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "Level.h"
+#include "LevelView.h"
 
 class Game
 {
@@ -13,4 +14,5 @@ public:
 private:
     sf::RenderWindow mWindow;
     Level mLevel;
+    LevelView mLevelView;
 };

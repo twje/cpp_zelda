@@ -12,5 +12,5 @@ public:
     virtual const sf::Texture &GetTexture() const = 0;
     virtual Util::FloatRect GetRect() const = 0;
     virtual void Update(){};
-    virtual void DebugDraw(sf::RenderWindow &window){};
+    virtual void DebugDraw(sf::RenderWindow &window) const {};
 };

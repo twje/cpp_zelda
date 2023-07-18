@@ -33,6 +33,8 @@ add_library(ZeldaLibrary STATIC
     src/Settings.h
     src/Level.h
     src/Level.cpp
+    src/LevelView.h
+    src/LevelView.cpp
     src/SpriteGroup.h
     src/SpriteGroup.cpp
     src/Sprite.h

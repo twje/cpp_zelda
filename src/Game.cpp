@@ -3,7 +3,8 @@
 
 Game::Game()
     : mWindow(sf::VideoMode(sf::Vector2u(WIDTH, HEIGHT), BPP), CAPTION),
-      mLevel(mWindow)
+      mLevel(),
+      mLevelView(mLevel)
 {
     mWindow.setFramerateLimit(FPS);
 }
@@ -20,7 +21,8 @@ void Game::Run()
         }
 
         mWindow.clear();
-        mLevel.Run();
+        mLevel.Update();
+        mLevelView.Draw(mWindow);
         mWindow.display();
     }
 }

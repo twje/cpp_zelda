@@ -19,11 +19,6 @@ namespace Util
         {
         }
 
-        // Rect(const Rect &other)
-        //     : mRect(sf::Vector2<T>(other.GetX(), other.GetY()), sf::Vector2<T>(other.GetWidth(), other.GetHeight()))
-        // {
-        // }
-
         std::optional<Rect<T>> FindIntersection(const Rect<T> &rect)
         {
             std::optional<sf::Rect<T>> intersectOpt = mRect.findIntersection(ConvertToSFMLRect(rect));
