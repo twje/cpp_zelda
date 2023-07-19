@@ -11,16 +11,9 @@
 class Level
 {
 public:
-    Level()
-    {
-        CreateMap();
-    }
+    Level();
 
-    void Update()
-    {
-        mVisibleSprites.Update();
-    }
-
+    void Update();
     const Player &GetPlayer() const { return *mPlayer; }
     const SpriteGroup &GetVisibleSpriteGroup() const { return mVisibleSprites; }
 

@@ -1,5 +1,15 @@
 #include "Level.h"
 
+Level::Level()
+{
+    CreateMap();
+}
+
+void Level::Update()
+{
+    mVisibleSprites.Update();
+}
+
 void Level::CreateMap()
 {
     for (size_t y = 0; y < ROWS; y++)
