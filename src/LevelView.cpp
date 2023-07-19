@@ -9,15 +9,21 @@ LevelView::LevelView(const Level &level)
 
 void LevelView::Draw(sf::RenderWindow &window)
 {
-    for (const auto &internalSprite : mLevel.GetVisibleSpriteGroup().GetSprites())
+    const Player &player = mLevel.GetPlayer();
+
+    SpriteGroup sortedSpriteGroup = mLevel.GetVisibleSpriteGroup();
+    sortedSpriteGroup.YSortSprites();
+
+    sf::Vector2f offset(player.GetRect().GetCenterX() - window.getSize().x / 2,
+                        player.GetRect().GetCenterY() - window.getSize().y / 2);
+
+    for (const auto &internalSprite : sortedSpriteGroup.GetSprites())
     {
-        Util::FloatRect rect = internalSprite->GetRect();
+        sf::Vector2f offsetPos(internalSprite->GetRect().GetLeft() - offset.x,
+                               internalSprite->GetRect().GetTop() - offset.y);
+
         sf::Sprite sprite(internalSprite->GetTexture());
-        sprite.setPosition(sf::Vector2f(rect.GetX(), rect.GetY()));
+        sprite.setPosition(offsetPos);
         window.draw(sprite);
     }
-
-    const Player &player = mLevel.GetPlayer();
-    Debug(window, ToString(player.GetDirection()));
-    player.DebugDraw(window);
 }
