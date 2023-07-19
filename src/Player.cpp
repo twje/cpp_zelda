@@ -108,9 +108,3 @@ void Player::Collision(Direction direction)
         }
     }
 }
-
-void Player::DebugDraw(sf::RenderWindow &window) const
-{
-    DrawTransparentRectangle(window, mRect, sf::Color::White, 2);
-    DrawTransparentRectangle(window, mHitbox, sf::Color::Red, 2);
-}

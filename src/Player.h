@@ -21,11 +21,11 @@ public:
     void Input();
     void Move();
     void Collision(Direction direction);
-    void DebugDraw(sf::RenderWindow &window) const override;
 
     // Getters
     const sf::Texture &GetTexture() const override { return *mTexture; }
     Util::FloatRect GetRect() const override { return mRect; }
+    Util::FloatRect GetHitbox() const { return mHitbox; }
     sf::Vector2f GetDirection() const { return mDirection; }
 
 private:

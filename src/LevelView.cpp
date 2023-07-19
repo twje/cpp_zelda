@@ -1,6 +1,7 @@
 #include "LevelView.h"
 #include "Level.h"
 #include "Player.h"
+#include "Debug.h"
 
 LevelView::LevelView(const Level &level)
     : mLevel(level)
@@ -9,21 +10,42 @@ LevelView::LevelView(const Level &level)
 
 void LevelView::Draw(sf::RenderWindow &window)
 {
-    const Player &player = mLevel.GetPlayer();
-
     SpriteGroup sortedSpriteGroup = mLevel.GetVisibleSpriteGroup();
     sortedSpriteGroup.YSortSprites();
 
-    sf::Vector2f offset(player.GetRect().GetCenterX() - window.getSize().x / 2,
-                        player.GetRect().GetCenterY() - window.getSize().y / 2);
+    const Player &player = mLevel.GetPlayer();
+    mCameraOffset = GetFixedCenterCameraOffset(window, player);
 
     for (const auto &internalSprite : sortedSpriteGroup.GetSprites())
     {
-        sf::Vector2f offsetPos(internalSprite->GetRect().GetLeft() - offset.x,
-                               internalSprite->GetRect().GetTop() - offset.y);
+        sf::Vector2f offsetPos(internalSprite->GetRect().GetLeft() - mCameraOffset.x,
+                               internalSprite->GetRect().GetTop() - mCameraOffset.y);
 
         sf::Sprite sprite(internalSprite->GetTexture());
         sprite.setPosition(offsetPos);
         window.draw(sprite);
     }
+
+    DebugDrawPlayer(window);
+}
+
+sf::Vector2f LevelView::GetFixedCenterCameraOffset(sf::RenderWindow &window, const Sprite &relativeTo)
+{
+    return sf::Vector2f(relativeTo.GetRect().GetCenterX() - window.getSize().x / 2,
+                        relativeTo.GetRect().GetCenterY() - window.getSize().y / 2);
+}
+
+void LevelView::DebugDrawPlayer(sf::RenderWindow &window)
+{
+    const Player &player = mLevel.GetPlayer();
+
+    // Draw Bounding Box
+    Util::FloatRect rect = player.GetRect();
+    rect.SetPosition(rect.GetLeft() - mCameraOffset.x, rect.GetTop() - mCameraOffset.y);
+    DrawTransparentRectangle(window, rect, sf::Color::White, 2);
+
+    // Draw Hit Box
+    Util::FloatRect hitBox = player.GetHitbox();
+    hitBox.SetPosition(hitBox.GetLeft() - mCameraOffset.x, hitBox.GetTop() - mCameraOffset.y);
+    DrawTransparentRectangle(window, hitBox, sf::Color::Red, 2);
 }

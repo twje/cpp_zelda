@@ -59,6 +59,7 @@ namespace Util
         // Setters
         void SetX(T value) { mRect.left = value; }
         void SetY(T value) { mRect.top = value; }
+        void SetPosition(T x, T y) { SetX(x), SetY(y); }
         void SetWidth(T value) { mRect.width = value; }
         void SetHeight(T value) { mRect.height = value; }
         void SetLeft(T value) { mRect.left = value; }
