@@ -24,8 +24,8 @@ public:
 
     // Getters
     const sf::Texture &GetTexture() const override { return *mTexture; }
-    Util::FloatRect GetRect() const override { return mRect; }
-    Util::FloatRect GetHitbox() const { return mHitbox; }
+    FloatRect GetRect() const override { return mRect; }
+    FloatRect GetHitbox() const { return mHitbox; }
     sf::Vector2f GetDirection() const { return mDirection; }
 
 private:
@@ -36,8 +36,8 @@ private:
 
 private:
     std::unique_ptr<sf::Texture> mTexture;
-    Util::FloatRect mRect;
-    Util::FloatRect mHitbox;
+    FloatRect mRect;
+    FloatRect mHitbox;
     sf::Vector2f mDirection;
     const SpriteGroup &mObstacleSprites;
 };

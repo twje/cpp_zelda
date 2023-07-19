@@ -10,6 +10,6 @@ public:
     virtual ~Sprite() = default;
 
     virtual const sf::Texture &GetTexture() const = 0;
-    virtual Util::FloatRect GetRect() const = 0;
+    virtual FloatRect GetRect() const = 0;
     virtual void Update(){};
 };

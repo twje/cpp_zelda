@@ -7,7 +7,7 @@
 void DrawDebugString(sf::RenderWindow &window, const std::string &info, uint16_t x = 10, uint16_t y = 10);
 
 template <typename T>
-void DrawTransparentRectangle(sf::RenderWindow &window, const Util::Rect<T> &source, sf::Color color, int thickness = 0)
+void DrawTransparentRectangle(sf::RenderWindow &window, const Rect<T> &source, sf::Color color, int thickness = 0)
 {
     sf::RectangleShape target;
     target.setSize(sf::Vector2f(source.GetWidth(), source.GetHeight()));

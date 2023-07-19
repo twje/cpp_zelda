@@ -41,12 +41,12 @@ void LevelView::DebugDrawPlayer(sf::RenderWindow &window)
     const Player &player = mLevel.GetPlayer();
 
     // Draw Bounding Box
-    Util::FloatRect rect = player.GetRect();
+    FloatRect rect = player.GetRect();
     rect.SetPosition(rect.GetLeft() - mCameraOffset.x, rect.GetTop() - mCameraOffset.y);
     DrawTransparentRectangle(window, rect, sf::Color::White, 2);
 
     // Draw Hit Box
-    Util::FloatRect hitBox = player.GetHitbox();
+    FloatRect hitBox = player.GetHitbox();
     hitBox.SetPosition(hitBox.GetLeft() - mCameraOffset.x, hitBox.GetTop() - mCameraOffset.y);
     DrawTransparentRectangle(window, hitBox, sf::Color::Red, 2);
 
