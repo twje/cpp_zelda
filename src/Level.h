@@ -8,12 +8,6 @@
 #include "Player.h"
 #include "Debug.h"
 
-// Forward declare classes
-namespace sf
-{
-    class RenderWindow;
-}
-
 class Level
 {
 public:
