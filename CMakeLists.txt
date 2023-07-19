@@ -44,7 +44,6 @@ add_library(ZeldaLibrary STATIC
     src/Tile.h
     src/Tile.cpp
     src/Rect.h
-    src/Rect.cpp
 )
 
 target_link_libraries(ZeldaLibrary PUBLIC

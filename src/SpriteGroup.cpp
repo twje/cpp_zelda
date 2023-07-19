@@ -1,7 +1,16 @@
 
 #include "SpriteGroup.h"
 
-void SpriteGroup::Add(const std::shared_ptr<Sprite> &sprite)
+void SpriteGroup::YSortSprites()
 {
-    mSprites.push_back(sprite);
+    std::sort(mSprites.begin(), mSprites.end(), [](const std::shared_ptr<Sprite> &sprite1, const std::shared_ptr<Sprite> &sprite2)
+              { return sprite1->GetRect().GetCenterY() < sprite2->GetRect().GetCenterY(); });
+}
+
+void SpriteGroup::Update()
+{
+    for (const auto &internalSprite : mSprites)
+    {
+        internalSprite->Update();
+    }
 }

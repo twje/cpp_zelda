@@ -2,6 +2,12 @@
 
 #include <SFML/Graphics.hpp>
 
+// Forward declarations
+namespace sf
+{
+    class Texture;
+}
+
 namespace Util
 {
     enum class RectCorner
@@ -16,6 +22,10 @@ namespace Util
         Rect() {}
         Rect(T x, T y, T width, T height)
             : mRect(sf::Vector2<T>(x, y), sf::Vector2<T>(width, height))
+        {
+        }
+        Rect(sf::Vector2<T> position, sf::Vector2<T> size)
+            : mRect(position, size)
         {
         }
 
@@ -91,7 +101,4 @@ namespace Util
     };
 
     using FloatRect = Rect<float>;
-
-    // TODO: template
-    FloatRect GetRect(sf::Vector2u size, sf::Vector2f position, RectCorner anchor);
 }

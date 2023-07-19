@@ -7,7 +7,7 @@ Tile::Tile(sf::Vector2f position)
       mTexture(std::make_unique<sf::Texture>())
 {
     assert(mTexture->loadFromFile("../graphics/test/rock.png"));
-    mRect = Util::GetRect(mTexture->getSize(), position, Util::RectCorner::TOP_LEFT);
+    mRect = Util::FloatRect(position, sf::Vector2f(mTexture->getSize()));
 }
 
 const sf::Texture &Tile::GetTexture() const

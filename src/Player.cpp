@@ -11,7 +11,7 @@ Player::Player(sf::Vector2f position, const SpriteGroup &obstacleSprites)
       mObstacleSprites(obstacleSprites)
 {
     assert(mTexture->loadFromFile("../graphics/test/player.png"));
-    mRect = Util::GetRect(mTexture->getSize(), position, Util::RectCorner::TOP_LEFT);
+    mRect = Util::FloatRect(position, sf::Vector2f(mTexture->getSize()));
     mHitbox = mRect.Inflate(0, -26);
 }
 

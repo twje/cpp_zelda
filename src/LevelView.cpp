@@ -2,6 +2,7 @@
 #include "Level.h"
 #include "Player.h"
 #include "Debug.h"
+#include "OstreamOverloads.h"
 
 LevelView::LevelView(const Level &level)
     : mLevel(level)
@@ -48,4 +49,7 @@ void LevelView::DebugDrawPlayer(sf::RenderWindow &window)
     Util::FloatRect hitBox = player.GetHitbox();
     hitBox.SetPosition(hitBox.GetLeft() - mCameraOffset.x, hitBox.GetTop() - mCameraOffset.y);
     DrawTransparentRectangle(window, hitBox, sf::Color::Red, 2);
+
+    // Player Direction
+    DrawDebugString(window, ToString(player.GetDirection()));
 }

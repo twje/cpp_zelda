@@ -1,6 +1,6 @@
 #include "Debug.h"
 
-void Debug(sf::RenderWindow &window, const std::string &info, uint16_t x, uint16_t y)
+void DrawDebugString(sf::RenderWindow &window, const std::string &info, uint16_t x, uint16_t y)
 {
     sf::Font font;
     if (!font.loadFromFile("../graphics/font/joystix.ttf"))
