@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 
+// Game
 #include "Level.h"
 #include "LevelView.h"
 

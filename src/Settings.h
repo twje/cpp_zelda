@@ -11,7 +11,7 @@ constexpr uint16_t FPS = 60;
 constexpr uint16_t TILESIZE = 64;
 constexpr uint16_t ROWS = 20;
 constexpr uint16_t COLS = 20;
-constexpr char *WORLD_MAP =
+constexpr const char *WORLD_MAP =
     "xxxxxxxxxxxxxxxxxxxx"
     "x                  x"
     "x p                x"
@@ -28,6 +28,7 @@ constexpr char *WORLD_MAP =
     "x          xxx     x"
     "x        xxxxx     x"
     "x        x         x"
+    "x                  x"
     "x                  x"
     "x                  x"
     "xxxxxxxxxxxxxxxxxxxx";

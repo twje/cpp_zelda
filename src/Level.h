@@ -2,11 +2,14 @@
 
 #include <sstream>
 
+// Core
+#include "Core/SpriteGroup.h"
+#include "Core/Debug.h"
+
+// Game
 #include "Settings.h"
-#include "SpriteGroup.h"
 #include "Tile.h"
 #include "Player.h"
-#include "Debug.h"
 
 class Level
 {

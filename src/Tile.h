@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Sprite.h"
+// Game
+#include "Core/Sprite.h"
 
 class Tile : public Sprite
 {

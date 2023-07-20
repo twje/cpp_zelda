@@ -2,7 +2,10 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "Sprite.h"
+// Core
+#include "Core/Sprite.h"
+
+// Game
 #include "Constants.h"
 
 // Forward Declarations

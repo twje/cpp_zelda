@@ -1,8 +1,11 @@
+// Core
+#include "Core/Debug.h"
+#include "Core/OstreamOverloads.h"
+
+// Game
 #include "LevelView.h"
 #include "Level.h"
 #include "Player.h"
-#include "Debug.h"
-#include "OstreamOverloads.h"
 
 LevelView::LevelView(const Level &level)
     : mLevel(level)

@@ -1,8 +1,11 @@
+// Core
+#include "Core/Sprite.h"
+#include "Core/Rect.h"
+#include "Core/SpriteGroup.h"
+#include "Core/Debug.h"
+
+// Game
 #include "Player.h"
-#include "Sprite.h"
-#include "Rect.h"
-#include "SpriteGroup.h"
-#include "Debug.h"
 
 Player::Player(sf::Vector2f position, const SpriteGroup &obstacleSprites)
     : Sprite(),

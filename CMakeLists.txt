@@ -24,10 +24,17 @@ set(ZeldaIncludes
 )
 
 add_library(ZeldaLibrary STATIC
-    src/OstreamOverloads.h
+    src/Core/OstreamOverloads.h
     src/Constants.h
-    src/Debug.h
-    src/Debug.cpp    
+    src/Core/Debug.h
+    src/Core/Debug.cpp    
+    src/Core/SpriteGroup.h
+    src/Core/SpriteGroup.cpp
+    src/Core/Sprite.h
+    src/Core/Sprite.cpp
+    src/Core/Rect.h
+    src/Support.h
+    src/Support.cpp
     src/Game.h
     src/Game.cpp
     src/Settings.h
@@ -35,15 +42,10 @@ add_library(ZeldaLibrary STATIC
     src/Level.cpp
     src/LevelView.h
     src/LevelView.cpp
-    src/SpriteGroup.h
-    src/SpriteGroup.cpp
-    src/Sprite.h
-    src/Sprite.cpp
     src/Player.h
     src/Player.cpp
     src/Tile.h
-    src/Tile.cpp
-    src/Rect.h
+    src/Tile.cpp    
 )
 
 target_link_libraries(ZeldaLibrary PUBLIC
