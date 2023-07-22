@@ -2,6 +2,11 @@
 
 #include <SFML/Graphics.hpp>
 
+enum class Anchor
+{
+    TOP_LEFT
+};
+
 template <typename T>
 class Rect
 {
@@ -14,6 +19,22 @@ public:
     Rect(sf::Vector2<T> position, sf::Vector2<T> size)
         : mRect(position, size)
     {
+    }
+
+    void AnchorPosition(Anchor anchor, sf::Vector2<T> position)
+    {
+        sf::Vector2f offset;
+        switch (anchor)
+        {
+        case Anchor::TOP_LEFT:
+        {
+            break;
+        }
+        default:
+            throw std::runtime_error("Invalid rectangle anchor");
+        }
+
+        SetPosition(position.x - offset.x, position.y - offset.y);
     }
 
     std::optional<Rect<T>> FindIntersection(const Rect<T> &rect)
@@ -32,7 +53,7 @@ public:
         Rect<T> result = *this;
         result.SetLeft(result.GetX() - x / 2);
         result.SetWidth(result.GetWidth() + x);
-        result.SetRight(result.GetY() - y / 2);
+        result.SetTop(result.GetY() - y / 2);
         result.SetHeight(result.GetHeight() + y);
 
         return result;
@@ -63,6 +84,8 @@ public:
     void SetTop(T value) { mRect.top = value; }
     void SetRight(T value) { mRect.left = value - mRect.width; }
     void SetBottom(T value) { mRect.top = value - mRect.height; }
+
+    // FIX
     void SetCenterX(T value) { mRect.left = value - mRect.width / 2; }
     void SetCenterY(T value) { mRect.top = value - mRect.height / 2; }
     void SetCenter(T x, T y) { SetCenterX(x), SetCenterY(y); }

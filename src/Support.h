@@ -3,8 +3,36 @@
 #include <string>
 #include <memory>
 #include <vector>
+#include <filesystem>
+
+#include "SFML/Graphics.hpp"
 
 using CSVData = std::vector<std::vector<std::string>>;
+using Textures = std::vector<sf::Texture>;
 
-std::unique_ptr<CSVData> readCSV(const std::string &foo);
-void foo(const std::string &csvFilePath);
+namespace fs = std::filesystem;
+
+std::unique_ptr<sf::Texture> createTexture(uint16_t width, uint16_t height, sf::Color color);
+
+std::unique_ptr<CSVData> readCSV(const std::string &csvFilepath);
+
+std::unique_ptr<sf::Texture> importTexture(const std::string &filepath);
+
+std::unique_ptr<Textures> importTexturesFromDirectoryRecursive(const fs::path &directoryPath);
+
+static void importTexturesFromDirectoryRecursiveImpl(std::unique_ptr<Textures> &texturesOut, const fs::path &directoryPath);
+
+template <typename T>
+T &getRandomElement(std::vector<T> &vec)
+{
+    std::srand(static_cast<unsigned int>(std::time(nullptr)));
+
+    if (vec.empty())
+    {
+        throw std::runtime_error("Error: Vector is empty.");
+    }
+
+    std::size_t randomIndex = std::rand() % vec.size();
+
+    return vec[randomIndex];
+}

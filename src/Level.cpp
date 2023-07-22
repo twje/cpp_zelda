@@ -1,7 +1,8 @@
+#include <map>
+#include <random>
+
 // Game
 #include "Level.h"
-#include "Support.h"
-#include "iostream"
 
 Level::Level()
 {
@@ -15,26 +16,64 @@ void Level::Update()
 
 void Level::CreateMap()
 {
-    for (size_t y = 0; y < ROWS; y++)
+    mFloor = importTexture("../graphics/tilemap/ground.png");
+    mInvisibleBlock = createTexture(TILESIZE, TILESIZE, sf::Color(255, 0, 0, 255));
+
+    createTexture(TILESIZE, TILESIZE, sf::Color(100, 0, 0, 255));
+
+    // layouts
+    std::map<std::string, std::unique_ptr<CSVData>> layouts;
+    layouts.emplace("boundary", readCSV("../map/map_FloorBlocks.csv"));
+    layouts.emplace("grass", readCSV("../map/map_Grass.csv"));
+    layouts.emplace("object", readCSV("../map/map_Objects.csv"));
+
+    // graphics
+    mGraphics.emplace("grass", importTexturesFromDirectoryRecursive("../graphics/Grass"));
+    mGraphics.emplace("objects", importTexturesFromDirectoryRecursive("../graphics/objects"));
+
+    for (const auto &layoutPair : layouts)
     {
-        for (size_t x = 0; x < COLS; x++)
+        for (size_t rowIndex = 0; rowIndex < layoutPair.second->size(); rowIndex++)
         {
-            size_t xTile = x * TILESIZE;
-            size_t yTile = y * TILESIZE;
+            const std::vector<std::string> &row = layoutPair.second->at(rowIndex);
 
-            size_t index = x + (y * COLS);
-            if (WORLD_MAP[index] == 'x')
+            for (size_t colIndex = 0; colIndex < row.size(); colIndex++)
             {
-                std::shared_ptr<Tile> tile = std::make_shared<Tile>(sf::Vector2f(xTile, yTile));
-                mVisibleSprites.Add(tile);
-                mObstacleSprites.Add(tile);
-            }
+                std::string col = row[colIndex];
+                if (col == "-1")
+                {
+                    continue;
+                }
+                size_t value = std::stoul(col);
 
-            if (WORLD_MAP[index] == 'p')
-            {
-                mPlayer = std::make_shared<Player>(sf::Vector2f(xTile, yTile), mObstacleSprites);
-                mVisibleSprites.Add(mPlayer);
+                float x = colIndex * TILESIZE;
+                float y = rowIndex * TILESIZE;
+
+                if (layoutPair.first == "boundary")
+                {
+                    std::shared_ptr<Tile> tile = std::make_shared<Tile>(sf::Vector2f(x, y), SpriteType::INVISIBLE, *mInvisibleBlock);
+                    mVisibleSprites.Add(tile);
+                }
+
+                if (layoutPair.first == "grass")
+                {
+                    sf::Texture &texture = getRandomElement<sf::Texture>(*mGraphics["grass"]);
+                    std::shared_ptr<Tile> tile = std::make_shared<Tile>(sf::Vector2f(x, y), SpriteType::GRASS, texture);
+                    mVisibleSprites.Add(tile);
+                    mObstacleSprites.Add(tile);
+                }
+
+                if (layoutPair.first == "object")
+                {
+                    sf::Texture &texture = mGraphics["objects"]->at(value);
+                    std::shared_ptr<Tile> tile = std::make_shared<Tile>(sf::Vector2f(x, y), SpriteType::OBJECT, texture);
+                    mVisibleSprites.Add(tile);
+                    mObstacleSprites.Add(tile);
+                }
             }
         }
     }
+
+    mPlayer = std::make_shared<Player>(sf::Vector2f(2000, 1430), mObstacleSprites);
+    mVisibleSprites.Add(mPlayer);
 }

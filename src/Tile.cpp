@@ -4,18 +4,26 @@
 
 // Game
 #include "Tile.h"
+#include "Settings.h"
 
-Tile::Tile(sf::Vector2f position)
+Tile::Tile(sf::Vector2f position, SpriteType spriteType, sf::Texture &texture)
     : Sprite(),
-      mTexture(std::make_unique<sf::Texture>())
+      mTexture(texture)
 {
-    assert(mTexture->loadFromFile("../graphics/test/rock.png"));
-    mRect = FloatRect(position, sf::Vector2f(mTexture->getSize()));
+    if (spriteType == SpriteType::OBJECT)
+    {
+        mRect = FloatRect(position, sf::Vector2f(mTexture.getSize()));
+        mRect.AnchorPosition(Anchor::TOP_LEFT, sf::Vector2f(position.x, position.y - TILESIZE));
+    }
+    else
+    {
+        mRect = FloatRect(position, sf::Vector2f(mTexture.getSize()));
+    }
 }
 
 const sf::Texture &Tile::GetTexture() const
 {
-    return *mTexture;
+    return mTexture;
 }
 
 FloatRect Tile::GetRect() const

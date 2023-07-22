@@ -7,6 +7,9 @@
 #include "Level.h"
 #include "Player.h"
 
+#include "Core/OstreamOverloads.h"
+#include <iostream>
+
 LevelView::LevelView(const Level &level)
     : mLevel(level)
 {
@@ -20,6 +23,12 @@ void LevelView::Draw(sf::RenderWindow &window)
     const Player &player = mLevel.GetPlayer();
     mCameraOffset = GetFixedCenterCameraOffset(window, player);
 
+    // Draw floor
+    sf::Sprite floorSprite(mLevel.GetFloorTexture());
+    floorSprite.setPosition(sf::Vector2f(-mCameraOffset.x, -mCameraOffset.y));
+    window.draw(floorSprite);
+
+    // Draw Tiles
     for (const auto &internalSprite : sortedSpriteGroup.GetSprites())
     {
         sf::Vector2f offsetPos(internalSprite->GetRect().GetLeft() - mCameraOffset.x,
