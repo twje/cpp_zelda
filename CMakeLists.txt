@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.21)
 
 project(Zelda C CXX)
 
+include(Functions.cmake)
+
 enable_testing()
 
 # Add nlohmann sub-module
@@ -60,6 +62,8 @@ target_link_libraries(ZeldaLibrary PUBLIC
 target_include_directories(ZeldaLibrary PUBLIC
     ${ZeldaIncludes}
 )
+
+set_debug_build_target(ZeldaLibrary)
 
 add_executable(Zelda 
     bootstrap/Main.cpp

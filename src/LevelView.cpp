@@ -38,14 +38,20 @@ void LevelView::Draw(sf::RenderWindow &window)
         sprite.setPosition(offsetPos);
         window.draw(sprite);
     }
-
-    DebugDrawPlayer(window);
+    DebugDraw(window);
 }
 
 sf::Vector2f LevelView::GetFixedCenterCameraOffset(sf::RenderWindow &window, const Sprite &relativeTo)
 {
     return sf::Vector2f(relativeTo.GetRect().GetCenterX() - window.getSize().x / 2,
                         relativeTo.GetRect().GetCenterY() - window.getSize().y / 2);
+}
+
+void LevelView::DebugDraw(sf::RenderWindow &window)
+{
+#ifdef DEBUG_BUILD
+    DebugDrawPlayer(window);
+#endif
 }
 
 void LevelView::DebugDrawPlayer(sf::RenderWindow &window)
