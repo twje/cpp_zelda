@@ -12,13 +12,20 @@ set(JSON_BuildTests OFF CACHE INTERNAL "")
 set(JSON_ImplicitConversions OFF CACHE INTERNAL "")
 add_subdirectory("vendor/nlohmann")
 
-# Add googletest sub-module
-add_subdirectory(vendor/googletest)
+# Add googletest dependency
+FetchContent_Declare(
+    googletest
+    GIT_REPOSITORY https://github.com/google/googletest.git
+    GIT_TAG main
+)
+FetchContent_MakeAvailable(googletest)
 
-# Add SFML sub-module
+# Add SFML dependency
 set(BUILD_SHARED_LIBS OFF CACHE INTERNAL "")
 FetchContent_Declare(SFML
-    GIT_REPOSITORY https://github.com/SFML/SFML.git)
+    GIT_REPOSITORY https://github.com/SFML/SFML.git
+    GIT_TAG master
+)
 FetchContent_MakeAvailable(SFML)
 
 # Configure project
