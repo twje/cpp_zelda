@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.21)
 project(Zelda C CXX)
 
 include(Functions.cmake)
+include(FetchContent)
 
 enable_testing()
 
@@ -16,11 +17,13 @@ add_subdirectory(vendor/googletest)
 
 # Add SFML sub-module
 set(BUILD_SHARED_LIBS OFF CACHE INTERNAL "")
-add_subdirectory(vendor/SFML)
+FetchContent_Declare(SFML
+    GIT_REPOSITORY https://github.com/SFML/SFML.git)
+FetchContent_MakeAvailable(SFML)
 
 # Configure project
 set(ZeldaIncludes
-    vendor/SFML/include
+    ${SFML_SOURCE_DIR}/include
     vendor/nlohmann/include
     src
 )
