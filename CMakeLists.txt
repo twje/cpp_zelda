@@ -7,11 +7,6 @@ include(FetchContent)
 
 enable_testing()
 
-# Add nlohmann sub-module
-set(JSON_BuildTests OFF CACHE INTERNAL "")
-set(JSON_ImplicitConversions OFF CACHE INTERNAL "")
-add_subdirectory("vendor/nlohmann")
-
 # Add googletest dependency
 FetchContent_Declare(
     googletest
@@ -31,7 +26,6 @@ FetchContent_MakeAvailable(SFML)
 # Configure project
 set(ZeldaIncludes
     ${SFML_SOURCE_DIR}/include
-    vendor/nlohmann/include
     src
 )
 
@@ -66,7 +60,6 @@ target_link_libraries(ZeldaLibrary PUBLIC
     sfml-graphics
     sfml-audio
     sfml-network
-    nlohmann_json::nlohmann_json
 )
 
 target_include_directories(ZeldaLibrary PUBLIC
