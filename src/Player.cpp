@@ -150,10 +150,10 @@ void Player::Collision(Direction direction)
     {
         for (const auto &sprite : mObstacleSprites.GetSprites())
         {
-            auto result = sprite->GetRect().FindIntersection(mHitbox);
+            auto result = sprite->GetHitbox().FindIntersection(mHitbox);
             if (result.has_value())
             {
-                const auto spriteRect = sprite->GetRect();
+                const auto spriteRect = sprite->GetHitbox();
                 if (IsMovingDown())
                 {
                     mHitbox.SetBottom(spriteRect.GetTop());
