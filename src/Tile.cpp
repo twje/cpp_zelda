@@ -10,6 +10,7 @@ Tile::Tile(sf::Vector2f position, SpriteType spriteType, sf::Texture &texture)
     : Sprite(),
       mTexture(texture)
 {
+    mTextureRegion = sf::IntRect(sf::Vector2i(position), sf::Vector2i(mTexture.getSize()));
     if (spriteType == SpriteType::OBJECT)
     {
         mRect = FloatRect(position, sf::Vector2f(mTexture.getSize()));

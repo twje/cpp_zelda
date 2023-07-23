@@ -9,6 +9,7 @@
 
 // Game
 #include "Constants.h"
+#include "Support.h"
 
 // Forward Declarations
 class SpriteGroup;
@@ -28,6 +29,7 @@ public:
     // Getters
     const std::string &GetStatus() const { return mStatus; }
     const sf::Texture &GetTexture() const override { return *mTexture; }
+    sf::IntRect GetTextureRegion() const { return mTextureRegion; }
     FloatRect GetRect() const override { return mRect; }
     FloatRect GetHitbox() const override { return mHitbox; };
     sf::Vector2f GetDirection() const { return mDirection; }
@@ -46,10 +48,11 @@ private:
     bool IsMovingDown() { return mDirection.y > 0; }
 
 private:
-    std::string mStatus;
     sf::Texture *mTexture;
+    sf::IntRect mTextureRegion;
     FloatRect mRect;
     FloatRect mHitbox;
+    std::string mStatus;
     sf::Vector2f mDirection;
     const SpriteGroup &mObstacleSprites;
     std::map<std::string, std::unique_ptr<Textures>> mAnimations;

@@ -10,6 +10,7 @@ public:
     virtual ~Sprite() = default;
 
     virtual const sf::Texture &GetTexture() const = 0;
+    virtual sf::IntRect GetTextureRegion() const = 0;
     virtual FloatRect GetRect() const = 0;
     virtual FloatRect GetHitbox() const = 0;
     virtual void Update(const sf::Time &timestamp){};

@@ -19,6 +19,7 @@ Player::Player(sf::Vector2f position, const SpriteGroup &obstacleSprites)
       mFrameIndex(0),
       mAnimationSpeed(0.15)
 {
+    mTextureRegion = sf::IntRect(sf::Vector2i(), sf::Vector2i(mTexture->getSize()));
     mRect = FloatRect(position, sf::Vector2f(mTexture->getSize()));
     mHitbox = mRect.Inflate(0, -26);
     ImportPlayerAssets();

@@ -35,6 +35,7 @@ void LevelView::Draw(sf::RenderWindow &window)
                                internalSprite->GetRect().GetTop() - mCameraOffset.y);
 
         sf::Sprite sprite(internalSprite->GetTexture());
+        sprite.setTextureRect(internalSprite->GetTextureRegion());
         sprite.setPosition(offsetPos);
         window.draw(sprite);
     }
