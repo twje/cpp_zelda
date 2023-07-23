@@ -15,7 +15,7 @@ public:
     void Add(const std::shared_ptr<Sprite> &sprite) { mSprites.push_back(sprite); };
     const SpriteList &GetSprites() const { return mSprites; }
     void YSortSprites();
-    void Update();
+    void Update(const sf::Time &timestamp);
 
 private:
     SpriteList mSprites;

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <map>
+
 #include <SFML/Graphics.hpp>
 
 // Core
@@ -21,27 +23,39 @@ public:
     ~Player() {}
 
 public:
-    void Update() override;
-    void Input();
-    void Move();
-    void Collision(Direction direction);
+    void Update(const sf::Time &timestamp) override;
 
     // Getters
+    const std::string &GetStatus() const { return mStatus; }
     const sf::Texture &GetTexture() const override { return *mTexture; }
     FloatRect GetRect() const override { return mRect; }
-    FloatRect GetHitbox() const { return mHitbox; }
+    FloatRect GetHitbox() const override { return mHitbox; };
     sf::Vector2f GetDirection() const { return mDirection; }
 
 private:
+    void Input();
+    void Cooldowns(const sf::Time &timestamp);
+    void Animate();
+    void Move();
+    void Collision(Direction direction);
+    void ImportPlayerAssets();
+    void UpdateStatus();
     bool IsMovingRight() { return mDirection.x > 0; }
     bool IsMovingLeft() { return mDirection.x < 0; }
     bool IsMovingUp() { return mDirection.y < 0; }
     bool IsMovingDown() { return mDirection.y > 0; }
 
 private:
-    std::unique_ptr<sf::Texture> mTexture;
+    std::string mStatus;
+    sf::Texture *mTexture;
     FloatRect mRect;
     FloatRect mHitbox;
     sf::Vector2f mDirection;
     const SpriteGroup &mObstacleSprites;
+    std::map<std::string, std::unique_ptr<Textures>> mAnimations;
+    bool mIsAttacking;
+    uint16_t mAttackCooldown;
+    uint16_t mAttackTime;
+    float mFrameIndex;
+    float mAnimationSpeed;
 };

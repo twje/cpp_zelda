@@ -94,3 +94,19 @@ void importTexturesFromDirectoryRecursiveImpl(std::unique_ptr<Textures> &texture
         }
     }
 }
+
+bool isSubstring(const std::string &source, const std::string &substring)
+{
+    size_t foundPos = source.find(substring);
+    return foundPos != std::string::npos;
+}
+
+void replaceSubstring(std::string &source, const std::string &substringToReplace, const std::string &newSubstring)
+{
+    size_t pos = source.find(substringToReplace);
+    while (pos != std::string::npos)
+    {
+        source.replace(pos, substringToReplace.length(), newSubstring);
+        pos = source.find(substringToReplace, pos + newSubstring.length());
+    }
+}

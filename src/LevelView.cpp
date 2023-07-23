@@ -17,8 +17,8 @@ LevelView::LevelView(const Level &level)
 
 void LevelView::Draw(sf::RenderWindow &window)
 {
-    SpriteGroup sortedSpriteGroup = mLevel.GetVisibleSpriteGroup();
-    sortedSpriteGroup.YSortSprites();
+    mSortedSpriteGroup = mLevel.GetVisibleSpriteGroup();
+    mSortedSpriteGroup.YSortSprites();
 
     const Player &player = mLevel.GetPlayer();
     mCameraOffset = GetFixedCenterCameraOffset(window, player);
@@ -29,7 +29,7 @@ void LevelView::Draw(sf::RenderWindow &window)
     window.draw(floorSprite);
 
     // Draw Tiles
-    for (const auto &internalSprite : sortedSpriteGroup.GetSprites())
+    for (const auto &internalSprite : mSortedSpriteGroup.GetSprites())
     {
         sf::Vector2f offsetPos(internalSprite->GetRect().GetLeft() - mCameraOffset.x,
                                internalSprite->GetRect().GetTop() - mCameraOffset.y);
@@ -51,6 +51,7 @@ void LevelView::DebugDraw(sf::RenderWindow &window)
 {
 #ifdef DEBUG_BUILD
     DebugDrawPlayer(window);
+    DebugHitbox(window);
 #endif
 }
 
@@ -63,11 +64,23 @@ void LevelView::DebugDrawPlayer(sf::RenderWindow &window)
     rect.SetPosition(rect.GetLeft() - mCameraOffset.x, rect.GetTop() - mCameraOffset.y);
     DrawTransparentRectangle(window, rect, sf::Color::White, 2);
 
-    // Draw Hit Box
-    FloatRect hitBox = player.GetHitbox();
-    hitBox.SetPosition(hitBox.GetLeft() - mCameraOffset.x, hitBox.GetTop() - mCameraOffset.y);
-    DrawTransparentRectangle(window, hitBox, sf::Color::Red, 2);
-
     // Player Direction
-    DrawDebugString(window, ToString(player.GetDirection()));
+    DrawDebugString(window, player.GetStatus());
+}
+
+void LevelView::DebugHitbox(sf::RenderWindow &window)
+{
+    for (const auto &internalSprite : mSortedSpriteGroup.GetSprites())
+    {
+        sf::Vector2f offsetPos(internalSprite->GetRect().GetLeft() - mCameraOffset.x,
+                               internalSprite->GetRect().GetTop() - mCameraOffset.y);
+
+        FloatRect hitBox = internalSprite->GetHitbox();
+        hitBox.SetPosition(hitBox.GetLeft() - mCameraOffset.x, hitBox.GetTop() - mCameraOffset.y);
+        DrawTransparentRectangle(window, hitBox, sf::Color::Red, 2);
+    }
+
+    // FloatRect hitBox = player.GetHitbox();
+    // hitBox.SetPosition(hitBox.GetLeft() - mCameraOffset.x, hitBox.GetTop() - mCameraOffset.y);
+    // DrawTransparentRectangle(window, hitBox, sf::Color::Red, 2);
 }

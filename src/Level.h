@@ -20,7 +20,7 @@ class Level
 public:
     Level();
 
-    void Update();
+    void Update(const sf::Time &timestamp);
     const Player &GetPlayer() const { return *mPlayer; }
     const SpriteGroup &GetVisibleSpriteGroup() const { return mVisibleSprites; }
     const sf::Texture &GetFloorTexture() const { return *mFloor; }

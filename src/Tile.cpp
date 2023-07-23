@@ -19,14 +19,5 @@ Tile::Tile(sf::Vector2f position, SpriteType spriteType, sf::Texture &texture)
     {
         mRect = FloatRect(position, sf::Vector2f(mTexture.getSize()));
     }
-}
-
-const sf::Texture &Tile::GetTexture() const
-{
-    return mTexture;
-}
-
-FloatRect Tile::GetRect() const
-{
-    return mRect;
+    mHitbox = mRect.Inflate(0, -10);
 }

@@ -7,10 +7,10 @@ void SpriteGroup::YSortSprites()
               { return sprite1->GetRect().GetCenterY() < sprite2->GetRect().GetCenterY(); });
 }
 
-void SpriteGroup::Update()
+void SpriteGroup::Update(const sf::Time &timestamp)
 {
     for (const auto &internalSprite : mSprites)
     {
-        internalSprite->Update();
+        internalSprite->Update(timestamp);
     }
 }

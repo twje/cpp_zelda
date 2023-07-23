@@ -36,3 +36,7 @@ T &getRandomElement(std::vector<T> &vec)
 
     return vec[randomIndex];
 }
+
+bool isSubstring(const std::string &source, const std::string &substring);
+
+void replaceSubstring(std::string &source, const std::string &substringToReplace, const std::string &newSubstring);

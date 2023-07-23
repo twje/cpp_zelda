@@ -4,7 +4,8 @@
 
 enum class Anchor
 {
-    TOP_LEFT
+    TOP_LEFT,
+    CENTER
 };
 
 template <typename T>
@@ -30,11 +31,19 @@ public:
         {
             break;
         }
+        case Anchor::CENTER:
+        {
+            offset.x = -GetWidth() / 2;
+            offset.y = -GetHeight() / 2;
+            break;
+        }
         default:
+        {
             throw std::runtime_error("Invalid rectangle anchor");
         }
+        }
 
-        SetPosition(position.x - offset.x, position.y - offset.y);
+        SetPosition(position.x + offset.x, position.y + offset.y);
     }
 
     std::optional<Rect<T>> FindIntersection(const Rect<T> &rect)
@@ -73,6 +82,8 @@ public:
     T GetBottom() const { return mRect.top + mRect.height; }
     T GetCenterX() const { return mRect.left + mRect.width / 2; }
     T GetCenterY() const { return mRect.top + mRect.height / 2; }
+    sf::Vector2<T> GetPosition() const { return sf::Vector2<T>(GetX(), GetY()); }
+    sf::Vector2<T> GetCenter() const { return sf::Vector2<T>(GetCenterX(), GetCenterY()); }
 
     // Setters
     void SetX(T value) { mRect.left = value; }
@@ -84,11 +95,6 @@ public:
     void SetTop(T value) { mRect.top = value; }
     void SetRight(T value) { mRect.left = value - mRect.width; }
     void SetBottom(T value) { mRect.top = value - mRect.height; }
-
-    // FIX
-    void SetCenterX(T value) { mRect.left = value - mRect.width / 2; }
-    void SetCenterY(T value) { mRect.top = value - mRect.height / 2; }
-    void SetCenter(T x, T y) { SetCenterX(x), SetCenterY(y); }
 
     static Rect<T> ConvertFromSFMLRect(const sf::Rect<T> &rect)
     {

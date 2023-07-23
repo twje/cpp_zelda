@@ -1,3 +1,5 @@
+#include <iostream>
+
 // Game
 #include "Game.h"
 #include "Settings.h"
@@ -22,7 +24,7 @@ void Game::Run()
         }
 
         mWindow.clear();
-        mLevel.Update();
+        mLevel.Update(mClock.restart());
         mLevelView.Draw(mWindow);
         mWindow.display();
     }

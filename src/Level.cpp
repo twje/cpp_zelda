@@ -9,17 +9,15 @@ Level::Level()
     CreateMap();
 }
 
-void Level::Update()
+void Level::Update(const sf::Time &timestamp)
 {
-    mVisibleSprites.Update();
+    mVisibleSprites.Update(timestamp);
 }
 
 void Level::CreateMap()
 {
     mFloor = importTexture("../graphics/tilemap/ground.png");
-    mInvisibleBlock = createTexture(TILESIZE, TILESIZE, sf::Color(255, 0, 0, 255));
-
-    createTexture(TILESIZE, TILESIZE, sf::Color(100, 0, 0, 255));
+    mInvisibleBlock = createTexture(TILESIZE, TILESIZE, sf::Color(0, 0, 0, 0));
 
     // layouts
     std::map<std::string, std::unique_ptr<CSVData>> layouts;
@@ -52,7 +50,7 @@ void Level::CreateMap()
                 if (layoutPair.first == "boundary")
                 {
                     std::shared_ptr<Tile> tile = std::make_shared<Tile>(sf::Vector2f(x, y), SpriteType::INVISIBLE, *mInvisibleBlock);
-                    mVisibleSprites.Add(tile);
+                    mObstacleSprites.Add(tile);
                 }
 
                 if (layoutPair.first == "grass")
