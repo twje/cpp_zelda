@@ -3,17 +3,17 @@
 #include "Core/Rect.h"
 #include "Core/SpriteGroup.h"
 #include "Core/Debug.h"
+#include "Support.h"
 
 // Game
 #include "Player.h"
 
 Player::Player(sf::Vector2f position, const SpriteGroup &obstacleSprites)
     : Sprite(),
-      mTexture(std::make_unique<sf::Texture>()),
+      mTexture(importTexture("../graphics/test/player.png")),
       mDirection(0, 0),
       mObstacleSprites(obstacleSprites)
 {
-    assert(mTexture->loadFromFile("../graphics/test/player.png"));
     mRect = FloatRect(position, sf::Vector2f(mTexture->getSize()));
     mHitbox = mRect.Inflate(0, -26);
 }

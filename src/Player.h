@@ -18,6 +18,7 @@ private:
 
 public:
     Player(sf::Vector2f position, const SpriteGroup &obstacleSprites);
+    ~Player() {}
 
 public:
     void Update() override;
