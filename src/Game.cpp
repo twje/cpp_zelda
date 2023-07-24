@@ -7,7 +7,7 @@
 Game::Game()
     : mWindow(sf::VideoMode(sf::Vector2u(WIDTH, HEIGHT), BPP), CAPTION),
       mLevel(),
-      mLevelView(mLevel)
+      mLevelView(mWindow, mLevel)
 {
     mWindow.setFramerateLimit(FPS);
 }

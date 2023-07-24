@@ -14,7 +14,7 @@ public:
 
 private:
     sf::RenderWindow mWindow;
-    sf::Clock mClock;
     Level mLevel;
     LevelView mLevelView;
+    sf::Clock mClock;
 };

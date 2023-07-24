@@ -10,44 +10,39 @@
 #include "Core/OstreamOverloads.h"
 #include <iostream>
 
-LevelView::LevelView(const Level &level)
-    : mLevel(level)
+LevelView::LevelView(sf::RenderWindow &window, const Level &level)
+    : mWindow(window),
+      mLevel(level),
+      mView(sf::Vector2f(), sf::Vector2f(window.getSize()))
 {
 }
 
 void LevelView::Draw(sf::RenderWindow &window)
 {
+    const Player &player = mLevel.GetPlayer();
+    mView.setCenter(player.GetSpriteData().GetBoundingBox().GetCenter());
+    mWindow.setView(mView);
+
     mSortedSpriteGroup = mLevel.GetVisibleSpriteGroup();
     mSortedSpriteGroup.YSortSprites();
 
-    const Player &player = mLevel.GetPlayer();
-    mCameraOffset = GetFixedCenterCameraOffset(window, player);
-
     // Draw floor
     sf::Sprite floorSprite(mLevel.GetFloorTexture());
-    floorSprite.setPosition(sf::Vector2f(-mCameraOffset.x, -mCameraOffset.y));
+    floorSprite.setPosition(sf::Vector2f());
     window.draw(floorSprite);
 
     // Draw Tiles
     for (const auto &internalSprite : mSortedSpriteGroup.GetSprites())
     {
         const SpriteDataView &data = internalSprite->GetSpriteData();
-
-        sf::Vector2f offsetPos(data.GetBoundingBox().GetLeft() - mCameraOffset.x,
-                               data.GetBoundingBox().GetTop() - mCameraOffset.y);
-
         sf::Sprite sprite(data.GetTexture());
         sprite.setTextureRect(data.GetTextureRegion());
-        sprite.setPosition(offsetPos);
+        sprite.setPosition(data.GetBoundingBox().GetPosition());
         window.draw(sprite);
     }
-    DebugDraw(window);
-}
 
-sf::Vector2f LevelView::GetFixedCenterCameraOffset(sf::RenderWindow &window, const Sprite &relativeTo)
-{
-    return sf::Vector2f(relativeTo.GetSpriteData().GetBoundingBox().GetCenterX() - window.getSize().x / 2,
-                        relativeTo.GetSpriteData().GetBoundingBox().GetCenterY() - window.getSize().y / 2);
+    DebugDraw(window);
+    window.setView(window.getDefaultView());
 }
 
 void LevelView::DebugDraw(sf::RenderWindow &window)
@@ -61,25 +56,14 @@ void LevelView::DebugDraw(sf::RenderWindow &window)
 void LevelView::DebugDrawPlayer(sf::RenderWindow &window)
 {
     const Player &player = mLevel.GetPlayer();
-
-    // Draw Bounding Box
-    FloatRect rect = player.GetSpriteData().GetBoundingBox();
-    rect.SetPosition(rect.GetLeft() - mCameraOffset.x, rect.GetTop() - mCameraOffset.y);
-    DrawTransparentRectangle(window, rect, sf::Color::White, 2);
-
-    // Player Direction
+    DrawTransparentRectangle(window, player.GetSpriteData().GetBoundingBox(), sf::Color::White, 2);
     DrawDebugString(window, player.GetStatus());
 }
 
 void LevelView::DebugHitbox(sf::RenderWindow &window)
 {
-    for (const auto &internalSprite : mSortedSpriteGroup.GetSprites())
+    for (const auto &sprite : mSortedSpriteGroup.GetSprites())
     {
-        sf::Vector2f offsetPos(internalSprite->GetSpriteData().GetBoundingBox().GetLeft() - mCameraOffset.x,
-                               internalSprite->GetSpriteData().GetBoundingBox().GetTop() - mCameraOffset.y);
-
-        FloatRect hitBox = internalSprite->GetSpriteData().GetHitBox();
-        hitBox.SetPosition(hitBox.GetLeft() - mCameraOffset.x, hitBox.GetTop() - mCameraOffset.y);
-        DrawTransparentRectangle(window, hitBox, sf::Color::Red, 2);
+        DrawTransparentRectangle(window, sprite->GetSpriteData().GetHitBox(), sf::Color::Red, 2);
     }
 }
