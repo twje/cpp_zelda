@@ -27,11 +27,8 @@ public:
     void Update(const sf::Time &timestamp) override;
 
     // Getters
+    const SpriteData &GetSpriteData() const { return mData; }
     const std::string &GetStatus() const { return mStatus; }
-    const sf::Texture &GetTexture() const override { return *mTexture; }
-    sf::IntRect GetTextureRegion() const { return mTextureRegion; }
-    FloatRect GetRect() const override { return mRect; }
-    FloatRect GetHitbox() const override { return mHitbox; };
     sf::Vector2f GetDirection() const { return mDirection; }
 
 private:
@@ -48,10 +45,7 @@ private:
     bool IsMovingDown() { return mDirection.y > 0; }
 
 private:
-    sf::Texture *mTexture;
-    sf::IntRect mTextureRegion;
-    FloatRect mRect;
-    FloatRect mHitbox;
+    SpriteData mData;
     std::string mStatus;
     sf::Vector2f mDirection;
     const SpriteGroup &mObstacleSprites;

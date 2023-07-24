@@ -31,11 +31,13 @@ void LevelView::Draw(sf::RenderWindow &window)
     // Draw Tiles
     for (const auto &internalSprite : mSortedSpriteGroup.GetSprites())
     {
-        sf::Vector2f offsetPos(internalSprite->GetRect().GetLeft() - mCameraOffset.x,
-                               internalSprite->GetRect().GetTop() - mCameraOffset.y);
+        const SpriteData &data = internalSprite->GetSpriteData();
 
-        sf::Sprite sprite(internalSprite->GetTexture());
-        sprite.setTextureRect(internalSprite->GetTextureRegion());
+        sf::Vector2f offsetPos(data.GetBoundingBox().GetLeft() - mCameraOffset.x,
+                               data.GetBoundingBox().GetTop() - mCameraOffset.y);
+
+        sf::Sprite sprite(data.GetTexture());
+        sprite.setTextureRect(data.GetTextureRegion());
         sprite.setPosition(offsetPos);
         window.draw(sprite);
     }
@@ -44,8 +46,8 @@ void LevelView::Draw(sf::RenderWindow &window)
 
 sf::Vector2f LevelView::GetFixedCenterCameraOffset(sf::RenderWindow &window, const Sprite &relativeTo)
 {
-    return sf::Vector2f(relativeTo.GetRect().GetCenterX() - window.getSize().x / 2,
-                        relativeTo.GetRect().GetCenterY() - window.getSize().y / 2);
+    return sf::Vector2f(relativeTo.GetSpriteData().GetBoundingBox().GetCenterX() - window.getSize().x / 2,
+                        relativeTo.GetSpriteData().GetBoundingBox().GetCenterY() - window.getSize().y / 2);
 }
 
 void LevelView::DebugDraw(sf::RenderWindow &window)
@@ -61,7 +63,7 @@ void LevelView::DebugDrawPlayer(sf::RenderWindow &window)
     const Player &player = mLevel.GetPlayer();
 
     // Draw Bounding Box
-    FloatRect rect = player.GetRect();
+    FloatRect rect = player.GetSpriteData().GetBoundingBox();
     rect.SetPosition(rect.GetLeft() - mCameraOffset.x, rect.GetTop() - mCameraOffset.y);
     DrawTransparentRectangle(window, rect, sf::Color::White, 2);
 
@@ -73,15 +75,11 @@ void LevelView::DebugHitbox(sf::RenderWindow &window)
 {
     for (const auto &internalSprite : mSortedSpriteGroup.GetSprites())
     {
-        sf::Vector2f offsetPos(internalSprite->GetRect().GetLeft() - mCameraOffset.x,
-                               internalSprite->GetRect().GetTop() - mCameraOffset.y);
+        sf::Vector2f offsetPos(internalSprite->GetSpriteData().GetBoundingBox().GetLeft() - mCameraOffset.x,
+                               internalSprite->GetSpriteData().GetBoundingBox().GetTop() - mCameraOffset.y);
 
-        FloatRect hitBox = internalSprite->GetHitbox();
+        FloatRect hitBox = internalSprite->GetSpriteData().GetHitBox();
         hitBox.SetPosition(hitBox.GetLeft() - mCameraOffset.x, hitBox.GetTop() - mCameraOffset.y);
         DrawTransparentRectangle(window, hitBox, sf::Color::Red, 2);
     }
-
-    // FloatRect hitBox = player.GetHitbox();
-    // hitBox.SetPosition(hitBox.GetLeft() - mCameraOffset.x, hitBox.GetTop() - mCameraOffset.y);
-    // DrawTransparentRectangle(window, hitBox, sf::Color::Red, 2);
 }

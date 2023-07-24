@@ -46,7 +46,7 @@ public:
         SetPosition(position.x + offset.x, position.y + offset.y);
     }
 
-    std::optional<Rect<T>> FindIntersection(const Rect<T> &rect)
+    std::optional<Rect<T>> FindIntersection(const Rect<T> &rect) const
     {
         std::optional<sf::Rect<T>> intersectOpt = mRect.findIntersection(ConvertToSFMLRect(rect));
         if (intersectOpt.has_value())
@@ -57,7 +57,7 @@ public:
         return std::nullopt;
     }
 
-    Rect Inflate(T x, T y)
+    Rect Inflate(T x, T y) const
     {
         Rect<T> result = *this;
         result.SetLeft(result.GetX() - x / 2);

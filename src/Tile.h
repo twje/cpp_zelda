@@ -10,15 +10,9 @@ public:
     Tile(sf::Vector2f position, SpriteType spriteType, sf::Texture &texture);
 
 public:
-    const sf::Texture &GetTexture() const override { return mTexture; }
-    sf::IntRect GetTextureRegion() const { return mTextureRegion; }
-    FloatRect GetRect() const override { return mRect; };
-    FloatRect GetHitbox() const override { return mHitbox; };
+    const SpriteData &GetSpriteData() const { return mData; }
 
 private:
-    sf::Texture &mTexture;
-    sf::IntRect mTextureRegion;
-    FloatRect mRect;
-    FloatRect mHitbox;
+    SpriteData mData;
     SpriteType mSpriteType;
 };

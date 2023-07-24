@@ -7,18 +7,15 @@
 #include "Settings.h"
 
 Tile::Tile(sf::Vector2f position, SpriteType spriteType, sf::Texture &texture)
-    : Sprite(),
-      mTexture(texture)
+    : Sprite()
 {
-    mTextureRegion = sf::IntRect(sf::Vector2i(position), sf::Vector2i(mTexture.getSize()));
+    mData.SetTexture(&texture);
+    mData.SetTextureRegion(sf::IntRect(sf::Vector2i(), sf::Vector2i(mData.GetTexture().getSize())));
+    mData.SetBoundingBox(FloatRect(position, sf::Vector2f(mData.GetTexture().getSize())));
+
     if (spriteType == SpriteType::OBJECT)
     {
-        mRect = FloatRect(position, sf::Vector2f(mTexture.getSize()));
-        mRect.AnchorPosition(Anchor::TOP_LEFT, sf::Vector2f(position.x, position.y - TILESIZE));
+        mData.GetMutableBoundingBox().AnchorPosition(Anchor::TOP_LEFT, sf::Vector2f(position.x, position.y - TILESIZE));
     }
-    else
-    {
-        mRect = FloatRect(position, sf::Vector2f(mTexture.getSize()));
-    }
-    mHitbox = mRect.Inflate(0, -10);
+    mData.SetHitBox(mData.GetBoundingBox().Inflate(0, -10));
 }

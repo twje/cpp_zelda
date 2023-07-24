@@ -9,7 +9,6 @@
 
 Player::Player(sf::Vector2f position, const SpriteGroup &obstacleSprites)
     : Sprite(),
-      mTexture(importTexture("../graphics/test/player.png").release()),
       mDirection(0, 0),
       mObstacleSprites(obstacleSprites),
       mStatus("down"),
@@ -19,9 +18,10 @@ Player::Player(sf::Vector2f position, const SpriteGroup &obstacleSprites)
       mFrameIndex(0),
       mAnimationSpeed(0.15)
 {
-    mTextureRegion = sf::IntRect(sf::Vector2i(), sf::Vector2i(mTexture->getSize()));
-    mRect = FloatRect(position, sf::Vector2f(mTexture->getSize()));
-    mHitbox = mRect.Inflate(0, -26);
+    mData.SetTexture(importTexture("../graphics/test/player.png").release());
+    mData.SetTextureRegion(sf::IntRect(sf::Vector2i(), sf::Vector2i(mData.GetTexture().getSize())));
+    mData.SetBoundingBox(FloatRect(position, sf::Vector2f(mData.GetTexture().getSize())));
+    mData.SetHitBox(mData.GetBoundingBox().Inflate(0, -26));
     ImportPlayerAssets();
 }
 
@@ -105,9 +105,9 @@ void Player::Animate()
         mFrameIndex = 0;
     }
 
-    mTexture = &animation[mFrameIndex];
-    mRect = FloatRect(sf::Vector2f(0, 0), sf::Vector2f(mTexture->getSize()));
-    mRect.AnchorPosition(Anchor::CENTER, mHitbox.GetCenter());
+    mData.SetTexture(&animation[mFrameIndex]);
+    mData.SetBoundingBox(FloatRect(sf::Vector2f(0, 0), sf::Vector2f(mData.GetTexture().getSize())));
+    mData.GetMutableBoundingBox().AnchorPosition(Anchor::CENTER, mData.GetHitBox().GetCenter());
 }
 
 void Player::Move()
@@ -117,11 +117,11 @@ void Player::Move()
         mDirection = mDirection.normalized();
     }
 
-    mHitbox.MoveHorizontally(mDirection.x * SPEED);
+    mData.GetMutableHitBox().MoveHorizontally(mDirection.x * SPEED);
     Collision(Direction::HORIZONTAL);
-    mHitbox.MoveVertically(mDirection.y * SPEED);
+    mData.GetMutableHitBox().MoveVertically(mDirection.y * SPEED);
     Collision(Direction::VERTICAL);
-    mRect.AnchorPosition(Anchor::CENTER, mHitbox.GetCenter());
+    mData.GetMutableBoundingBox().AnchorPosition(Anchor::CENTER, mData.GetHitBox().GetCenter());
 }
 
 void Player::Collision(Direction direction)
@@ -130,18 +130,18 @@ void Player::Collision(Direction direction)
     {
         for (const auto &sprite : mObstacleSprites.GetSprites())
         {
-            auto result = sprite->GetHitbox().FindIntersection(mHitbox);
+            auto result = sprite->GetSpriteData().GetHitBox().FindIntersection(mData.GetHitBox());
             if (result.has_value())
             {
-                const auto spriteHitbox = sprite->GetHitbox();
+                const auto spriteHitbox = sprite->GetSpriteData().GetHitBox();
                 if (IsMovingRight())
                 {
-                    mHitbox.SetRight(spriteHitbox.GetLeft());
+                    mData.GetMutableHitBox().SetRight(spriteHitbox.GetLeft());
                 }
 
                 if (IsMovingLeft())
                 {
-                    mHitbox.SetLeft(spriteHitbox.GetRight());
+                    mData.GetMutableHitBox().SetLeft(spriteHitbox.GetRight());
                 }
             }
         }
@@ -151,18 +151,18 @@ void Player::Collision(Direction direction)
     {
         for (const auto &sprite : mObstacleSprites.GetSprites())
         {
-            auto result = sprite->GetHitbox().FindIntersection(mHitbox);
+            auto result = sprite->GetSpriteData().GetHitBox().FindIntersection(mData.GetHitBox());
             if (result.has_value())
             {
-                const auto spriteRect = sprite->GetHitbox();
+                const auto spriteRect = sprite->GetSpriteData().GetHitBox();
                 if (IsMovingDown())
                 {
-                    mHitbox.SetBottom(spriteRect.GetTop());
+                    mData.GetMutableHitBox().SetBottom(spriteRect.GetTop());
                 }
 
                 if (IsMovingUp())
                 {
-                    mHitbox.SetTop(spriteRect.GetBottom());
+                    mData.GetMutableHitBox().SetTop(spriteRect.GetBottom());
                 }
             }
         }
