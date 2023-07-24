@@ -10,7 +10,7 @@ public:
     Tile(sf::Vector2f position, SpriteType spriteType, sf::Texture &texture);
 
 public:
-    const SpriteData &GetSpriteData() const { return mData; }
+    const SpriteDataView &GetSpriteData() const { return mData.GetDataView(); }
 
 private:
     SpriteData mData;

@@ -18,10 +18,10 @@ Player::Player(sf::Vector2f position, const SpriteGroup &obstacleSprites)
       mFrameIndex(0),
       mAnimationSpeed(0.15)
 {
-    mData.SetTexture(importTexture("../graphics/test/player.png").release());
-    mData.SetTextureRegion(sf::IntRect(sf::Vector2i(), sf::Vector2i(mData.GetTexture().getSize())));
-    mData.SetBoundingBox(FloatRect(position, sf::Vector2f(mData.GetTexture().getSize())));
-    mData.SetHitBox(mData.GetBoundingBox().Inflate(0, -26));
+    mData.mTexture = importTexture("../graphics/test/player.png").release();
+    mData.mTextureRegion = sf::IntRect(sf::Vector2i(), sf::Vector2i(mData.mTexture->getSize()));
+    mData.mBoundingBox = FloatRect(position, sf::Vector2f(mData.mTexture->getSize()));
+    mData.mHitBox = mData.mBoundingBox.Inflate(0, -26);
     ImportPlayerAssets();
 }
 
@@ -105,9 +105,9 @@ void Player::Animate()
         mFrameIndex = 0;
     }
 
-    mData.SetTexture(&animation[mFrameIndex]);
-    mData.SetBoundingBox(FloatRect(sf::Vector2f(0, 0), sf::Vector2f(mData.GetTexture().getSize())));
-    mData.GetMutableBoundingBox().AnchorPosition(Anchor::CENTER, mData.GetHitBox().GetCenter());
+    mData.mTexture = &animation[mFrameIndex];
+    mData.mBoundingBox = FloatRect(sf::Vector2f(0, 0), sf::Vector2f(mData.mTexture->getSize()));
+    mData.mBoundingBox.AnchorPosition(Anchor::CENTER, mData.mHitBox.GetCenter());
 }
 
 void Player::Move()
@@ -117,11 +117,11 @@ void Player::Move()
         mDirection = mDirection.normalized();
     }
 
-    mData.GetMutableHitBox().MoveHorizontally(mDirection.x * SPEED);
+    mData.mHitBox.MoveHorizontally(mDirection.x * SPEED);
     Collision(Direction::HORIZONTAL);
-    mData.GetMutableHitBox().MoveVertically(mDirection.y * SPEED);
+    mData.mHitBox.MoveVertically(mDirection.y * SPEED);
     Collision(Direction::VERTICAL);
-    mData.GetMutableBoundingBox().AnchorPosition(Anchor::CENTER, mData.GetHitBox().GetCenter());
+    mData.mBoundingBox.AnchorPosition(Anchor::CENTER, mData.mHitBox.GetCenter());
 }
 
 void Player::Collision(Direction direction)
@@ -130,18 +130,18 @@ void Player::Collision(Direction direction)
     {
         for (const auto &sprite : mObstacleSprites.GetSprites())
         {
-            auto result = sprite->GetSpriteData().GetHitBox().FindIntersection(mData.GetHitBox());
+            auto result = sprite->GetSpriteData().GetHitBox().FindIntersection(mData.mHitBox);
             if (result.has_value())
             {
                 const auto spriteHitbox = sprite->GetSpriteData().GetHitBox();
                 if (IsMovingRight())
                 {
-                    mData.GetMutableHitBox().SetRight(spriteHitbox.GetLeft());
+                    mData.mHitBox.SetRight(spriteHitbox.GetLeft());
                 }
 
                 if (IsMovingLeft())
                 {
-                    mData.GetMutableHitBox().SetLeft(spriteHitbox.GetRight());
+                    mData.mHitBox.SetLeft(spriteHitbox.GetRight());
                 }
             }
         }
@@ -151,18 +151,18 @@ void Player::Collision(Direction direction)
     {
         for (const auto &sprite : mObstacleSprites.GetSprites())
         {
-            auto result = sprite->GetSpriteData().GetHitBox().FindIntersection(mData.GetHitBox());
+            auto result = sprite->GetSpriteData().GetHitBox().FindIntersection(mData.mHitBox);
             if (result.has_value())
             {
                 const auto spriteRect = sprite->GetSpriteData().GetHitBox();
                 if (IsMovingDown())
                 {
-                    mData.GetMutableHitBox().SetBottom(spriteRect.GetTop());
+                    mData.mHitBox.SetBottom(spriteRect.GetTop());
                 }
 
                 if (IsMovingUp())
                 {
-                    mData.GetMutableHitBox().SetTop(spriteRect.GetBottom());
+                    mData.mHitBox.SetTop(spriteRect.GetBottom());
                 }
             }
         }

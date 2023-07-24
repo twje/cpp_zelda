@@ -27,7 +27,7 @@ public:
     void Update(const sf::Time &timestamp) override;
 
     // Getters
-    const SpriteData &GetSpriteData() const { return mData; }
+    const SpriteDataView &GetSpriteData() const { return mData.GetDataView(); }
     const std::string &GetStatus() const { return mStatus; }
     sf::Vector2f GetDirection() const { return mDirection; }
 

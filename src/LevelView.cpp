@@ -31,7 +31,7 @@ void LevelView::Draw(sf::RenderWindow &window)
     // Draw Tiles
     for (const auto &internalSprite : mSortedSpriteGroup.GetSprites())
     {
-        const SpriteData &data = internalSprite->GetSpriteData();
+        const SpriteDataView &data = internalSprite->GetSpriteData();
 
         sf::Vector2f offsetPos(data.GetBoundingBox().GetLeft() - mCameraOffset.x,
                                data.GetBoundingBox().GetTop() - mCameraOffset.y);
