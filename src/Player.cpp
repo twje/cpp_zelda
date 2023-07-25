@@ -1,6 +1,5 @@
 // Core
 #include "Core/Sprite.h"
-#include "Core/Rect.h"
 #include "Core/SpriteGroup.h"
 #include "Core/Debug.h"
 #include "Support.h"

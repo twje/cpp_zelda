@@ -2,8 +2,6 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "Rect.h"
-
 void DrawDebugString(sf::RenderWindow &window, const std::string &info, uint16_t x = 10, uint16_t y = 10);
 
 template <typename T>

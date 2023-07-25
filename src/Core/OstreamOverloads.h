@@ -4,8 +4,6 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "Rect.h"
-
 template <typename T>
 std::ostream &operator<<(std::ostream &os, const sf::Vector2<T> &obj)
 {
