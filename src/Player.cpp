@@ -8,20 +8,18 @@
 #include "Player.h"
 
 Player::Player(sf::Vector2f position, const SpriteGroup &obstacleSprites)
-    : Sprite(),
-      mDirection(0, 0),
+    : Sprite(*importTexture("../graphics/test/player.png").release()),
       mObstacleSprites(obstacleSprites),
+      mDirection(0, 0),
       mStatus("down"),
       mIsAttacking(false),
-      mAttackCooldown(400),
-      mAttackTime(0),
       mFrameIndex(0),
-      mAnimationSpeed(0.15)
+      mAnimationSpeed(0.15),
+      mAttackCooldown(400),
+      mAttackTime(0)
 {
-    mData.mTexture = importTexture("../graphics/test/player.png").release();
-    mData.mTextureRegion = sf::IntRect(sf::Vector2i(), sf::Vector2i(mData.mTexture->getSize()));
-    mData.mBoundingBox = FloatRect(position, sf::Vector2f(mData.mTexture->getSize()));
-    mData.mHitBox = mData.mBoundingBox.Inflate(0, -26);
+    setPosition(position);
+    mHitBox = InflateRect(GetBoundingBox(), 0, -26);
     ImportPlayerAssets();
 }
 
@@ -34,13 +32,25 @@ void Player::Update(const sf::Time &timestamp)
     Move();
 }
 
-void Player::Draw(sf::RenderWindow &window)
+void Player::ImportPlayerAssets()
 {
-    const SpriteDataView &data = GetSpriteData();
-    sf::Sprite sprite(data.GetTexture());
-    sprite.setTextureRect(data.GetTextureRegion());
-    sprite.setPosition(data.GetBoundingBox().GetPosition());
-    window.draw(sprite);
+    const std::string characterPath = "../graphics/player/";
+    for (const std::string &animation : {
+             "up",
+             "down",
+             "left",
+             "right",
+             "up_idle",
+             "down_idle",
+             "left_idle",
+             "right_idle",
+             "up_attack",
+             "down_attack",
+             "left_attack",
+             "right_attack"})
+    {
+        mAnimations.emplace(animation, importTexturesFromDirectoryRecursive(characterPath + animation));
+    }
 }
 
 void Player::Input()
@@ -91,114 +101,6 @@ void Player::Input()
     }
 }
 
-void Player::Cooldowns(const sf::Time &timestamp)
-{
-    if (mIsAttacking)
-    {
-        mAttackTime += timestamp.asMilliseconds();
-        if (mAttackTime > mAttackCooldown)
-        {
-            mIsAttacking = false;
-            mAttackTime = 0;
-        }
-    }
-}
-
-void Player::Animate()
-{
-    Textures &animation = *mAnimations[mStatus];
-
-    mFrameIndex += mAnimationSpeed;
-    if (mFrameIndex >= animation.size())
-    {
-        mFrameIndex = 0;
-    }
-
-    mData.mTexture = &animation[mFrameIndex];
-    mData.mBoundingBox = FloatRect(sf::Vector2f(0, 0), sf::Vector2f(mData.mTexture->getSize()));
-    mData.mBoundingBox.AnchorPosition(Anchor::CENTER, mData.mHitBox.GetCenter());
-}
-
-void Player::Move()
-{
-    if (mDirection.lengthSq() != 0)
-    {
-        mDirection = mDirection.normalized();
-    }
-
-    mData.mHitBox.MoveHorizontally(mDirection.x * SPEED);
-    Collision(Direction::HORIZONTAL);
-    mData.mHitBox.MoveVertically(mDirection.y * SPEED);
-    Collision(Direction::VERTICAL);
-    mData.mBoundingBox.AnchorPosition(Anchor::CENTER, mData.mHitBox.GetCenter());
-}
-
-void Player::Collision(Direction direction)
-{
-    if (direction == Direction::HORIZONTAL)
-    {
-        for (const auto &sprite : mObstacleSprites.GetSprites())
-        {
-            auto result = sprite->GetSpriteData().GetHitBox().FindIntersection(mData.mHitBox);
-            if (result.has_value())
-            {
-                const auto spriteHitbox = sprite->GetSpriteData().GetHitBox();
-                if (IsMovingRight())
-                {
-                    mData.mHitBox.SetRight(spriteHitbox.GetLeft());
-                }
-
-                if (IsMovingLeft())
-                {
-                    mData.mHitBox.SetLeft(spriteHitbox.GetRight());
-                }
-            }
-        }
-    }
-
-    if (direction == Direction::VERTICAL)
-    {
-        for (const auto &sprite : mObstacleSprites.GetSprites())
-        {
-            auto result = sprite->GetSpriteData().GetHitBox().FindIntersection(mData.mHitBox);
-            if (result.has_value())
-            {
-                const auto spriteRect = sprite->GetSpriteData().GetHitBox();
-                if (IsMovingDown())
-                {
-                    mData.mHitBox.SetBottom(spriteRect.GetTop());
-                }
-
-                if (IsMovingUp())
-                {
-                    mData.mHitBox.SetTop(spriteRect.GetBottom());
-                }
-            }
-        }
-    }
-}
-
-void Player::ImportPlayerAssets()
-{
-    const std::string characterPath = "../graphics/player/";
-    for (const std::string &animation : {
-             "up",
-             "down",
-             "left",
-             "right",
-             "up_idle",
-             "down_idle",
-             "left_idle",
-             "right_idle",
-             "up_attack",
-             "down_attack",
-             "left_attack",
-             "right_attack"})
-    {
-        mAnimations.emplace(animation, importTexturesFromDirectoryRecursive(characterPath + animation));
-    }
-}
-
 void Player::UpdateStatus()
 {
     if (mDirection.lengthSq() == 0)
@@ -230,6 +132,92 @@ void Player::UpdateStatus()
         if (isSubstring(mStatus, "attack"))
         {
             replaceSubstring(mStatus, "_attack", "");
+        }
+    }
+}
+
+void Player::Cooldowns(const sf::Time &timestamp)
+{
+    if (mIsAttacking)
+    {
+        mAttackTime += timestamp.asMilliseconds();
+        if (mAttackTime > mAttackCooldown)
+        {
+            mIsAttacking = false;
+            mAttackTime = 0;
+        }
+    }
+}
+
+void Player::Animate()
+{
+    Textures &animation = *mAnimations[mStatus];
+
+    mFrameIndex += mAnimationSpeed;
+    if (mFrameIndex >= animation.size())
+    {
+        mFrameIndex = 0;
+    }
+
+    setTexture(animation[mFrameIndex]);
+    setPosition(GetRectCenter(mHitBox) - .5f * GetSize());
+}
+
+void Player::Move()
+{
+    if (mDirection.lengthSq() != 0)
+    {
+        mDirection = mDirection.normalized();
+    }
+
+    mHitBox.left += mDirection.x * SPEED;
+    Collision(Direction::HORIZONTAL);
+    mHitBox.top += mDirection.y * SPEED;
+    Collision(Direction::VERTICAL);
+    setPosition(GetRectCenter(mHitBox) - .5f * GetSize());
+}
+
+void Player::Collision(Direction direction)
+{
+    if (direction == Direction::HORIZONTAL)
+    {
+        for (const auto &sprite : mObstacleSprites.GetSprites())
+        {
+            auto result = sprite->GetHitbox().findIntersection(mHitBox);
+            if (result.has_value())
+            {
+                const auto spriteHitbox = sprite->GetHitbox();
+                if (IsMovingRight())
+                {
+                    mHitBox.left = spriteHitbox.left - mHitBox.width;
+                }
+
+                if (IsMovingLeft())
+                {
+                    mHitBox.left = spriteHitbox.left + spriteHitbox.width;
+                }
+            }
+        }
+    }
+
+    if (direction == Direction::VERTICAL)
+    {
+        for (const auto &sprite : mObstacleSprites.GetSprites())
+        {
+            auto result = sprite->GetHitbox().findIntersection(mHitBox);
+            if (result.has_value())
+            {
+                const auto spriteHitbox = sprite->GetHitbox();
+                if (IsMovingDown())
+                {
+                    mHitBox.top = spriteHitbox.top - mHitBox.height;
+                }
+
+                if (IsMovingUp())
+                {
+                    mHitBox.top = spriteHitbox.top + spriteHitbox.height;
+                }
+            }
         }
     }
 }

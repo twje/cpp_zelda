@@ -1,15 +1,28 @@
 #pragma once
 
-#include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
 
-#include "Core/SpriteData.h"
-
-class Sprite
+class Sprite : public sf::Drawable, public sf::Transformable
 {
 public:
-    virtual ~Sprite() = default;
+    Sprite(const sf::Texture &texture)
+        : mSprite(texture)
+    {
+    }
 
-    virtual const SpriteDataView &GetSpriteData() const = 0;
     virtual void Update(const sf::Time &timestamp){};
-    virtual void Draw(sf::RenderWindow &window){};
+    virtual void draw(sf::RenderTarget &target, const sf::RenderStates &states) const override;
+
+    // Setters
+    void setTexture(const sf::Texture &texture) { mSprite.setTexture(texture); }
+    void setTextureRect(const sf::IntRect &rectangle) { mSprite.setTextureRect(rectangle); }
+
+    // Getters
+    sf::Vector2f GetSize() const { return sf::Vector2f(mSprite.getLocalBounds().width, mSprite.getLocalBounds().height); }
+    sf::Vector2f GetCenter() const { return getPosition() + 0.5f * GetSize(); }
+    sf::FloatRect GetBoundingBox() const { return getTransform().transformRect(mSprite.getLocalBounds()); }
+    virtual sf::FloatRect GetHitbox() const { return GetBoundingBox(); }
+
+private:
+    sf::Sprite mSprite;
 };

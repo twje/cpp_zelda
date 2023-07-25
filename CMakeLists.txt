@@ -37,12 +37,7 @@ add_library(ZeldaLibrary STATIC
     src/Core/SpriteGroup.h
     src/Core/SpriteGroup.cpp
     src/Core/Sprite.h
-    src/Core/Sprite.cpp
-    src/Core/Rect.h
-    src/Core/SpriteData.h
-    src/Core/SpriteData.cpp
-    src/Core/SpriteDataView.h
-    src/Core/SpriteDataView.cpp
+    src/Core/Sprite.cpp    
     src/Support.h
     src/Support.cpp
     src/Game.h

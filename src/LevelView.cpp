@@ -20,7 +20,7 @@ LevelView::LevelView(sf::RenderWindow &window, const Level &level)
 void LevelView::Draw(sf::RenderWindow &window)
 {
     const Player &player = mLevel.GetPlayer();
-    mView.setCenter(player.GetSpriteData().GetBoundingBox().GetCenter());
+    mView.setCenter(player.GetCenter());
     mWindow.setView(mView);
 
     mSortedSpriteGroup = mLevel.GetVisibleSpriteGroup();
@@ -32,16 +32,17 @@ void LevelView::Draw(sf::RenderWindow &window)
     window.draw(floorSprite);
 
     // Draw Tiles
-    for (const auto &internalSprite : mSortedSpriteGroup.GetSprites())
+    for (const auto &sprite : mSortedSpriteGroup.GetSprites())
     {
-        internalSprite->Draw(window);
+        window.draw(*sprite);
     }
 
-    DebugDraw(window);
+    DebugWorldDraw(window);
     window.setView(window.getDefaultView());
+    DebugHUDDraw(window);
 }
 
-void LevelView::DebugDraw(sf::RenderWindow &window)
+void LevelView::DebugWorldDraw(sf::RenderWindow &window)
 {
 #ifdef DEBUG_BUILD
     DebugDrawPlayer(window);
@@ -52,14 +53,21 @@ void LevelView::DebugDraw(sf::RenderWindow &window)
 void LevelView::DebugDrawPlayer(sf::RenderWindow &window)
 {
     const Player &player = mLevel.GetPlayer();
-    DrawTransparentRectangle(window, player.GetSpriteData().GetBoundingBox(), sf::Color::White, 2);
-    DrawDebugString(window, player.GetStatus());
+    DrawTransparentRectangle(window, player.GetBoundingBox(), sf::Color::White, 2);
 }
 
 void LevelView::DebugHitbox(sf::RenderWindow &window)
 {
     for (const auto &sprite : mSortedSpriteGroup.GetSprites())
     {
-        DrawTransparentRectangle(window, sprite->GetSpriteData().GetHitBox(), sf::Color::Red, 2);
+        DrawTransparentRectangle(window, sprite->GetHitbox(), sf::Color::Red, 2);
     }
+}
+
+void LevelView::DebugHUDDraw(sf::RenderWindow &window)
+{
+#ifdef DEBUG_BUILD
+    const Player &player = mLevel.GetPlayer();
+    DrawDebugString(window, player.GetStatus());
+#endif
 }

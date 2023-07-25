@@ -8,12 +8,9 @@ class Tile : public Sprite
 {
 public:
     Tile(sf::Vector2f position, SpriteType spriteType, sf::Texture &texture);
-
-public:
-    void Draw(sf::RenderWindow &window) override;
-    const SpriteDataView &GetSpriteData() const { return mData.GetDataView(); }
+    sf::FloatRect GetHitbox() const override { return mHitBox; }
 
 private:
-    SpriteData mData;
     SpriteType mSpriteType;
+    sf::FloatRect mHitBox;
 };

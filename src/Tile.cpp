@@ -5,26 +5,17 @@
 // Game
 #include "Tile.h"
 #include "Settings.h"
+#include "Support.h"
 
 Tile::Tile(sf::Vector2f position, SpriteType spriteType, sf::Texture &texture)
-    : Sprite()
+    : Sprite(texture),
+      mSpriteType(spriteType)
 {
-    mData.mTexture = &texture;
-    mData.mTextureRegion = sf::IntRect(sf::Vector2i(), sf::Vector2i(mData.mTexture->getSize()));
-    mData.mBoundingBox = FloatRect(position, sf::Vector2f(mData.mTexture->getSize()));
-
+    setPosition(position);
     if (spriteType == SpriteType::OBJECT)
     {
-        mData.mBoundingBox.AnchorPosition(Anchor::TOP_LEFT, sf::Vector2f(position.x, position.y - TILESIZE));
+        // 2x the height of normal tiles
+        move(sf::Vector2f(0, -TILESIZE));
     }
-    mData.mHitBox = mData.mBoundingBox.Inflate(0, -10);
-}
-
-void Tile::Draw(sf::RenderWindow &window)
-{
-    const SpriteDataView &data = GetSpriteData();
-    sf::Sprite sprite(data.GetTexture());
-    sprite.setTextureRect(data.GetTextureRegion());
-    sprite.setPosition(data.GetBoundingBox().GetPosition());
-    window.draw(sprite);
+    mHitBox = InflateRect(GetBoundingBox(), 0, -10);
 }

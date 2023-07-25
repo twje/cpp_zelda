@@ -17,9 +17,10 @@ public:
     void Draw(sf::RenderWindow &window);
 
 private:
-    void DebugDraw(sf::RenderWindow &window);
+    void DebugWorldDraw(sf::RenderWindow &window);
     void DebugDrawPlayer(sf::RenderWindow &window);
     void DebugHitbox(sf::RenderWindow &window);
+    void DebugHUDDraw(sf::RenderWindow &window);
 
 private:
     sf::RenderWindow &mWindow;

@@ -7,6 +7,21 @@
 #include <cstdlib>
 #include <iostream>
 
+sf::FloatRect InflateRect(const sf::FloatRect &source, float x, float y)
+{
+    sf::FloatRect target = source;
+    target.left = source.left - x / 2;
+    target.width = source.width + x;
+    target.top = source.top - y / 2;
+    target.height = source.height + y;
+    return target;
+}
+
+sf::Vector2f GetRectCenter(const sf::FloatRect &rect)
+{
+    return sf::Vector2f(rect.left + rect.width / 2, rect.top + rect.height / 2);
+}
+
 std::unique_ptr<sf::Texture> createTexture(uint16_t width, uint16_t height, sf::Color color)
 {
     sf::Image image;
