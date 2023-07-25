@@ -1,6 +1,5 @@
 add_executable(ZeldaTests 
-    Example.cpp
-    TestRect.cpp
+    Example.cpp    
 )
 
 target_link_libraries(ZeldaTests PUBLIC 
