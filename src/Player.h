@@ -25,6 +25,7 @@ public:
 
 public:
     void Update(const sf::Time &timestamp) override;
+    void Draw(sf::RenderWindow &window) override;
 
     // Getters
     const SpriteDataView &GetSpriteData() const { return mData.GetDataView(); }

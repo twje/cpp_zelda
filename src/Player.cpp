@@ -34,6 +34,15 @@ void Player::Update(const sf::Time &timestamp)
     Move();
 }
 
+void Player::Draw(sf::RenderWindow &window)
+{
+    const SpriteDataView &data = GetSpriteData();
+    sf::Sprite sprite(data.GetTexture());
+    sprite.setTextureRect(data.GetTextureRegion());
+    sprite.setPosition(data.GetBoundingBox().GetPosition());
+    window.draw(sprite);
+}
+
 void Player::Input()
 {
     if (!mIsAttacking)

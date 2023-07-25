@@ -19,3 +19,12 @@ Tile::Tile(sf::Vector2f position, SpriteType spriteType, sf::Texture &texture)
     }
     mData.mHitBox = mData.mBoundingBox.Inflate(0, -10);
 }
+
+void Tile::Draw(sf::RenderWindow &window)
+{
+    const SpriteDataView &data = GetSpriteData();
+    sf::Sprite sprite(data.GetTexture());
+    sprite.setTextureRect(data.GetTextureRegion());
+    sprite.setPosition(data.GetBoundingBox().GetPosition());
+    window.draw(sprite);
+}
