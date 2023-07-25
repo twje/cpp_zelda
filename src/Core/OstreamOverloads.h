@@ -12,9 +12,9 @@ std::ostream &operator<<(std::ostream &os, const sf::Vector2<T> &obj)
 }
 
 template <typename T>
-std::ostream &operator<<(std::ostream &os, const Rect<T> &obj)
+std::ostream &operator<<(std::ostream &os, const sf::Rect<T> &obj)
 {
-    os << "[x: " << obj.GetX() << ", y: " << obj.GetY() << ", W: " << obj.GetWidth() << ", H: " << obj.GetHeight() << "]";
+    os << "[x: " << obj.left << ", y: " << obj.top << ", W: " << obj.width << ", H: " << obj.height << "]";
     return os;
 }
 
