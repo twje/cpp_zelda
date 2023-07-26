@@ -13,7 +13,7 @@ void TextureManager::LoadTexture(const std::string textureID, const std::string 
     {
         throw std::runtime_error("Failed to load texture: " + filePath);
     }
-    mTextures[textureID].emplace_back(std::make_shared<sf::Texture>(std::move(texture)));
+    mTextures[textureID].emplace_back(CreateRef<sf::Texture>(std::move(texture)));
 }
 
 void TextureManager::LoadTextures(const std::string textureID, const std::string &directoryPath)
@@ -58,7 +58,7 @@ void TextureManager::LoadTexturesFromDirectoryRecursive(TextureVector &textureVe
             {
                 throw std::runtime_error("Failed to load texture: " + entryPath.string());
             }
-            textureVectorOut.emplace_back(std::make_shared<sf::Texture>(std::move(texture)));
+            textureVectorOut.emplace_back(CreateRef<sf::Texture>(std::move(texture)));
         }
         else if (fs::is_directory(entryPath))
         {

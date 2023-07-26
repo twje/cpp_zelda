@@ -1,17 +1,9 @@
 #pragma once
 
-#include <unordered_map>
-#include <vector>
-#include <string>
+#include <Core/Base.h>
 #include <filesystem>
 
-#include <SFML/Graphics.hpp>
-
 namespace fs = std::filesystem;
-
-using TexturePtr = std::shared_ptr<const sf::Texture>;
-using TextureVector = std::vector<TexturePtr>;
-using TextureMap = std::unordered_map<std::string, TextureVector>;
 
 class TextureManager
 {
