@@ -3,11 +3,11 @@
 #include "Core/SpriteGroup.h"
 #include "Core/Debug.h"
 #include "Support.h"
-
 #include "Player.h"
+#include "TextureManager.h"
 
-Player::Player(sf::Vector2f position, const SpriteGroup &obstacleSprites)
-    : Sprite(*importTexture("../graphics/test/player.png").release()),
+Player::Player(sf::Vector2f position, const SpriteGroup &obstacleSprites, sf::Texture &texture)
+    : Sprite(texture),
       mObstacleSprites(obstacleSprites),
       mDirection(0, 0),
       mStatus("down"),
@@ -33,7 +33,9 @@ void Player::Update(const sf::Time &timestamp)
 
 void Player::ImportPlayerAssets()
 {
+    auto &textureManager = TextureManager::GetInstance();
     const std::string characterPath = "../graphics/player/";
+
     for (const std::string &animation : {
              "up",
              "down",
@@ -48,7 +50,8 @@ void Player::ImportPlayerAssets()
              "left_attack",
              "right_attack"})
     {
-        mAnimations.emplace(animation, importTexturesFromDirectoryRecursive(characterPath + animation));
+        textureManager.LoadTextures(animation, characterPath + animation);
+        mAnimations.emplace(animation, textureManager.GetTextures(animation));
     }
 }
 
@@ -150,7 +153,7 @@ void Player::Cooldowns(const sf::Time &timestamp)
 
 void Player::Animate()
 {
-    Textures &animation = *mAnimations[mStatus];
+    TextureVector &animation = mAnimations[mStatus];
 
     mFrameIndex += mAnimationSpeed;
     if (mFrameIndex >= animation.size())
@@ -158,7 +161,7 @@ void Player::Animate()
         mFrameIndex = 0;
     }
 
-    setTexture(animation[mFrameIndex]);
+    setTexture(*animation[mFrameIndex]);
     setPosition(GetRectCenter(mHitBox) - .5f * GetSize());
 }
 

@@ -29,10 +29,10 @@ private:
     void CreateMap();
 
 private:
-    std::shared_ptr<Player> mPlayer;
+    Ref<Player> mPlayer;
     SpriteGroup mVisibleSprites;
     SpriteGroup mObstacleSprites;
-    std::map<std::string, std::unique_ptr<Textures>> mGraphics;
-    std::unique_ptr<sf::Texture> mInvisibleBlock;
-    std::unique_ptr<sf::Texture> mFloor;
+    TextureMap mGraphics;
+    TexturePtr mInvisibleBlock;
+    TexturePtr mFloor;
 };

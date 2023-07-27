@@ -20,12 +20,6 @@ std::unique_ptr<sf::Texture> createTexture(uint16_t width, uint16_t height, sf::
 
 std::unique_ptr<CSVData> readCSV(const std::string &csvFilepath);
 
-std::unique_ptr<sf::Texture> importTexture(const std::string &filepath);
-
-std::unique_ptr<Textures> importTexturesFromDirectoryRecursive(const fs::path &directoryPath);
-
-static void importTexturesFromDirectoryRecursiveImpl(std::unique_ptr<Textures> &texturesOut, const fs::path &directoryPath);
-
 template <typename T>
 T &getRandomElement(std::vector<T> &vec)
 {

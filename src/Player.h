@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 
 // Core
+#include "Core/Base.h"
 #include "Core/Sprite.h"
 
 // Game
@@ -20,7 +21,7 @@ private:
     static constexpr int SPEED = 5;
 
 public:
-    Player(sf::Vector2f position, const SpriteGroup &obstacleSprites);
+    Player(sf::Vector2f position, const SpriteGroup &obstacleSprites, sf::Texture &texture);
 
     void Update(const sf::Time &timestamp) override;
     virtual sf::FloatRect GetHitbox() const override { return mHitBox; }
@@ -45,7 +46,7 @@ private:
     std::string mStatus;
     sf::Vector2f mDirection;
     bool mIsAttacking;
-    std::map<std::string, std::unique_ptr<Textures>> mAnimations;
+    TextureMap mAnimations;
     sf::FloatRect mHitBox;
     float mFrameIndex;
     float mAnimationSpeed;

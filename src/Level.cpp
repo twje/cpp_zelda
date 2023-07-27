@@ -3,6 +3,7 @@
 
 // Game
 #include "Level.h"
+#include "TextureManager.h"
 
 Level::Level()
 {
@@ -16,7 +17,18 @@ void Level::Update(const sf::Time &timestamp)
 
 void Level::CreateMap()
 {
-    mFloor = importTexture("../graphics/tilemap/ground.png");
+    auto &textureManager = TextureManager::GetInstance();
+
+    // graphics
+    textureManager.LoadTexture("player", "../graphics/test/player.png");
+    textureManager.LoadTexture("ground", "../graphics/tilemap/ground.png");
+    textureManager.LoadTextures("grass", "../graphics/Grass");
+    textureManager.LoadTextures("objects", "../graphics/objects");
+
+    mGraphics.emplace("grass", textureManager.GetTextures("grass"));
+    mGraphics.emplace("objects", textureManager.GetTextures("objects"));
+
+    mFloor = textureManager.GetTexture("ground");
     mInvisibleBlock = createTexture(TILESIZE, TILESIZE, sf::Color(0, 0, 0, 0));
 
     // layouts
@@ -24,10 +36,6 @@ void Level::CreateMap()
     layouts.emplace("boundary", readCSV("../map/map_FloorBlocks.csv"));
     layouts.emplace("grass", readCSV("../map/map_Grass.csv"));
     layouts.emplace("object", readCSV("../map/map_Objects.csv"));
-
-    // graphics
-    mGraphics.emplace("grass", importTexturesFromDirectoryRecursive("../graphics/Grass"));
-    mGraphics.emplace("objects", importTexturesFromDirectoryRecursive("../graphics/objects"));
 
     for (const auto &layoutPair : layouts)
     {
@@ -55,16 +63,16 @@ void Level::CreateMap()
 
                 if (layoutPair.first == "grass")
                 {
-                    sf::Texture &texture = getRandomElement<sf::Texture>(*mGraphics["grass"]);
-                    std::shared_ptr<Tile> tile = std::make_shared<Tile>(sf::Vector2f(x, y), SpriteType::GRASS, texture);
+                    TexturePtr &texture = getRandomElement(mGraphics["grass"]);
+                    std::shared_ptr<Tile> tile = std::make_shared<Tile>(sf::Vector2f(x, y), SpriteType::GRASS, *texture);
                     mVisibleSprites.Add(tile);
                     mObstacleSprites.Add(tile);
                 }
 
                 if (layoutPair.first == "object")
                 {
-                    sf::Texture &texture = mGraphics["objects"]->at(value);
-                    std::shared_ptr<Tile> tile = std::make_shared<Tile>(sf::Vector2f(x, y), SpriteType::OBJECT, texture);
+                    TexturePtr &texture = mGraphics["objects"].at(value);
+                    std::shared_ptr<Tile> tile = std::make_shared<Tile>(sf::Vector2f(x, y), SpriteType::OBJECT, *texture);
                     mVisibleSprites.Add(tile);
                     mObstacleSprites.Add(tile);
                 }
@@ -72,6 +80,6 @@ void Level::CreateMap()
         }
     }
 
-    mPlayer = std::make_shared<Player>(sf::Vector2f(2000, 1430), mObstacleSprites);
+    mPlayer = std::make_shared<Player>(sf::Vector2f(2000, 1430), mObstacleSprites, *textureManager.GetTexture("player"));
     mVisibleSprites.Add(mPlayer);
 }

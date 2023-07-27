@@ -63,53 +63,6 @@ std::unique_ptr<CSVData> readCSV(const std::string &csvFilepath)
     return std::move(data);
 }
 
-std::unique_ptr<sf::Texture> importTexture(const std::string &filepath)
-{
-    auto texture = std::make_unique<sf::Texture>();
-    if (!texture->loadFromFile(filepath))
-    {
-        throw std::runtime_error("Failed to load texture: " + filepath);
-    }
-    return texture;
-}
-
-std::unique_ptr<Textures> importTexturesFromDirectoryRecursive(const fs::path &directoryPath)
-{
-    if (!fs::exists(directoryPath) || !fs::is_directory(directoryPath))
-    {
-        fs::path relativePath = fs::relative(directoryPath);
-        std::string errorMessage = "Invalid directory path or not a directory: " + relativePath.string();
-        throw std::runtime_error(errorMessage);
-    }
-
-    auto textures = std::make_unique<Textures>();
-    importTexturesFromDirectoryRecursiveImpl(textures, directoryPath);
-
-    return textures;
-}
-
-void importTexturesFromDirectoryRecursiveImpl(std::unique_ptr<Textures> &texturesOut, const fs::path &directoryPath)
-{
-    for (const auto &entry : fs::directory_iterator(directoryPath))
-    {
-        const fs::path &entryPath = entry.path();
-
-        if (fs::is_regular_file(entryPath))
-        {
-            sf::Texture texture;
-            if (!texture.loadFromFile(entryPath.string()))
-            {
-                throw std::runtime_error("Failed to load texture: " + entryPath.string());
-            }
-            texturesOut->push_back(std::move(texture));
-        }
-        else if (fs::is_directory(entryPath))
-        {
-            importTexturesFromDirectoryRecursiveImpl(texturesOut, entryPath);
-        }
-    }
-}
-
 bool isSubstring(const std::string &source, const std::string &substring)
 {
     size_t foundPos = source.find(substring);

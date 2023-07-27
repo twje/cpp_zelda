@@ -18,8 +18,7 @@ public:
     void LoadTextures(const std::string textureID, const std::string &directoryPath);
     const TexturePtr &GetTexture(const std::string &textureID) const;
     const TexturePtr &GetTextureAtIndex(const std::string &textureID, size_t index) const;
-    const TextureVector &GetAllTextures(const std::string &textureID) const;
-    void AddTexture(const std::string &textureID, const TexturePtr &texture);
+    const TextureVector &GetTextures(const std::string &textureID) const;
 
 private:
     void LoadTexturesFromDirectoryRecursive(TextureVector &textureVectorOut, const fs::path &directoryPath);

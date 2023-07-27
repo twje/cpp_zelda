@@ -35,14 +35,9 @@ const TexturePtr &TextureManager::GetTextureAtIndex(const std::string &textureID
     return index < textures.size() ? textures[index] : defaultTexture;
 }
 
-const TextureVector &TextureManager::GetAllTextures(const std::string &textureID) const
+const TextureVector &TextureManager::GetTextures(const std::string &textureID) const
 {
     return mTextures.at(textureID);
-}
-
-void TextureManager::AddTexture(const std::string &textureID, const TexturePtr &texture)
-{
-    mTextures[textureID].push_back(texture);
 }
 
 void TextureManager::LoadTexturesFromDirectoryRecursive(TextureVector &textureVectorOut, const fs::path &directoryPath)

@@ -22,6 +22,6 @@ constexpr Ref<T> CreateRef(Args &&...args)
     return std::make_shared<T>(std::forward<Args>(args)...);
 }
 
-using TexturePtr = Ref<const sf::Texture>;
+using TexturePtr = Ref<sf::Texture>;
 using TextureVector = std::vector<TexturePtr>;
 using TextureMap = std::unordered_map<std::string, TextureVector>;
