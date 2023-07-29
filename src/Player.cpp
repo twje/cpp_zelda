@@ -9,7 +9,7 @@
 #include "Player.h"
 
 Player::Player(sf::Vector2f position, const SpriteGroup &obstacleSprites)
-    : Sprite(*TextureManager::LoadTexture("../graphics/test/player.png").release()),
+    : Sprite(sf::IntRect(sf::Vector2i(), sf::Vector2i(TILESIZE, TILESIZE))),
       mObstacleSprites(obstacleSprites),
       mDirection(0, 0),
       mStatus("down"),

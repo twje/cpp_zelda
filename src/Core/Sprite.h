@@ -10,6 +10,12 @@ public:
     {
     }
 
+    Sprite(const sf::IntRect &textureRect)
+        : mSprite(mDefaultTexture)
+    {
+        mSprite.setTextureRect(textureRect);
+    }
+
     virtual void Update(const sf::Time &timestamp){};
     virtual void draw(sf::RenderTarget &target, const sf::RenderStates &states) const override;
 
@@ -24,5 +30,6 @@ public:
     virtual sf::FloatRect GetHitbox() const { return GetBoundingBox(); }
 
 private:
+    sf::Texture mDefaultTexture;
     sf::Sprite mSprite;
 };

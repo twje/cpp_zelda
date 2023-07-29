@@ -12,6 +12,7 @@
 // Game
 #include "Constants.h"
 #include "Support.h"
+#include "Settings.h"
 
 // Forward Declarations
 class SpriteGroup;
