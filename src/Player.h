@@ -27,7 +27,7 @@ public:
 
     void Update(const sf::Time &timestamp) override;
     virtual sf::FloatRect GetHitbox() const override { return mHitBox; }
-    std::string GetStatus() const { return mAnimation.GetSequencesID(); }
+    std::string GetAnimationGetSequenceID() const { return mAnimation.GetSequenceID(); }
 
 private:
     void ImportPlayerAssets();

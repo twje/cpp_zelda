@@ -44,7 +44,7 @@ void Animation::AddAnimationSequence(const std::string &sequenceID, Scope<Animat
 void Animation::SetAnimationSequence(const std::string &sequenceID)
 {
     assert(mSequences.find(sequenceID) != mSequences.end()); // Invalid Animation sequenceID
-    mSequencesID = sequenceID;
-    mCurrentSequence = mSequences[mSequencesID].get();
+    mSequenceID = sequenceID;
+    mCurrentSequence = mSequences[mSequenceID].get();
     mCurrentSequence->Reset();
 }

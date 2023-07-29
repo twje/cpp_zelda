@@ -18,10 +18,10 @@ public:
     void AddAnimationSequence(const std::string &sequenceID, Scope<AnimationSequence> sequence);
     void SetAnimationSequence(const std::string &sequenceID);
     const sf::Texture &GetSequenceFrame() const { return mCurrentSequence->GetSequenceFrame(); }
-    const std::string &GetSequencesID() const { return mSequencesID; }
+    const std::string &GetSequenceID() const { return mSequenceID; }
 
 private:
-    std::string mSequencesID;
+    std::string mSequenceID;
     SequenceMap mSequences;
     AnimationSequence *mCurrentSequence;
 };

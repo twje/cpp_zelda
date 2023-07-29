@@ -68,6 +68,6 @@ void LevelView::DebugHUDDraw(sf::RenderWindow &window)
 {
 #ifdef DEBUG_BUILD
     const Player &player = mLevel.GetPlayer();
-    DrawDebugString(window, player.GetStatus());
+    DrawDebugString(window, player.GetAnimationGetSequenceID());
 #endif
 }

@@ -148,7 +148,7 @@ void Player::Cooldowns(const sf::Time &timestamp)
 
 void Player::Animate(const sf::Time &timestamp)
 {
-    if (mStatus != mAnimation.GetSequencesID())
+    if (mStatus != mAnimation.GetSequenceID())
     {
         mAnimation.SetAnimationSequence(mStatus);
     }
