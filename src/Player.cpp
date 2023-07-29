@@ -140,8 +140,9 @@ void Player::Animate(const sf::Time &timestamp)
     }
 
     mAnimation.Update(timestamp);
-    setTexture(mAnimation.GetSequenceFrame());
-    // TODO: call setTextureRect
+    SequenceFrame &frame = mAnimation.GetSequenceFrame();
+    setTexture(frame.mTexture);
+    setTextureRect(frame.mTextureRect);
     setPosition(GetRectCenter(mHitBox) - .5f * GetSize());
 }
 
@@ -213,6 +214,7 @@ Scope<TextureAnimationSequence> Player::CreateAnimationSequence(const std::strin
 void Player::SetAnimationSequence(const std::string &sequenceID)
 {
     mAnimation.SetAnimationSequence(mStatus);
-    setTexture(mAnimation.GetSequenceFrame());
-    setTextureRect(sf::IntRect(sf::Vector2i(), sf::Vector2i(TILESIZE, TILESIZE))); // fix
+    SequenceFrame &frame = mAnimation.GetSequenceFrame();
+    setTexture(frame.mTexture);
+    setTextureRect(frame.mTextureRect);
 }

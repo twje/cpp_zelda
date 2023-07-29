@@ -6,18 +6,24 @@
 
 #include "Core/Base.h"
 
+struct SequenceFrame
+{
+    const sf::Texture &mTexture;
+    sf::IntRect mTextureRect;
+};
+
 class AnimationSequence
 {
 public:
     AnimationSequence(float framesPerSecond);
 
     void Update(const sf::Time &timestamp);
-    const sf::Texture &GetSequenceFrame() const { return *GetTextureAtIndex(mFrameIndex); }
+    SequenceFrame GetSequenceFrame() const { return GetTextureAtIndex(mFrameIndex); }
     void Reset() { mFrameIndex = 0; }
 
 protected:
     virtual const size_t GetFrameCount() const = 0;
-    virtual const TexturePtr &GetTextureAtIndex(size_t index) const = 0;
+    virtual SequenceFrame GetTextureAtIndex(size_t index) const = 0;
 
 private:
     float mFrameTime;
@@ -32,7 +38,7 @@ public:
 
 private:
     virtual const size_t GetFrameCount() const { return mTextures.size(); }
-    const TexturePtr &GetTextureAtIndex(size_t index) const override { return mTextures.at(index); }
+    SequenceFrame GetTextureAtIndex(size_t index) const override;
 
 private:
     TextureVector mTextures;

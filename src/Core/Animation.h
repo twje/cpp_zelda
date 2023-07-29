@@ -17,7 +17,7 @@ public:
     void Update(const sf::Time &timestamp);
     void AddAnimationSequence(const std::string &sequenceID, Scope<AnimationSequence> sequence);
     void SetAnimationSequence(const std::string &sequenceID);
-    const sf::Texture &GetSequenceFrame() const { return mCurrentSequence->GetSequenceFrame(); }
+    SequenceFrame GetSequenceFrame() const { return mCurrentSequence->GetSequenceFrame(); }
     const std::string &GetSequenceID() const { return mSequenceID; }
 
 private:
