@@ -1,15 +1,5 @@
 #include "Animation.h"
-
-#pragma once
-
-#include <vector>
-#include <map>
-#include <string>
 #include <cassert>
-
-#include <SFML/Graphics.hpp>
-
-#include "Core/Base.h"
 
 AnimationSequence::AnimationSequence(float framesPerSecond)
     : mFrameTime(1.0f / framesPerSecond),
