@@ -8,12 +8,12 @@
 #include <SFML/Graphics.hpp>
 
 #include "Core/Base.h"
-
+#include <iostream>
 class AnimationSequence
 {
 public:
-    AnimationSequence(float frameTime)
-        : mFrameTime(frameTime),
+    AnimationSequence(float framesPerSecond)
+        : mFrameTime(1.0f / framesPerSecond),
           mElapsedTime(0),
           mFrameIndex(0)
     {
@@ -21,8 +21,9 @@ public:
 
     void Update(const sf::Time &timestamp)
     {
+        std::cout << timestamp.asSeconds() << std::endl;
         mElapsedTime += timestamp.asSeconds();
-        if (mFrameTime > mElapsedTime)
+        if (mElapsedTime > mFrameTime)
         {
             mElapsedTime -= mFrameTime;
             mFrameIndex = (mFrameIndex + 1) % GetFrameCount();
@@ -45,8 +46,8 @@ private:
 class TextureAnimationSequence : public AnimationSequence
 {
 public:
-    TextureAnimationSequence(float frameTime, const TextureVector &textures)
-        : AnimationSequence(frameTime),
+    TextureAnimationSequence(uint8_t framesPerSecond, const TextureVector &textures)
+        : AnimationSequence(framesPerSecond),
           mTextures(textures)
     {
     }

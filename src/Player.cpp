@@ -53,7 +53,7 @@ void Player::ImportPlayerAssets()
         textureManager.LoadTextures(animation, characterPath + animation);
         mAnimations.emplace(animation, textureManager.GetTextures(animation));
 
-        auto sequence = CreateScope<TextureAnimationSequence>(0.11f, textureManager.GetTextures(animation));
+        auto sequence = CreateScope<TextureAnimationSequence>(8, textureManager.GetTextures(animation));
         mAnimation.AddAnimationSequence(animation, std::move(sequence));
     }
     mAnimation.SetAnimationSequence(mStatus);
