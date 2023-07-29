@@ -39,6 +39,10 @@ add_library(ZeldaLibrary STATIC
     src/Core/SpriteGroup.cpp
     src/Core/Sprite.h
     src/Core/Sprite.cpp    
+    src/Core/Animation.h
+    src/Core/Animation.cpp
+    src/Core/AnimationSequence.h
+    src/Core/AnimationSequence.cpp
     src/Support.h
     src/Support.cpp
     src/Game.h
@@ -52,8 +56,6 @@ add_library(ZeldaLibrary STATIC
     src/Player.cpp
     src/Tile.h
     src/Tile.cpp
-    src/Animation.h
-    src/Animation.cpp
     src/TextureManager.h
     src/TextureManager.cpp
 )

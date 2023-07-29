@@ -7,11 +7,11 @@
 // Core
 #include "Core/Base.h"
 #include "Core/Sprite.h"
+#include "Core/Animation.h"
 
 // Game
 #include "Constants.h"
 #include "Support.h"
-#include "Animation.h"
 
 // Forward Declarations
 class SpriteGroup;
