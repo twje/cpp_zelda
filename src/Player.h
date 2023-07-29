@@ -11,6 +11,7 @@
 // Game
 #include "Constants.h"
 #include "Support.h"
+#include "Animation.h"
 
 // Forward Declarations
 class SpriteGroup;
@@ -21,18 +22,18 @@ private:
     static constexpr int SPEED = 5;
 
 public:
-    Player(sf::Vector2f position, const SpriteGroup &obstacleSprites, sf::Texture &texture);
+    Player(sf::Vector2f position, const SpriteGroup &obstacleSprites);
 
     void Update(const sf::Time &timestamp) override;
     virtual sf::FloatRect GetHitbox() const override { return mHitBox; }
-    std::string GetStatus() const { return mStatus; }
+    std::string GetStatus() const { return mAnimation.GetSequencesID(); }
 
 private:
     void ImportPlayerAssets();
     void Input();
     void Cooldowns(const sf::Time &timestamp);
     void UpdateStatus();
-    void Animate();
+    void Animate(const sf::Time &timestamp);
     void Move();
     void Collision(Direction direction);
 
@@ -52,4 +53,5 @@ private:
     float mAnimationSpeed;
     uint16_t mAttackCooldown;
     uint16_t mAttackTime;
+    Animation mAnimation;
 };

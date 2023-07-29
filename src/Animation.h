@@ -84,7 +84,7 @@ public:
 
     void AddAnimationSequence(const std::string &sequenceID, Scope<AnimationSequence> sequence)
     {
-        assert(mSequences.find(sequenceID) != mSequences.end()); // Animation sequenceID already in use
+        assert(mSequences.find(sequenceID) == mSequences.end()); // Animation sequenceID already in use
         mSequences.emplace(sequenceID, std::move(sequence));
     }
 
@@ -96,8 +96,8 @@ public:
         mCurrentSequence->Reset();
     }
 
-    const sf::Texture &GetSequenceFrame() const { mCurrentSequence->GetSequenceFrame(); }
-    const std::string &GetSequencesID() { return mSequencesID; }
+    const sf::Texture &GetSequenceFrame() const { return mCurrentSequence->GetSequenceFrame(); }
+    const std::string &GetSequencesID() const { return mSequencesID; }
 
 private:
     std::string mSequencesID;

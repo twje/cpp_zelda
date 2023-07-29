@@ -6,8 +6,8 @@
 #include "Player.h"
 #include "TextureManager.h"
 
-Player::Player(sf::Vector2f position, const SpriteGroup &obstacleSprites, sf::Texture &texture)
-    : Sprite(texture),
+Player::Player(sf::Vector2f position, const SpriteGroup &obstacleSprites)
+    : Sprite(*TextureManager::LoadTexture("../graphics/test/player.png").release()),
       mObstacleSprites(obstacleSprites),
       mDirection(0, 0),
       mStatus("down"),
@@ -27,7 +27,7 @@ void Player::Update(const sf::Time &timestamp)
     Input();
     Cooldowns(timestamp);
     UpdateStatus();
-    Animate();
+    Animate(timestamp);
     Move();
 }
 
@@ -52,7 +52,11 @@ void Player::ImportPlayerAssets()
     {
         textureManager.LoadTextures(animation, characterPath + animation);
         mAnimations.emplace(animation, textureManager.GetTextures(animation));
+
+        auto sequence = CreateScope<TextureAnimationSequence>(0.11f, textureManager.GetTextures(animation));
+        mAnimation.AddAnimationSequence(animation, std::move(sequence));
     }
+    mAnimation.SetAnimationSequence(mStatus);
 }
 
 void Player::Input()
@@ -151,17 +155,14 @@ void Player::Cooldowns(const sf::Time &timestamp)
     }
 }
 
-void Player::Animate()
+void Player::Animate(const sf::Time &timestamp)
 {
-    TextureVector &animation = mAnimations[mStatus];
-
-    mFrameIndex += mAnimationSpeed;
-    if (mFrameIndex >= animation.size())
+    if (mStatus != mAnimation.GetSequencesID())
     {
-        mFrameIndex = 0;
+        mAnimation.SetAnimationSequence(mStatus);
     }
-
-    setTexture(*animation[mFrameIndex]);
+    mAnimation.Update(timestamp);
+    setTexture(mAnimation.GetSequenceFrame());
     setPosition(GetRectCenter(mHitBox) - .5f * GetSize());
 }
 

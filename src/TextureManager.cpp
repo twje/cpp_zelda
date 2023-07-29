@@ -61,3 +61,13 @@ void TextureManager::LoadTexturesFromDirectoryRecursive(TextureVector &textureVe
         }
     }
 }
+
+Scope<sf::Texture> TextureManager::LoadTexture(const std::string &filePath)
+{
+    sf::Texture texture;
+    if (!texture.loadFromFile(filePath))
+    {
+        throw std::runtime_error("Failed to load texture: " + filePath);
+    }
+    return std::make_unique<sf::Texture>(std::move(texture));
+}

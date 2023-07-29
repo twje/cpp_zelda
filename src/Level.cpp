@@ -20,7 +20,6 @@ void Level::CreateMap()
     auto &textureManager = TextureManager::GetInstance();
 
     // graphics
-    textureManager.LoadTexture("player", "../graphics/test/player.png");
     textureManager.LoadTexture("ground", "../graphics/tilemap/ground.png");
     textureManager.LoadTextures("grass", "../graphics/Grass");
     textureManager.LoadTextures("objects", "../graphics/objects");
@@ -80,6 +79,6 @@ void Level::CreateMap()
         }
     }
 
-    mPlayer = std::make_shared<Player>(sf::Vector2f(2000, 1430), mObstacleSprites, *textureManager.GetTexture("player"));
+    mPlayer = std::make_shared<Player>(sf::Vector2f(2000, 1430), mObstacleSprites);
     mVisibleSprites.Add(mPlayer);
 }

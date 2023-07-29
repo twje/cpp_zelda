@@ -19,6 +19,7 @@ public:
     const TexturePtr &GetTexture(const std::string &textureID) const;
     const TexturePtr &GetTextureAtIndex(const std::string &textureID, size_t index) const;
     const TextureVector &GetTextures(const std::string &textureID) const;
+    static Scope<sf::Texture> LoadTexture(const std::string &filePath);
 
 private:
     void LoadTexturesFromDirectoryRecursive(TextureVector &textureVectorOut, const fs::path &directoryPath);
