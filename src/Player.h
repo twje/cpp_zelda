@@ -31,7 +31,6 @@ public:
     std::string GetAnimationGetSequenceID() const { return mAnimation.GetSequenceID(); }
 
 private:
-    void ImportPlayerAssets();
     void Input();
     void Cooldowns(const sf::Time &timestamp);
     void UpdateStatus();
@@ -45,6 +44,7 @@ private:
     bool IsMovingUp() { return mDirection.y < 0; }
     bool IsMovingDown() { return mDirection.y > 0; }
     Scope<TextureAnimationSequence> CreateAnimationSequence(const std::string &sequenceID);
+    void SetAnimationSequence(const std::string &sequenceID);
 
 private:
     const SpriteGroup &mObstacleSprites;

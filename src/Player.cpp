@@ -18,10 +18,13 @@ Player::Player(sf::Vector2f position, const SpriteGroup &obstacleSprites)
       mAttackCooldown(400),
       mAttackTime(0)
 {
-    setTextureRect(sf::IntRect(sf::Vector2i(), sf::Vector2i(TILESIZE, TILESIZE)));
+    for (const auto &playerData : PLAYER_DATA)
+    {
+        mAnimation.AddAnimationSequence(playerData.first, std::move(CreateAnimationSequence(playerData.first)));
+    }
+    SetAnimationSequence(mStatus);
     setPosition(position);
     mHitBox = InflateRect(GetBoundingBox(), 0, -26);
-    ImportPlayerAssets();
 }
 
 void Player::Update(const sf::Time &timestamp)
@@ -31,14 +34,6 @@ void Player::Update(const sf::Time &timestamp)
     UpdateStatus();
     Animate(timestamp);
     Move(timestamp);
-}
-
-void Player::ImportPlayerAssets()
-{
-    for (const auto &playerData : PLAYER_DATA)
-    {
-        mAnimation.AddAnimationSequence(playerData.first, std::move(CreateAnimationSequence(playerData.first)));
-    }
 }
 
 void Player::Input()
@@ -141,8 +136,9 @@ void Player::Animate(const sf::Time &timestamp)
 {
     if (mStatus != mAnimation.GetSequenceID())
     {
-        mAnimation.SetAnimationSequence(mStatus);
+        SetAnimationSequence(mStatus);
     }
+
     mAnimation.Update(timestamp);
     setTexture(mAnimation.GetSequenceFrame());
     // TODO: call setTextureRect
@@ -212,4 +208,11 @@ Scope<TextureAnimationSequence> Player::CreateAnimationSequence(const std::strin
 {
     auto &textureManager = TextureManager::GetInstance();
     return CreateScope<TextureAnimationSequence>(ANIMATION_FRAMES_PER_SECOND, textureManager.GetTextures(sequenceID));
+}
+
+void Player::SetAnimationSequence(const std::string &sequenceID)
+{
+    mAnimation.SetAnimationSequence(mStatus);
+    setTexture(mAnimation.GetSequenceFrame());
+    setTextureRect(sf::IntRect(sf::Vector2i(), sf::Vector2i(TILESIZE, TILESIZE))); // fix
 }
