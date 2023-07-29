@@ -12,23 +12,9 @@
 class AnimationSequence
 {
 public:
-    AnimationSequence(float framesPerSecond)
-        : mFrameTime(1.0f / framesPerSecond),
-          mElapsedTime(0),
-          mFrameIndex(0)
-    {
-    }
+    AnimationSequence(float framesPerSecond);
 
-    void Update(const sf::Time &timestamp)
-    {
-        mElapsedTime += timestamp.asSeconds();
-        if (mElapsedTime > mFrameTime)
-        {
-            mElapsedTime -= mFrameTime;
-            mFrameIndex = (mFrameIndex + 1) % GetFrameCount();
-        }
-    }
-
+    void Update(const sf::Time &timestamp);
     const sf::Texture &GetSequenceFrame() const { return *GetTextureAtIndex(mFrameIndex); }
     void Reset() { mFrameIndex = 0; }
 
@@ -45,22 +31,11 @@ private:
 class TextureAnimationSequence : public AnimationSequence
 {
 public:
-    TextureAnimationSequence(uint8_t framesPerSecond, const TextureVector &textures)
-        : AnimationSequence(framesPerSecond),
-          mTextures(textures)
-    {
-    }
+    TextureAnimationSequence(uint8_t framesPerSecond, const TextureVector &textures);
 
 private:
-    virtual const size_t GetFrameCount() const
-    {
-        return mTextures.size();
-    }
-
-    const TexturePtr &GetTextureAtIndex(size_t index) const override
-    {
-        return mTextures.at(index);
-    }
+    virtual const size_t GetFrameCount() const { return mTextures.size(); }
+    const TexturePtr &GetTextureAtIndex(size_t index) const override { return mTextures.at(index); }
 
 private:
     TextureVector mTextures;
@@ -71,31 +46,11 @@ class Animation
     using SequenceMap = std::map<std::string, Scope<AnimationSequence>>;
 
 public:
-    Animation()
-        : mCurrentSequence(nullptr)
-    {
-    }
+    Animation();
 
-    void Update(const sf::Time &timestamp)
-    {
-        assert(mCurrentSequence != nullptr); // Animation sequence is not set
-        mCurrentSequence->Update(timestamp);
-    }
-
-    void AddAnimationSequence(const std::string &sequenceID, Scope<AnimationSequence> sequence)
-    {
-        assert(mSequences.find(sequenceID) == mSequences.end()); // Animation sequenceID already in use
-        mSequences.emplace(sequenceID, std::move(sequence));
-    }
-
-    void SetAnimationSequence(const std::string &sequenceID)
-    {
-        assert(mSequences.find(sequenceID) != mSequences.end()); // Invalid Animation sequenceID
-        mSequencesID = sequenceID;
-        mCurrentSequence = mSequences[mSequencesID].get();
-        mCurrentSequence->Reset();
-    }
-
+    void Update(const sf::Time &timestamp);
+    void AddAnimationSequence(const std::string &sequenceID, Scope<AnimationSequence> sequence);
+    void SetAnimationSequence(const std::string &sequenceID);
     const sf::Texture &GetSequenceFrame() const { return mCurrentSequence->GetSequenceFrame(); }
     const std::string &GetSequencesID() const { return mSequencesID; }
 
