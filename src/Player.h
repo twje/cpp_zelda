@@ -20,6 +20,7 @@ class Player : public Sprite
 {
 private:
     static constexpr int SPEED = 5;
+    static constexpr int ANIMATION_FRAMES_PER_SECOND = 8;
 
 public:
     Player(sf::Vector2f position, const SpriteGroup &obstacleSprites);
@@ -37,20 +38,19 @@ private:
     void Move();
     void Collision(Direction direction);
 
+    // Helper Methods
     bool IsMovingRight() { return mDirection.x > 0; }
     bool IsMovingLeft() { return mDirection.x < 0; }
     bool IsMovingUp() { return mDirection.y < 0; }
     bool IsMovingDown() { return mDirection.y > 0; }
+    Scope<TextureAnimationSequence> CreateAnimationSequence(const std::string &sequenceID);
 
 private:
     const SpriteGroup &mObstacleSprites;
     std::string mStatus;
     sf::Vector2f mDirection;
     bool mIsAttacking;
-    TextureMap mAnimations;
     sf::FloatRect mHitBox;
-    float mFrameIndex;
-    float mAnimationSpeed;
     uint16_t mAttackCooldown;
     uint16_t mAttackTime;
     Animation mAnimation;

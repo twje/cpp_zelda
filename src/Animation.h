@@ -8,7 +8,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "Core/Base.h"
-#include <iostream>
+
 class AnimationSequence
 {
 public:
@@ -21,7 +21,6 @@ public:
 
     void Update(const sf::Time &timestamp)
     {
-        std::cout << timestamp.asSeconds() << std::endl;
         mElapsedTime += timestamp.asSeconds();
         if (mElapsedTime > mFrameTime)
         {

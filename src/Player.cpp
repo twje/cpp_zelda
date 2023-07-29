@@ -12,8 +12,6 @@ Player::Player(sf::Vector2f position, const SpriteGroup &obstacleSprites)
       mDirection(0, 0),
       mStatus("down"),
       mIsAttacking(false),
-      mFrameIndex(0),
-      mAnimationSpeed(0.15),
       mAttackCooldown(400),
       mAttackTime(0)
 {
@@ -33,9 +31,6 @@ void Player::Update(const sf::Time &timestamp)
 
 void Player::ImportPlayerAssets()
 {
-    auto &textureManager = TextureManager::GetInstance();
-    const std::string characterPath = "../graphics/player/";
-
     for (const std::string &animation : {
              "up",
              "down",
@@ -50,11 +45,7 @@ void Player::ImportPlayerAssets()
              "left_attack",
              "right_attack"})
     {
-        textureManager.LoadTextures(animation, characterPath + animation);
-        mAnimations.emplace(animation, textureManager.GetTextures(animation));
-
-        auto sequence = CreateScope<TextureAnimationSequence>(8, textureManager.GetTextures(animation));
-        mAnimation.AddAnimationSequence(animation, std::move(sequence));
+        mAnimation.AddAnimationSequence(animation, std::move(CreateAnimationSequence(animation)));
     }
     mAnimation.SetAnimationSequence(mStatus);
 }
@@ -223,4 +214,12 @@ void Player::Collision(Direction direction)
             }
         }
     }
+}
+
+Scope<TextureAnimationSequence> Player::CreateAnimationSequence(const std::string &sequenceID)
+{
+    const std::string characterPath = "../graphics/player/";
+    auto &textureManager = TextureManager::GetInstance();
+    textureManager.LoadTextures(sequenceID, characterPath + sequenceID);
+    return CreateScope<TextureAnimationSequence>(ANIMATION_FRAMES_PER_SECOND, textureManager.GetTextures(sequenceID));
 }
