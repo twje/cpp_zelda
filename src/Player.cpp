@@ -28,7 +28,7 @@ void Player::Update(const sf::Time &timestamp)
     Cooldowns(timestamp);
     UpdateStatus();
     Animate(timestamp);
-    Move();
+    Move(timestamp);
 }
 
 void Player::ImportPlayerAssets()
@@ -159,16 +159,16 @@ void Player::Animate(const sf::Time &timestamp)
     setPosition(GetRectCenter(mHitBox) - .5f * GetSize());
 }
 
-void Player::Move()
+void Player::Move(const sf::Time &timestamp)
 {
     if (mDirection.lengthSq() != 0)
     {
         mDirection = mDirection.normalized();
     }
 
-    mHitBox.left += mDirection.x * SPEED;
+    mHitBox.left += mDirection.x * SPEED * timestamp.asSeconds();
     Collision(Direction::HORIZONTAL);
-    mHitBox.top += mDirection.y * SPEED;
+    mHitBox.top += mDirection.y * SPEED * timestamp.asSeconds();
     Collision(Direction::VERTICAL);
     setPosition(GetRectCenter(mHitBox) - .5f * GetSize());
 }

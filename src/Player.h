@@ -19,7 +19,7 @@ class SpriteGroup;
 class Player : public Sprite
 {
 private:
-    static constexpr int SPEED = 5;
+    static constexpr int SPEED = 300;
     static constexpr int ANIMATION_FRAMES_PER_SECOND = 8;
 
 public:
@@ -35,7 +35,7 @@ private:
     void Cooldowns(const sf::Time &timestamp);
     void UpdateStatus();
     void Animate(const sf::Time &timestamp);
-    void Move();
+    void Move(const sf::Time &timestamp);
     void Collision(Direction direction);
 
     // Helper Methods
