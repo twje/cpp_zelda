@@ -1,9 +1,11 @@
 #include <map>
 #include <random>
 
+// Core
+#include "Core/TextureManager.h"
+
 // Game
 #include "Level.h"
-#include "TextureManager.h"
 
 Level::Level()
 {

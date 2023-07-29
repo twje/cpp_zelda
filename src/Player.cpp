@@ -2,9 +2,11 @@
 #include "Core/Sprite.h"
 #include "Core/SpriteGroup.h"
 #include "Core/Debug.h"
+#include "Core/TextureManager.h"
+
+// Game
 #include "Support.h"
 #include "Player.h"
-#include "TextureManager.h"
 
 Player::Player(sf::Vector2f position, const SpriteGroup &obstacleSprites)
     : Sprite(*TextureManager::LoadTexture("../graphics/test/player.png").release()),
