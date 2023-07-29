@@ -43,6 +43,8 @@ add_library(ZeldaLibrary STATIC
     src/Core/Animation.cpp
     src/Core/AnimationSequence.h
     src/Core/AnimationSequence.cpp
+    src/Core/TextureManager.h
+    src/Core/TextureManager.cpp
     src/Support.h
     src/Support.cpp
     src/Game.h
@@ -56,8 +58,6 @@ add_library(ZeldaLibrary STATIC
     src/Player.cpp
     src/Tile.h
     src/Tile.cpp
-    src/TextureManager.h
-    src/TextureManager.cpp
 )
 
 target_link_libraries(ZeldaLibrary PUBLIC
