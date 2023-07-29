@@ -11,7 +11,7 @@ public:
     }
 
     Sprite(const sf::IntRect &textureRect)
-        : mSprite(mDefaultTexture)
+        : mSprite(mPlaceholderTexture)
     {
         mSprite.setTextureRect(textureRect);
     }
@@ -30,6 +30,6 @@ public:
     virtual sf::FloatRect GetHitbox() const { return GetBoundingBox(); }
 
 private:
-    sf::Texture mDefaultTexture;
+    sf::Texture mPlaceholderTexture;
     sf::Sprite mSprite;
 };
