@@ -7,9 +7,10 @@
 // Game
 #include "Support.h"
 #include "Player.h"
+#include "Settings.h"
 
 Player::Player(sf::Vector2f position, const SpriteGroup &obstacleSprites)
-    : Sprite(sf::IntRect(sf::Vector2i(), sf::Vector2i(TILESIZE, TILESIZE))),
+    : Sprite(),
       mObstacleSprites(obstacleSprites),
       mDirection(0, 0),
       mStatus("down"),
@@ -17,6 +18,7 @@ Player::Player(sf::Vector2f position, const SpriteGroup &obstacleSprites)
       mAttackCooldown(400),
       mAttackTime(0)
 {
+    setTextureRect(sf::IntRect(sf::Vector2i(), sf::Vector2i(TILESIZE, TILESIZE)));
     setPosition(position);
     mHitBox = InflateRect(GetBoundingBox(), 0, -26);
     ImportPlayerAssets();
@@ -33,23 +35,10 @@ void Player::Update(const sf::Time &timestamp)
 
 void Player::ImportPlayerAssets()
 {
-    for (const std::string &animation : {
-             "up",
-             "down",
-             "left",
-             "right",
-             "up_idle",
-             "down_idle",
-             "left_idle",
-             "right_idle",
-             "up_attack",
-             "down_attack",
-             "left_attack",
-             "right_attack"})
+    for (const auto &playerData : PLAYER_DATA)
     {
-        mAnimation.AddAnimationSequence(animation, std::move(CreateAnimationSequence(animation)));
+        mAnimation.AddAnimationSequence(playerData.first, std::move(CreateAnimationSequence(playerData.first)));
     }
-    mAnimation.SetAnimationSequence(mStatus);
 }
 
 void Player::Input()
@@ -156,6 +145,7 @@ void Player::Animate(const sf::Time &timestamp)
     }
     mAnimation.Update(timestamp);
     setTexture(mAnimation.GetSequenceFrame());
+    // TODO: call setTextureRect
     setPosition(GetRectCenter(mHitBox) - .5f * GetSize());
 }
 
@@ -220,8 +210,6 @@ void Player::Collision(Direction direction)
 
 Scope<TextureAnimationSequence> Player::CreateAnimationSequence(const std::string &sequenceID)
 {
-    const std::string characterPath = "../graphics/player/";
     auto &textureManager = TextureManager::GetInstance();
-    textureManager.LoadTextures(sequenceID, characterPath + sequenceID);
     return CreateScope<TextureAnimationSequence>(ANIMATION_FRAMES_PER_SECOND, textureManager.GetTextures(sequenceID));
 }

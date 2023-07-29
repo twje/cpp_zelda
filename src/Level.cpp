@@ -32,6 +32,16 @@ void Level::CreateMap()
     mFloor = textureManager.GetTexture("ground");
     mInvisibleBlock = createTexture(TILESIZE, TILESIZE, sf::Color(0, 0, 0, 0));
 
+    for (const auto &weaponData : WEAPON_DATA)
+    {
+        textureManager.LoadTexture(weaponData.first, weaponData.second.mGraphic);
+    }
+
+    for (const auto &playerData : PLAYER_DATA)
+    {
+        textureManager.LoadTextures(playerData.first, playerData.second.mGraphics);
+    }
+
     // layouts
     std::map<std::string, std::unique_ptr<CSVData>> layouts;
     layouts.emplace("boundary", readCSV("../map/map_FloorBlocks.csv"));

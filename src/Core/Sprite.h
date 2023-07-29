@@ -10,10 +10,9 @@ public:
     {
     }
 
-    Sprite(const sf::IntRect &textureRect)
+    Sprite()
         : mSprite(mPlaceholderTexture)
     {
-        mSprite.setTextureRect(textureRect);
     }
 
     virtual void Update(const sf::Time &timestamp){};

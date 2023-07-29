@@ -45,11 +45,14 @@ add_library(ZeldaLibrary STATIC
     src/Core/AnimationSequence.cpp
     src/Core/TextureManager.h
     src/Core/TextureManager.cpp
+    src/Weapon.h
+    src/Weapon.cpp
     src/Support.h
     src/Support.cpp
     src/Game.h
     src/Game.cpp
     src/Settings.h
+    src/Settings.cpp
     src/Level.h
     src/Level.cpp
     src/LevelView.h
