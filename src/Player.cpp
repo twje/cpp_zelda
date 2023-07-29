@@ -22,7 +22,8 @@ Player::Player(sf::Vector2f position, const SpriteGroup &obstacleSprites)
     {
         mAnimation.AddAnimationSequence(playerData.first, std::move(CreateAnimationSequence(playerData.first)));
     }
-    SetAnimationSequence(mStatus);
+    mAnimation.SetAnimationSequence(mStatus);
+    UpdateSequenceFrame();
     setPosition(position);
     mHitBox = InflateRect(GetBoundingBox(), 0, -26);
 }
@@ -136,13 +137,11 @@ void Player::Animate(const sf::Time &timestamp)
 {
     if (mStatus != mAnimation.GetSequenceID())
     {
-        SetAnimationSequence(mStatus);
+        mAnimation.SetAnimationSequence(mStatus);
     }
 
     mAnimation.Update(timestamp);
-    SequenceFrame &frame = mAnimation.GetSequenceFrame();
-    setTexture(frame.mTexture);
-    setTextureRect(frame.mTextureRect);
+    UpdateSequenceFrame();
     setPosition(GetRectCenter(mHitBox) - .5f * GetSize());
 }
 
@@ -211,9 +210,8 @@ Scope<TextureAnimationSequence> Player::CreateAnimationSequence(const std::strin
     return CreateScope<TextureAnimationSequence>(ANIMATION_FRAMES_PER_SECOND, textureManager.GetTextures(sequenceID));
 }
 
-void Player::SetAnimationSequence(const std::string &sequenceID)
+void Player::UpdateSequenceFrame()
 {
-    mAnimation.SetAnimationSequence(mStatus);
     SequenceFrame &frame = mAnimation.GetSequenceFrame();
     setTexture(frame.mTexture);
     setTextureRect(frame.mTextureRect);

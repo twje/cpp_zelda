@@ -44,7 +44,7 @@ private:
     bool IsMovingUp() { return mDirection.y < 0; }
     bool IsMovingDown() { return mDirection.y > 0; }
     Scope<TextureAnimationSequence> CreateAnimationSequence(const std::string &sequenceID);
-    void SetAnimationSequence(const std::string &sequenceID);
+    void UpdateSequenceFrame();
 
 private:
     const SpriteGroup &mObstacleSprites;
