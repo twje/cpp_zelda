@@ -36,7 +36,7 @@ void Level::CreateMap()
 
     for (const auto &weaponData : WEAPON_DATA)
     {
-        textureManager.LoadTextures(TextureIDGeneratorPresets::ExtractSecondLastDirectoryWithFilename, weaponData.second.mGraphics);
+        textureManager.LoadTextures(TextureIDGeneratorPresets::ExtractLastDirectoryWithFilename, weaponData.second.mGraphics);
     }
 
     for (const auto &playerData : PLAYER_DATA)

@@ -2,18 +2,17 @@
 
 namespace TextureIDGeneratorPresets
 {
-    std::string ExtractSecondLastDirectoryWithFilename(const fs::path &filePath)
+    std::string ExtractLastDirectoryWithFilename(const fs::path &filePath)
     {
         std::string filenameWithoutExtension = filePath.stem().string();
         fs::path parentDir = filePath.parent_path();
 
-        // Get the second last directory name
-        fs::path secondLastDir;
+        fs::path lastDir;
         auto it = parentDir.begin();
         std::advance(it, std::distance(parentDir.begin(), parentDir.end()) - 1);
-        secondLastDir = *it;
+        lastDir = *it;
 
-        return secondLastDir.string() + "_" + filenameWithoutExtension;
+        return lastDir.string() + "_" + filenameWithoutExtension;
     }
 }
 
