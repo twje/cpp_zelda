@@ -1,6 +1,7 @@
 #pragma once
 
 #include <map>
+#include <functional>
 
 #include <SFML/Graphics.hpp>
 
@@ -19,16 +20,20 @@ class SpriteGroup;
 
 class Player : public Sprite
 {
+    using Callback = std::function<void()>;
+
 private:
     static constexpr int SPEED = 300;
     static constexpr int ANIMATION_FRAMES_PER_SECOND = 8;
 
 public:
-    Player(sf::Vector2f position, const SpriteGroup &obstacleSprites);
+    Player(sf::Vector2f position, const SpriteGroup &obstacleSprites, Callback createAttack, Callback destroyAttack);
 
     void Update(const sf::Time &timestamp) override;
     virtual sf::FloatRect GetHitbox() const override { return mHitBox; }
     std::string GetAnimationGetSequenceID() const { return mAnimation.GetSequenceID(); }
+    std::string GetDirection() const;
+    std::string GetWeapon() const { return "lance"; }
 
 private:
     void Input();
@@ -43,8 +48,8 @@ private:
     bool IsMovingLeft() { return mDirection.x < 0; }
     bool IsMovingUp() { return mDirection.y < 0; }
     bool IsMovingDown() { return mDirection.y > 0; }
-    Scope<TextureAnimationSequence> CreateAnimationSequence(const std::string &sequenceID);
     void UpdateSequenceFrame();
+    Scope<TextureAnimationSequence> CreateAnimationSequence(const std::string &sequenceID);
 
 private:
     const SpriteGroup &mObstacleSprites;
@@ -55,4 +60,6 @@ private:
     uint16_t mAttackCooldown;
     uint16_t mAttackTime;
     Animation mAnimation;
+    Callback mCreateAttack;
+    Callback mDestroyAttack;
 };

@@ -16,5 +16,5 @@ Tile::Tile(sf::Vector2f position, SpriteType spriteType, sf::Texture &texture)
         // 2x the height of normal tiles
         move(sf::Vector2f(0, -TILESIZE));
     }
-    mHitBox = InflateRect(GetBoundingBox(), 0, -10);
+    mHitBox = InflateRect(GetGlobalBounds(), 0, -10);
 }

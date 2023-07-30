@@ -53,7 +53,7 @@ void LevelView::DebugWorldDraw(sf::RenderWindow &window)
 void LevelView::DebugDrawPlayer(sf::RenderWindow &window)
 {
     const Player &player = mLevel.GetPlayer();
-    DrawTransparentRectangle(window, player.GetBoundingBox(), sf::Color::White, 2);
+    DrawTransparentRectangle(window, player.GetGlobalBounds(), sf::Color::White, 2);
 }
 
 void LevelView::DebugHitbox(sf::RenderWindow &window)

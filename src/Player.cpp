@@ -9,14 +9,16 @@
 #include "Player.h"
 #include "Settings.h"
 
-Player::Player(sf::Vector2f position, const SpriteGroup &obstacleSprites)
+Player::Player(sf::Vector2f position, const SpriteGroup &obstacleSprites, Callback createAttack, Callback destroyAttack)
     : Sprite(),
       mObstacleSprites(obstacleSprites),
       mDirection(0, 0),
       mStatus("down"),
       mIsAttacking(false),
       mAttackCooldown(400),
-      mAttackTime(0)
+      mAttackTime(0),
+      mCreateAttack(createAttack),
+      mDestroyAttack(destroyAttack)
 {
     for (const auto &playerData : PLAYER_DATA)
     {
@@ -25,7 +27,7 @@ Player::Player(sf::Vector2f position, const SpriteGroup &obstacleSprites)
     mAnimation.SetAnimationSequence(mStatus);
     UpdateSequenceFrame();
     setPosition(position);
-    mHitBox = InflateRect(GetBoundingBox(), 0, -26);
+    mHitBox = InflateRect(GetGlobalBounds(), 0, -26);
 }
 
 void Player::Update(const sf::Time &timestamp)
@@ -35,6 +37,16 @@ void Player::Update(const sf::Time &timestamp)
     UpdateStatus();
     Animate(timestamp);
     Move(timestamp);
+}
+
+std::string Player::GetDirection() const
+{
+    size_t index = mStatus.find('_');
+    if (index == std::string::npos)
+    {
+        return mStatus;
+    }
+    return mStatus.substr(0, index);
 }
 
 void Player::Input()
@@ -76,6 +88,7 @@ void Player::Input()
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
         {
             mIsAttacking = true;
+            mCreateAttack();
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
@@ -129,6 +142,7 @@ void Player::Cooldowns(const sf::Time &timestamp)
         {
             mIsAttacking = false;
             mAttackTime = 0;
+            mDestroyAttack();
         }
     }
 }
@@ -204,15 +218,15 @@ void Player::Collision(Direction direction)
     }
 }
 
-Scope<TextureAnimationSequence> Player::CreateAnimationSequence(const std::string &sequenceID)
-{
-    auto &textureManager = TextureManager::GetInstance();
-    return CreateScope<TextureAnimationSequence>(ANIMATION_FRAMES_PER_SECOND, textureManager.GetTextures(sequenceID));
-}
-
 void Player::UpdateSequenceFrame()
 {
     SequenceFrame &frame = mAnimation.GetSequenceFrame();
     setTexture(frame.mTexture);
     setTextureRect(frame.mTextureRect);
+}
+
+Scope<TextureAnimationSequence> Player::CreateAnimationSequence(const std::string &sequenceID)
+{
+    auto &textureManager = TextureManager::GetInstance();
+    return CreateScope<TextureAnimationSequence>(ANIMATION_FRAMES_PER_SECOND, textureManager.GetTextures(sequenceID));
 }

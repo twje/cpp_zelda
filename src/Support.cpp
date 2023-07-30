@@ -22,6 +22,26 @@ sf::Vector2f GetRectCenter(const sf::FloatRect &rect)
     return sf::Vector2f(rect.left + rect.width / 2, rect.top + rect.height / 2);
 }
 
+sf::Vector2f GetRectMidRight(const sf::FloatRect &rect)
+{
+    return sf::Vector2f(rect.left + rect.width, rect.top + rect.height / 2);
+}
+
+sf::Vector2f GetRectMidLeft(const sf::FloatRect &rect)
+{
+    return sf::Vector2f(rect.left, rect.top + rect.height / 2);
+}
+
+sf::Vector2f GetRectMidTop(const sf::FloatRect &rect)
+{
+    return sf::Vector2f(rect.left + rect.width / 2, rect.top);
+}
+
+sf::Vector2f GetRectMidBottom(const sf::FloatRect &rect)
+{
+    return sf::Vector2f(rect.left + rect.width / 2, rect.top + rect.height);
+}
+
 std::unique_ptr<sf::Texture> createTexture(uint16_t width, uint16_t height, sf::Color color)
 {
     sf::Image image;

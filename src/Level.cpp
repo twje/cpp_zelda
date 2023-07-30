@@ -93,6 +93,21 @@ void Level::CreateMap()
         }
     }
 
-    mPlayer = std::make_shared<Player>(sf::Vector2f(2000, 1430), mObstacleSprites);
+    mPlayer = std::make_shared<Player>(sf::Vector2f(2000, 1430), mObstacleSprites, std::bind(&Level::CreateAttack, this), std::bind(&Level::DestroyAttack, this));
     mVisibleSprites.Add(mPlayer);
+}
+
+void Level::CreateAttack()
+{
+    mCurrentAttack = std::make_shared<Weapon>(*mPlayer);
+    mVisibleSprites.Add(mCurrentAttack);
+}
+
+void Level::DestroyAttack()
+{
+    if (mCurrentAttack)
+    {
+        mCurrentAttack->Kill();
+        mCurrentAttack.reset();
+    }
 }

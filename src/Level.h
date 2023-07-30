@@ -15,6 +15,9 @@
 #include "Tile.h"
 #include "Player.h"
 
+// Game
+#include "Weapon.h"
+
 class Level
 {
 public:
@@ -27,9 +30,12 @@ public:
 
 private:
     void CreateMap();
+    void CreateAttack();
+    void DestroyAttack();
 
 private:
     Ref<Player> mPlayer;
+    Ref<Weapon> mCurrentAttack;
     SpriteGroup mVisibleSprites;
     SpriteGroup mObstacleSprites;
     TextureMap mGraphics;

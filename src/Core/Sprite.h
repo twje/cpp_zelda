@@ -17,16 +17,21 @@ public:
 
     virtual void Update(const sf::Time &timestamp){};
     virtual void draw(sf::RenderTarget &target, const sf::RenderStates &states) const override;
+    void Kill()
+    {
+        // implement
+    }
 
     // Setters
-    void setTexture(const sf::Texture &texture) { mSprite.setTexture(texture); }
+    void setTexture(const sf::Texture &texture, bool setDefaultTextureRect = false);
     void setTextureRect(const sf::IntRect &rectangle) { mSprite.setTextureRect(rectangle); }
 
     // Getters
     sf::Vector2f GetSize() const { return sf::Vector2f(mSprite.getLocalBounds().width, mSprite.getLocalBounds().height); }
     sf::Vector2f GetCenter() const { return getPosition() + 0.5f * GetSize(); }
-    sf::FloatRect GetBoundingBox() const { return getTransform().transformRect(mSprite.getLocalBounds()); }
-    virtual sf::FloatRect GetHitbox() const { return GetBoundingBox(); }
+    sf::FloatRect GetGlobalBounds() const { return getTransform().transformRect(mSprite.getLocalBounds()); }
+    sf::FloatRect GetLocalBounds() const { return mSprite.getLocalBounds(); }
+    virtual sf::FloatRect GetHitbox() const { return GetGlobalBounds(); }
 
 private:
     sf::Texture mPlaceholderTexture;
