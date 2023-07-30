@@ -8,19 +8,49 @@ TextureManager &TextureManager::GetInstance()
 
 void TextureManager::LoadTexture(const std::string textureID, const std::string &filePath)
 {
-    sf::Texture texture;
-    if (!texture.loadFromFile(filePath))
+    TexturePtr texturePtr = std::make_shared<sf::Texture>();
+    if (!texturePtr->loadFromFile(filePath))
     {
         throw std::runtime_error("Failed to load texture: " + filePath);
     }
-    mTextures[textureID].emplace_back(CreateRef<sf::Texture>(std::move(texture)));
+    mTextures[textureID].emplace_back(texturePtr);
 }
 
 void TextureManager::LoadTextures(const std::string textureID, const std::string &directoryPath)
 {
-    TextureVector textures;
-    LoadTexturesFromDirectoryRecursive(textures, directoryPath);
-    mTextures[textureID] = std::move(textures);
+    TextureVector textureVector;
+    for (const auto &entry : fs::directory_iterator(directoryPath))
+    {
+        const fs::path &entryPath = entry.path();
+        if (fs::is_regular_file(entryPath))
+        {
+            TexturePtr texture = CreateScope<sf::Texture>();
+            if (!texture->loadFromFile(entryPath.string()))
+            {
+                throw std::runtime_error("Failed to load texture: " + entryPath.string());
+            }
+            textureVector.emplace_back(texture);
+        }
+    }
+    mTextures.emplace(textureID, std::move(textureVector));
+}
+
+void TextureManager::LoadTextures(TextureIDGenerator generator, const std::string &directoryPath)
+{
+    for (const auto &entry : fs::directory_iterator(directoryPath))
+    {
+        const fs::path &entryPath = entry.path();
+        if (fs::is_regular_file(entryPath))
+        {
+            TexturePtr texture = CreateScope<sf::Texture>();
+            if (!texture->loadFromFile(entryPath.string()))
+            {
+                throw std::runtime_error("Failed to load texture: " + entryPath.string());
+            }
+            TextureVector textureVector{texture};
+            mTextures.emplace(generator(entryPath.string()), std::move(textureVector));
+        }
+    }
 }
 
 const TexturePtr &TextureManager::GetTexture(const std::string &textureID) const
@@ -38,28 +68,6 @@ const TexturePtr &TextureManager::GetTextureAtIndex(const std::string &textureID
 const TextureVector &TextureManager::GetTextures(const std::string &textureID) const
 {
     return mTextures.at(textureID);
-}
-
-void TextureManager::LoadTexturesFromDirectoryRecursive(TextureVector &textureVectorOut, const fs::path &directoryPath)
-{
-    for (const auto &entry : fs::directory_iterator(directoryPath))
-    {
-        const fs::path &entryPath = entry.path();
-
-        if (fs::is_regular_file(entryPath))
-        {
-            sf::Texture texture;
-            if (!texture.loadFromFile(entryPath.string()))
-            {
-                throw std::runtime_error("Failed to load texture: " + entryPath.string());
-            }
-            textureVectorOut.emplace_back(CreateRef<sf::Texture>(std::move(texture)));
-        }
-        else if (fs::is_directory(entryPath))
-        {
-            LoadTexturesFromDirectoryRecursive(textureVectorOut, entryPath);
-        }
-    }
 }
 
 Scope<sf::Texture> TextureManager::LoadTexture(const std::string &filePath)

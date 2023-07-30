@@ -16,7 +16,7 @@ struct WeaponData
 {
     int mCooldown;
     int mDamage;
-    std::string mGraphic;
+    std::string mGraphics;
 };
 
 struct PlayerData
