@@ -34,22 +34,9 @@ void Level::CreateMap()
     mFloor = textureManager.GetTexture("ground");
     mInvisibleBlock = createTexture(TILESIZE, TILESIZE, sf::Color(0, 0, 0, 0));
 
-    auto weaponTextureIDGenerator = [](const fs::path &filePath) -> std::string
-    {
-        std::string filenameWithoutExtension = filePath.stem().string();
-        fs::path parentDir = filePath.parent_path();
-
-        // Get the second last directory name
-        fs::path secondLastDir;
-        auto it = parentDir.begin();
-        std::advance(it, std::distance(parentDir.begin(), parentDir.end()) - 1);
-        secondLastDir = *it;
-
-        return secondLastDir.string() + "_" + filenameWithoutExtension;
-    };
     for (const auto &weaponData : WEAPON_DATA)
     {
-        textureManager.LoadTextures(weaponTextureIDGenerator, weaponData.second.mGraphics);
+        textureManager.LoadTextures(TextureIDGeneratorPresets::ExtractSecondLastDirectoryWithFilename, weaponData.second.mGraphics);
     }
 
     for (const auto &playerData : PLAYER_DATA)

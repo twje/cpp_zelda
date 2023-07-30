@@ -6,6 +6,11 @@
 
 namespace fs = std::filesystem;
 
+namespace TextureIDGeneratorPresets
+{
+    std::string ExtractSecondLastDirectoryWithFilename(const fs::path &filePath);
+}
+
 class TextureManager
 {
     using TextureIDGenerator = std::function<std::string(std::string)>;
