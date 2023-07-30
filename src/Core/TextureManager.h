@@ -31,6 +31,6 @@ public:
     static Scope<sf::Texture> LoadTexture(const std::string &filePath);
 
 private:
-    const TexturePtr defaultTexture = nullptr;
+    // const TexturePtr defaultTexture = nullptr;
     TextureMap mTextures;
 };

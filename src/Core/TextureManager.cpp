@@ -1,9 +1,13 @@
 #include "Core/TextureManager.h"
 
+#include <cassert>
+
 namespace TextureIDGeneratorPresets
 {
     std::string ExtractLastDirectoryWithFilename(const fs::path &filePath)
     {
+        assert(fs::is_regular_file(filePath));
+
         std::string filenameWithoutExtension = filePath.stem().string();
         fs::path parentDir = filePath.parent_path();
 
@@ -24,6 +28,8 @@ TextureManager &TextureManager::GetInstance()
 
 void TextureManager::LoadTexture(const std::string textureID, const std::string &filePath)
 {
+    assert(fs::is_regular_file(filePath));
+
     TexturePtr texturePtr = std::make_shared<sf::Texture>();
     if (!texturePtr->loadFromFile(filePath))
     {
@@ -34,6 +40,8 @@ void TextureManager::LoadTexture(const std::string textureID, const std::string 
 
 void TextureManager::LoadTextures(const std::string textureID, const std::string &directoryPath)
 {
+    assert(fs::is_directory(directoryPath));
+
     TextureVector textureVector;
     for (const auto &entry : fs::directory_iterator(directoryPath))
     {
@@ -53,6 +61,8 @@ void TextureManager::LoadTextures(const std::string textureID, const std::string
 
 void TextureManager::LoadTextures(TextureIDGenerator generator, const std::string &directoryPath)
 {
+    assert(fs::is_directory(directoryPath));
+
     for (const auto &entry : fs::directory_iterator(directoryPath))
     {
         const fs::path &entryPath = entry.path();
@@ -71,14 +81,14 @@ void TextureManager::LoadTextures(TextureIDGenerator generator, const std::strin
 
 const TexturePtr &TextureManager::GetTexture(const std::string &textureID) const
 {
-    const auto &textures = mTextures.at(textureID);
-    return textures.empty() ? defaultTexture : textures[0];
+    return GetTextureAtIndex(textureID, 0);
 }
 
 const TexturePtr &TextureManager::GetTextureAtIndex(const std::string &textureID, size_t index) const
 {
-    const auto &textures = mTextures.at(textureID);
-    return index < textures.size() ? textures[index] : defaultTexture;
+    auto iter = mTextures.find(textureID);
+    assert(iter != mTextures.end() && iter->second.size() > 0);
+    return iter->second.at(index);
 }
 
 const TextureVector &TextureManager::GetTextures(const std::string &textureID) const
@@ -88,6 +98,8 @@ const TextureVector &TextureManager::GetTextures(const std::string &textureID) c
 
 Scope<sf::Texture> TextureManager::LoadTexture(const std::string &filePath)
 {
+    assert(fs::is_regular_file(filePath));
+
     sf::Texture texture;
     if (!texture.loadFromFile(filePath))
     {
