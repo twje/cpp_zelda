@@ -41,10 +41,4 @@ public:
             setPosition(GetRectMidTop(player.GetGlobalBounds()) - GetRectMidBottom(GetLocalBounds()) + sf::Vector2f(-10, 0));
         }
     }
-
-private:
-    void LoadAssets()
-    {
-        TextureManager &textureManager = TextureManager::GetInstance();
-    }
 };

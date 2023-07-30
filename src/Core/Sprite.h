@@ -1,9 +1,17 @@
 #pragma once
 
+#include <vector>
+
 #include <SFML/Graphics.hpp>
+
+// Forward class declaration
+class SpriteGroup;
 
 class Sprite : public sf::Drawable, public sf::Transformable
 {
+    using SpriteGroupVector = std::vector<SpriteGroup *>;
+    friend SpriteGroup;
+
 public:
     Sprite(const sf::Texture &texture)
         : mSprite(texture)
@@ -17,10 +25,7 @@ public:
 
     virtual void Update(const sf::Time &timestamp){};
     virtual void draw(sf::RenderTarget &target, const sf::RenderStates &states) const override;
-    void Kill()
-    {
-        // implement
-    }
+    void Kill();
 
     // Setters
     void setTexture(const sf::Texture &texture, bool setDefaultTextureRect = false);
@@ -36,4 +41,5 @@ public:
 private:
     sf::Texture mPlaceholderTexture;
     sf::Sprite mSprite;
+    SpriteGroupVector mSpriteGroups;
 };

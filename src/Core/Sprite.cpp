@@ -1,4 +1,5 @@
-#include "Sprite.h"
+#include "Core/Sprite.h"
+#include "Core/SpriteGroup.h"
 
 void Sprite::draw(sf::RenderTarget &target, const sf::RenderStates &states) const
 {
@@ -14,5 +15,13 @@ void Sprite::setTexture(const sf::Texture &texture, bool setDefaultTextureRect)
     {
         sf::IntRect textureRect(sf::Vector2i(), sf::Vector2i(texture.getSize()));
         mSprite.setTextureRect(textureRect);
+    }
+}
+
+void Sprite::Kill()
+{
+    for (auto spriteGroup : mSpriteGroups)
+    {
+        spriteGroup->RemoveSprite(*this);
     }
 }
