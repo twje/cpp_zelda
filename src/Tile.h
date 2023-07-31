@@ -2,7 +2,6 @@
 
 // Game
 #include "Core/Sprite.h"
-#include "Constants.h"
 
 class Tile : public Sprite
 {

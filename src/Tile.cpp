@@ -3,8 +3,8 @@
 #include "Core/RectUtils.h"
 
 // Game
-#include "Tile.h"
 #include "Settings.h"
+#include "Tile.h"
 #include "Support.h"
 
 Tile::Tile(sf::Vector2f position, SpriteType spriteType, sf::Texture &texture)

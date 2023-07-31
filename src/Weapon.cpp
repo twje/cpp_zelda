@@ -8,9 +8,6 @@
 #include "Core/RectUtils.h"
 #include "Core/TextureManager.h"
 
-// Game
-#include "Constants.h"
-
 Weapon::Weapon(const Player &player)
     : Sprite()
 {

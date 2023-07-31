@@ -31,8 +31,7 @@ set(ZeldaIncludes
 
 add_library(ZeldaLibrary STATIC
     src/Core/Base.h
-    src/Core/OstreamOverloads.h
-    src/Constants.h
+    src/Core/OstreamOverloads.h    
     src/Core/Debug.h
     src/Core/Debug.cpp    
     src/Core/SpriteGroup.h

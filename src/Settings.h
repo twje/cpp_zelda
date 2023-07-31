@@ -12,6 +12,19 @@ constexpr uint16_t BPP = 32;
 constexpr uint16_t FPS = 60;
 constexpr uint16_t TILESIZE = 64;
 
+enum class Direction
+{
+    HORIZONTAL,
+    VERTICAL
+};
+
+enum class SpriteType
+{
+    GRASS,
+    OBJECT,
+    INVISIBLE
+};
+
 struct WeaponData
 {
     int mCooldown;
