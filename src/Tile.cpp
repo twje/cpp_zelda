@@ -1,5 +1,6 @@
 // Core
 #include "Core/Sprite.h"
+#include "Core/RectUtils.h"
 
 // Game
 #include "Tile.h"

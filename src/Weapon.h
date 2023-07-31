@@ -4,7 +4,11 @@
 
 #include <SFML/Graphics.hpp>
 
+// Core
+#include "Core/RectUtils.h"
 #include "Core/TextureManager.h"
+
+// Game
 #include "Core/Sprite.h"
 #include "Constants.h"
 #include "Player.h"

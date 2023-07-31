@@ -3,6 +3,7 @@
 #include "Core/SpriteGroup.h"
 #include "Core/Debug.h"
 #include "Core/TextureManager.h"
+#include "Core/RectUtils.h"
 
 // Game
 #include "Support.h"
