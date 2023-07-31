@@ -18,7 +18,8 @@ Player::Player(sf::Vector2f position, const SpriteGroup &obstacleSprites, Callba
       mIsAttacking(400, false),
       mCanSwitchWeapons(200, true),
       mCreateAttack(createAttack),
-      mDestroyAttack(destroyAttack)
+      mDestroyAttack(destroyAttack),
+      mWeaponIndex(0)
 {
     for (const auto &playerData : PLAYER_DATA)
     {
@@ -101,6 +102,7 @@ void Player::Input()
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && mCanSwitchWeapons.Value())
         {
             mCanSwitchWeapons.TryToggleValue();
+            mWeaponIndex = (mWeaponIndex + 1) % WEAPON_DATA.size();
         }
     }
 }
@@ -218,6 +220,14 @@ void Player::Collision(Direction direction)
             }
         }
     }
+}
+
+std::string Player::GetWeaponByIndex(size_t index) const
+{
+    assert(index < WEAPON_DATA.size());
+    auto it = WEAPON_DATA.begin();
+    std::advance(it, index);
+    return it->first;
 }
 
 void Player::UpdateSequenceFrame()

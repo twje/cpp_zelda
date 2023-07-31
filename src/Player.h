@@ -34,7 +34,7 @@ public:
     virtual sf::FloatRect GetHitbox() const override { return mHitBox; }
     std::string GetAnimationGetSequenceID() const { return mAnimation.GetSequenceID(); }
     std::string GetDirection() const;
-    std::string GetWeapon() const { return "lance"; }
+    std::string GetWeapon() const { return GetWeaponByIndex(mWeaponIndex); }
 
 private:
     void Input();
@@ -49,6 +49,7 @@ private:
     bool IsMovingLeft() { return mDirection.x < 0; }
     bool IsMovingUp() { return mDirection.y < 0; }
     bool IsMovingDown() { return mDirection.y > 0; }
+    std::string GetWeaponByIndex(size_t index) const;
     void UpdateSequenceFrame();
     Scope<TextureAnimationSequence> CreateAnimationSequence(const std::string &sequenceID);
 
@@ -62,4 +63,5 @@ private:
     Animation mAnimation;
     Callback mCreateAttack;
     Callback mDestroyAttack;
+    size_t mWeaponIndex;
 };

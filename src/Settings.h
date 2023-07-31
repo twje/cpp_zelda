@@ -2,7 +2,7 @@
 #pragma once
 
 #include <cstdint>
-#include <map>
+#include <unordered_map>
 #include <string>
 
 constexpr char *CAPTION = "Zelda";
@@ -24,5 +24,5 @@ struct PlayerData
     std::string mGraphics;
 };
 
-extern const std::map<std::string, WeaponData> WEAPON_DATA;
-extern const std::map<std::string, PlayerData> PLAYER_DATA;
+extern const std::unordered_map<std::string, WeaponData> WEAPON_DATA;
+extern const std::unordered_map<std::string, PlayerData> PLAYER_DATA;

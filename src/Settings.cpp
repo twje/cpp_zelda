@@ -1,13 +1,13 @@
 #include "Settings.h"
 
-const std::map<std::string, WeaponData> WEAPON_DATA = {
+const std::unordered_map<std::string, WeaponData> WEAPON_DATA = {
     {"sword", {100, 15, "../graphics/weapons/sword"}},
     {"lance", {400, 30, "../graphics/weapons/lance"}},
     {"axe", {300, 20, "../graphics/weapons/axe"}},
     {"rapier", {50, 8, "../graphics/weapons/rapier"}},
     {"sai", {80, 10, "../graphics/weapons/sai"}}};
 
-const std::map<std::string, PlayerData> PLAYER_DATA = {
+const std::unordered_map<std::string, PlayerData> PLAYER_DATA = {
     {"up", {"../graphics/player/up"}},
     {"down", {"../graphics/player/down"}},
     {"left", {"../graphics/player/left"}},
