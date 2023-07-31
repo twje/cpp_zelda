@@ -222,8 +222,8 @@ void Player::Collision(Direction direction)
 void Player::UpdateSequenceFrame()
 {
     SequenceFrame &frame = mAnimation.GetSequenceFrame();
-    setTexture(frame.mTexture);
-    setTextureRect(frame.mTextureRect);
+    SetTexture(frame.mTexture);
+    SetTextureRect(frame.mTextureRect);
 }
 
 Scope<TextureAnimationSequence> Player::CreateAnimationSequence(const std::string &sequenceID)

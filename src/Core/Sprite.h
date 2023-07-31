@@ -12,8 +12,6 @@ class Sprite : public sf::Sprite
     using SpriteGroupVector = std::vector<SpriteGroup *>;
     friend SpriteGroup;
 
-    static const sf::Texture PLACEHOLDER_TEXTURE;
-
 public:
     Sprite(const sf::Texture &texture)
         : sf::Sprite(texture)
@@ -21,12 +19,16 @@ public:
     }
 
     Sprite()
-        : sf::Sprite(Sprite::PLACEHOLDER_TEXTURE)
+        : sf::Sprite(GetPlaceholderTexture())
     {
     }
 
     virtual void Update(const sf::Time &timestamp){};
     void Kill();
+
+    // Setters
+    void SetTexture(const sf::Texture &texture, bool resetRect = false) { setTexture(texture, resetRect); }
+    void SetTextureRect(const sf::IntRect &rectangle) { setTextureRect(rectangle); }
 
     // Getters
     sf::Vector2f GetSize() const { return getGlobalBounds().getSize(); }
@@ -34,6 +36,9 @@ public:
     sf::FloatRect GetGlobalBounds() const { return getGlobalBounds(); }
     sf::FloatRect GetLocalBounds() const { return getLocalBounds(); }
     virtual sf::FloatRect GetHitbox() const { return getGlobalBounds(); }
+
+private:
+    static const sf::Texture &GetPlaceholderTexture();
 
 private:
     SpriteGroupVector mSpriteGroups;
