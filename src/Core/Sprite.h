@@ -7,39 +7,34 @@
 // Forward class declaration
 class SpriteGroup;
 
-class Sprite : public sf::Drawable, public sf::Transformable
+class Sprite : public sf::Sprite
 {
     using SpriteGroupVector = std::vector<SpriteGroup *>;
     friend SpriteGroup;
 
+    static const sf::Texture PLACEHOLDER_TEXTURE;
+
 public:
     Sprite(const sf::Texture &texture)
-        : mSprite(texture)
+        : sf::Sprite(texture)
     {
     }
 
     Sprite()
-        : mSprite(mPlaceholderTexture)
+        : sf::Sprite(Sprite::PLACEHOLDER_TEXTURE)
     {
     }
 
     virtual void Update(const sf::Time &timestamp){};
-    virtual void draw(sf::RenderTarget &target, const sf::RenderStates &states) const override;
     void Kill();
 
-    // Setters
-    void setTexture(const sf::Texture &texture, bool setDefaultTextureRect = false);
-    void setTextureRect(const sf::IntRect &rectangle) { mSprite.setTextureRect(rectangle); }
-
     // Getters
-    sf::Vector2f GetSize() const { return sf::Vector2f(mSprite.getLocalBounds().width, mSprite.getLocalBounds().height); }
+    sf::Vector2f GetSize() const { return getGlobalBounds().getSize(); }
     sf::Vector2f GetCenter() const { return getPosition() + 0.5f * GetSize(); }
-    sf::FloatRect GetGlobalBounds() const { return getTransform().transformRect(mSprite.getLocalBounds()); }
-    sf::FloatRect GetLocalBounds() const { return mSprite.getLocalBounds(); }
-    virtual sf::FloatRect GetHitbox() const { return GetGlobalBounds(); }
+    sf::FloatRect GetGlobalBounds() const { return getGlobalBounds(); }
+    sf::FloatRect GetLocalBounds() const { return getLocalBounds(); }
+    virtual sf::FloatRect GetHitbox() const { return getGlobalBounds(); }
 
 private:
-    sf::Texture mPlaceholderTexture;
-    sf::Sprite mSprite;
     SpriteGroupVector mSpriteGroups;
 };
