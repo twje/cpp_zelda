@@ -13,15 +13,8 @@ class Sprite : public sf::Sprite
     friend SpriteGroup;
 
 public:
-    Sprite(const sf::Texture &texture)
-        : sf::Sprite(texture)
-    {
-    }
-
-    Sprite()
-        : sf::Sprite(GetPlaceholderTexture())
-    {
-    }
+    Sprite(const sf::Texture &texture);
+    Sprite();
 
     virtual void Update(const sf::Time &timestamp){};
     void Kill();
