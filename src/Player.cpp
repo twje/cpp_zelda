@@ -14,9 +14,8 @@ Player::Player(sf::Vector2f position, const SpriteGroup &obstacleSprites, Callba
       mObstacleSprites(obstacleSprites),
       mDirection(0, 0),
       mStatus("down"),
-      mIsAttacking(false),
-      mAttackCooldown(400),
-      mAttackTime(0),
+      mIsAttacking(400, false),
+      mCanSwitchWeapons(200, true),
       mCreateAttack(createAttack),
       mDestroyAttack(destroyAttack)
 {
@@ -51,7 +50,7 @@ std::string Player::GetDirection() const
 
 void Player::Input()
 {
-    if (!mIsAttacking)
+    if (!mIsAttacking.Value())
     {
         // Movement
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
@@ -87,13 +86,20 @@ void Player::Input()
         // Attack input
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
         {
-            mIsAttacking = true;
+            mIsAttacking.TryToggleValue();
             mCreateAttack();
         }
 
+        // Magic input
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
         {
-            mIsAttacking = true;
+            mIsAttacking.TryToggleValue();
+        }
+
+        // Switch weapons
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && mCanSwitchWeapons.Value())
+        {
+            mCanSwitchWeapons.TryToggleValue();
         }
     }
 }
@@ -108,7 +114,7 @@ void Player::UpdateStatus()
         }
     }
 
-    if (mIsAttacking)
+    if (mIsAttacking.Value())
     {
         mDirection.x = 0;
         mDirection.y = 0;
@@ -135,16 +141,11 @@ void Player::UpdateStatus()
 
 void Player::Cooldowns(const sf::Time &timestamp)
 {
-    if (mIsAttacking)
+    if (mIsAttacking.Update(timestamp))
     {
-        mAttackTime += timestamp.asMilliseconds();
-        if (mAttackTime > mAttackCooldown)
-        {
-            mIsAttacking = false;
-            mAttackTime = 0;
-            mDestroyAttack();
-        }
+        mDestroyAttack();
     }
+    mCanSwitchWeapons.Update(timestamp);
 }
 
 void Player::Animate(const sf::Time &timestamp)

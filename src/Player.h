@@ -9,6 +9,7 @@
 #include "Core/Base.h"
 #include "Core/Sprite.h"
 #include "Core/Animation.h"
+#include "Core/Toggles.h"
 
 // Game
 #include "Constants.h"
@@ -55,10 +56,9 @@ private:
     const SpriteGroup &mObstacleSprites;
     std::string mStatus;
     sf::Vector2f mDirection;
-    bool mIsAttacking;
     sf::FloatRect mHitBox;
-    uint16_t mAttackCooldown;
-    uint16_t mAttackTime;
+    CooldownToggle mIsAttacking;
+    CooldownToggle mCanSwitchWeapons;
     Animation mAnimation;
     Callback mCreateAttack;
     Callback mDestroyAttack;
