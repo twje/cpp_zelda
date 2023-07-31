@@ -13,7 +13,6 @@ public:
 
 private:
     bool TurnOffAfterCooldown(const sf::Time &timestamp);
-    void TurnOff();
     void TurnOn() { mState = !mDefaultState; }
     bool IsOn() { return mState == !mDefaultState; }
 

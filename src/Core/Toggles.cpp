@@ -30,14 +30,9 @@ bool CooldownToggle::TurnOffAfterCooldown(const sf::Time &timestamp)
     mElapsedTime += timestamp.asMilliseconds();
     if (mElapsedTime > mCooldownTime)
     {
-        TurnOff();
+        mState = mDefaultState;
+        mElapsedTime = 0;
         return true;
     }
     return false;
-}
-
-void CooldownToggle::TurnOff()
-{
-    mState = mDefaultState;
-    mElapsedTime = 0;
 }
