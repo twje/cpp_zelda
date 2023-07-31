@@ -12,20 +12,20 @@ bool CooldownToggle::Update(const sf::Time &timestamp)
 {
     if (IsOn())
     {
-        return TurnOffAfterCooldown(timestamp);
+        return TurnOffAfterCooldownTime(timestamp);
     }
     return false;
 }
 
-void CooldownToggle::TryToggleValue()
+void CooldownToggle::ToggleForCooldownTime(bool forceToggle)
 {
-    if (!IsOn())
+    if (forceToggle || !IsOn())
     {
         TurnOn();
     }
 }
 
-bool CooldownToggle::TurnOffAfterCooldown(const sf::Time &timestamp)
+bool CooldownToggle::TurnOffAfterCooldownTime(const sf::Time &timestamp)
 {
     mElapsedTime += timestamp.asMilliseconds();
     if (mElapsedTime > mCooldownTime)

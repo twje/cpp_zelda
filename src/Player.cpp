@@ -88,20 +88,20 @@ void Player::Input()
         // Attack input
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
         {
-            mIsAttacking.TryToggleValue();
+            mIsAttacking.ToggleForCooldownTime();
             mCreateAttack();
         }
 
         // Magic input
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
         {
-            mIsAttacking.TryToggleValue();
+            mIsAttacking.ToggleForCooldownTime();
         }
 
         // Switch weapons
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && mCanSwitchWeapons.Value())
         {
-            mCanSwitchWeapons.TryToggleValue();
+            mCanSwitchWeapons.ToggleForCooldownTime();
             mWeaponIndex = (mWeaponIndex + 1) % WEAPON_DATA.size();
         }
     }

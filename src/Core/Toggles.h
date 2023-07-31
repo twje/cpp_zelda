@@ -9,10 +9,10 @@ public:
 
     bool Update(const sf::Time &timestamp);
     bool Value() { return mState; }
-    void TryToggleValue();
+    void ToggleForCooldownTime(bool forceToggle = false);
 
 private:
-    bool TurnOffAfterCooldown(const sf::Time &timestamp);
+    bool TurnOffAfterCooldownTime(const sf::Time &timestamp);
     void TurnOn() { mState = !mDefaultState; }
     bool IsOn() { return mState == !mDefaultState; }
 
