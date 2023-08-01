@@ -17,23 +17,23 @@ Weapon::Weapon(const Player &player)
     std::ostringstream oss;
     oss << player.GetWeapon() << "_" << direction;
     std::string textureID = oss.str();
-    setTexture(*TextureManager::GetInstance().GetTexture(textureID), true);
+    SetTexture(*TextureManager::GetInstance().GetTexture(textureID), true);
 
     // Set position
     if (direction == "right")
     {
-        setPosition(GetRectMidRight(player.GetGlobalBounds()) - GetRectMidLeft(GetLocalBounds()) + sf::Vector2f(0, 16));
+        SetPosition(GetRectMidRight(player.GetGlobalBounds()) - GetRectMidLeft(GetLocalBounds()) + sf::Vector2f(0, 16));
     }
     else if (direction == "left")
     {
-        setPosition(GetRectMidLeft(player.GetGlobalBounds()) - GetRectMidRight(GetLocalBounds()) + sf::Vector2f(0, 16));
+        SetPosition(GetRectMidLeft(player.GetGlobalBounds()) - GetRectMidRight(GetLocalBounds()) + sf::Vector2f(0, 16));
     }
     else if (direction == "down")
     {
-        setPosition(GetRectMidBottom(player.GetGlobalBounds()) - GetRectMidTop(GetLocalBounds()) + sf::Vector2f(-10, 0));
+        SetPosition(GetRectMidBottom(player.GetGlobalBounds()) - GetRectMidTop(GetLocalBounds()) + sf::Vector2f(-10, 0));
     }
     else
     {
-        setPosition(GetRectMidTop(player.GetGlobalBounds()) - GetRectMidBottom(GetLocalBounds()) + sf::Vector2f(-10, 0));
+        SetPosition(GetRectMidTop(player.GetGlobalBounds()) - GetRectMidBottom(GetLocalBounds()) + sf::Vector2f(-10, 0));
     }
 }

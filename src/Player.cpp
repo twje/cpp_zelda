@@ -27,7 +27,7 @@ Player::Player(sf::Vector2f position, const SpriteGroup &obstacleSprites, Callba
     }
     mAnimation.SetAnimationSequence(mStatus);
     UpdateSequenceFrame();
-    setPosition(position);
+    SetPosition(position);
     mHitBox = InflateRect(GetGlobalBounds(), 0, -26);
 }
 
@@ -160,7 +160,7 @@ void Player::Animate(const sf::Time &timestamp)
 
     mAnimation.Update(timestamp);
     UpdateSequenceFrame();
-    setPosition(GetRectCenter(mHitBox) - .5f * GetSize());
+    SetPosition(GetRectCenter(mHitBox) - .5f * GetSize());
 }
 
 void Player::Move(const sf::Time &timestamp)
@@ -174,7 +174,7 @@ void Player::Move(const sf::Time &timestamp)
     Collision(Direction::HORIZONTAL);
     mHitBox.top += mDirection.y * SPEED * timestamp.asSeconds();
     Collision(Direction::VERTICAL);
-    setPosition(GetRectCenter(mHitBox) - .5f * GetSize());
+    SetPosition(GetRectCenter(mHitBox) - .5f * GetSize());
 }
 
 void Player::Collision(Direction direction)
