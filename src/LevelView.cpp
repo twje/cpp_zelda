@@ -34,7 +34,7 @@ void LevelView::Draw(sf::RenderWindow &window)
     // Draw Tiles
     for (const auto &sprite : mSortedSpriteGroup.GetSprites())
     {
-        window.draw(*sprite);
+        sprite->Draw(window);
     }
 
     DebugWorldDraw(window);

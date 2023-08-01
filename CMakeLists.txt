@@ -53,6 +53,8 @@ add_library(ZeldaLibrary STATIC
     src/Core/LayerStack.cpp
     src/Core/Application.h
     src/Core/Application.cpp
+    src/Core/GameObject.h
+    src/Core/GameObject.cpp
     src/Weapon.h
     src/Weapon.cpp
     src/Support.h

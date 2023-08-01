@@ -2,12 +2,12 @@
 #include "Core/SpriteGroup.h"
 
 Sprite::Sprite(const sf::Texture &texture)
-    : sf::Sprite(texture)
+    : mSprite(texture)
 {
 }
 
 Sprite::Sprite()
-    : sf::Sprite(GetPlaceholderTexture())
+    : mSprite(GetPlaceholderTexture())
 {
 }
 
