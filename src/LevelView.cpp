@@ -5,14 +5,16 @@
 // Game
 #include "LevelView.h"
 #include "Level.h"
+#include "UI.h"
 #include "Player.h"
 
 #include "Core/OstreamOverloads.h"
 #include <iostream>
 
-LevelView::LevelView(sf::RenderWindow &window, const Level &level)
+LevelView::LevelView(sf::RenderWindow &window, const Level &level, const UI &ui)
     : mWindow(window),
       mLevel(level),
+      mUi(ui),
       mView(sf::Vector2f(), sf::Vector2f(window.getSize()))
 {
 }

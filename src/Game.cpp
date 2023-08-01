@@ -3,11 +3,12 @@
 // Game
 #include "Game.h"
 #include "Settings.h"
+#include "UI.h"
 
 Game::Game()
     : mWindow(sf::VideoMode(sf::Vector2u(WIDTH, HEIGHT), BPP), CAPTION),
       mLevel(),
-      mLevelView(mWindow, mLevel)
+      mLevelView(mWindow, mLevel, mUI)
 {
     mWindow.setFramerateLimit(FPS);
 }

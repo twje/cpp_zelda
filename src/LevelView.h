@@ -8,11 +8,12 @@
 // Forward declarations
 class Level;
 class Sprite;
+class UI;
 
 class LevelView
 {
 public:
-    LevelView(sf::RenderWindow &window, const Level &view);
+    LevelView(sf::RenderWindow &window, const Level &level, const UI &ui);
 
     void Draw(sf::RenderWindow &window);
 
@@ -25,6 +26,7 @@ private:
 private:
     sf::RenderWindow &mWindow;
     const Level &mLevel;
+    const UI &mUi;
     SpriteGroup mSortedSpriteGroup;
     sf::View mView;
 };

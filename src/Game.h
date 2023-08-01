@@ -5,6 +5,7 @@
 // Game
 #include "Level.h"
 #include "LevelView.h"
+#include "UI.h"
 
 class Game
 {
@@ -13,8 +14,9 @@ public:
     void Run();
 
 private:
+    sf::Clock mClock;
     sf::RenderWindow mWindow;
+    UI mUI;
     Level mLevel;
     LevelView mLevelView;
-    sf::Clock mClock;
 };
