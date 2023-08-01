@@ -48,6 +48,11 @@ add_library(ZeldaLibrary STATIC
     src/Core/Toggles.cpp
     src/Core/RectUtils.h
     src/Core/RectUtils.cpp
+    src/Core/Layer.h
+    src/Core/LayerStack.h
+    src/Core/LayerStack.cpp
+    src/Core/Application.h
+    src/Core/Application.cpp
     src/Weapon.h
     src/Weapon.cpp
     src/Support.h

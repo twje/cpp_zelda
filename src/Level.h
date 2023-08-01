@@ -6,6 +6,7 @@
 #include <memory>
 
 // Core
+#include "Core/Layer.h"
 #include "Core/SpriteGroup.h"
 #include "Core/Debug.h"
 
@@ -18,12 +19,12 @@
 // Game
 #include "Weapon.h"
 
-class Level
+class Level : public Layer
 {
 public:
     Level();
 
-    void Update(const sf::Time &timestamp);
+    void Update(const sf::Time &timestamp) override;
     const Player &GetPlayer() const { return *mPlayer; }
     const SpriteGroup &GetVisibleSpriteGroup() const { return mVisibleSprites; }
     const sf::Texture &GetFloorTexture() const { return *mFloor; }

@@ -3,19 +3,19 @@
 #include <SFML/Graphics.hpp>
 
 // Core
+#include "Core/Layer.h"
 #include "Core/SpriteGroup.h"
 
 // Forward declarations
 class Level;
 class Sprite;
-class UI;
 
-class LevelView
+class LevelView : public Layer
 {
 public:
-    LevelView(sf::RenderWindow &window, const Level &level, const UI &ui);
+    LevelView(sf::RenderWindow &window, const Level &level);
 
-    void Draw(sf::RenderWindow &window);
+    void Draw(sf::RenderWindow &window) override;
 
 private:
     void DebugWorldDraw(sf::RenderWindow &window);
@@ -26,7 +26,6 @@ private:
 private:
     sf::RenderWindow &mWindow;
     const Level &mLevel;
-    const UI &mUi;
     SpriteGroup mSortedSpriteGroup;
     sf::View mView;
 };

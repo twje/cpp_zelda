@@ -1,22 +1,11 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
+// Core
+#include "Core/Application.h"
 
-// Game
-#include "Level.h"
-#include "LevelView.h"
-#include "UI.h"
-
-class Game
+class Game : public Application
 {
 public:
     Game();
-    void Run();
-
-private:
-    sf::Clock mClock;
-    sf::RenderWindow mWindow;
-    UI mUI;
-    Level mLevel;
-    LevelView mLevelView;
+    void Setup() override;
 };

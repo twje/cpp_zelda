@@ -1,32 +1,27 @@
-#include <iostream>
+#include "Game.h"
+
+#include <memory>
+
+#include <SFML/Graphics.hpp>
 
 // Game
-#include "Game.h"
 #include "Settings.h"
+#include "Level.h"
+#include "LevelView.h"
 #include "UI.h"
 
 Game::Game()
-    : mWindow(sf::VideoMode(sf::Vector2u(WIDTH, HEIGHT), BPP), CAPTION),
-      mLevel(),
-      mLevelView(mWindow, mLevel, mUI)
+    : Application(WIDTH, HEIGHT, BPP, CAPTION)
 {
-    mWindow.setFramerateLimit(FPS);
 }
 
-void Game::Run()
+void Game::Setup()
 {
-    while (mWindow.isOpen())
-    {
-        sf::Event event;
-        while (mWindow.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                mWindow.close();
-        }
+    auto level = std::make_unique<Level>();
+    auto levelView = std::make_unique<LevelView>(GetRenderWindow(), *level);
+    auto ui = std::make_unique<UI>(*level);
 
-        mWindow.clear();
-        mLevel.Update(mClock.restart());
-        mLevelView.Draw(mWindow);
-        mWindow.display();
-    }
+    PushLayer(std::move(level));
+    PushLayer(std::move(levelView));
+    PushLayer(std::move(ui));
 }
