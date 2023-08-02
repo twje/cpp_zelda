@@ -7,20 +7,13 @@
 // Core
 #include "Core/GameObject.h"
 
-// Forward class declaration
-class SpriteGroup;
-
 class Sprite : public GameObject
 {
-    using SpriteGroupVector = std::vector<SpriteGroup *>;
-    friend SpriteGroup;
-
 public:
     Sprite(const sf::Texture &texture);
     Sprite();
 
     void Draw(sf::RenderWindow &window) override { window.draw(mSprite, GetTransform()); }
-    void Kill();
 
     // Setters
     void SetTexture(const sf::Texture &texture, bool resetRect = false) { mSprite.setTexture(texture, resetRect); }
@@ -34,5 +27,4 @@ private:
 
 private:
     sf::Sprite mSprite;
-    SpriteGroupVector mSpriteGroups;
 };

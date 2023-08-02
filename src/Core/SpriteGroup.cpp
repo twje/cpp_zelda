@@ -2,17 +2,17 @@
 #include "SpriteGroup.h"
 
 // Game
-#include "Sprite.h"
+#include "GameObject.h"
 
-void SpriteGroup::Add(const std::shared_ptr<Sprite> &sprite)
+void SpriteGroup::Add(const std::shared_ptr<GameObject> &sprite)
 {
     mSprites.emplace_back(sprite);
-    sprite->mSpriteGroups.emplace_back(this);
+    sprite->RegisterGroup(this);
 };
 
 void SpriteGroup::YSortSprites()
 {
-    std::sort(mSprites.begin(), mSprites.end(), [](const std::shared_ptr<Sprite> &sprite1, const std::shared_ptr<Sprite> &sprite2)
+    std::sort(mSprites.begin(), mSprites.end(), [](const std::shared_ptr<GameObject> &sprite1, const std::shared_ptr<GameObject> &sprite2)
               { return sprite1->GetCenter().y < sprite2->GetCenter().y; });
 }
 
@@ -24,9 +24,9 @@ void SpriteGroup::Update(const sf::Time &timestamp)
     }
 }
 
-void SpriteGroup::RemoveSprite(const Sprite &sprite)
+void SpriteGroup::RemoveSprite(const GameObject &sprite)
 {
-    mSprites.erase(std::remove_if(mSprites.begin(), mSprites.end(), [&sprite](const std::shared_ptr<Sprite> &element)
+    mSprites.erase(std::remove_if(mSprites.begin(), mSprites.end(), [&sprite](const std::shared_ptr<GameObject> &element)
                                   { return element.get() == &sprite; }),
                    mSprites.end());
 }

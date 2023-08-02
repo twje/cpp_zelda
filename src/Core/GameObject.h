@@ -2,8 +2,15 @@
 
 #include <SFML/Graphics.hpp>
 
+// Forward class declaration
+class SpriteGroup;
+
+using SpriteGroupVector = std::vector<SpriteGroup *>;
+
 class GameObject : private sf::Transformable
 {
+    friend SpriteGroup;
+
 public:
     // Hooks
     virtual void Draw(sf::RenderWindow &window) {}
@@ -20,4 +27,13 @@ public:
     sf::Vector2f GetCenter() const { return getPosition() + 0.5f * GetSize(); }
     sf::FloatRect GetGlobalBounds() const { return getTransform().transformRect(GetLocalBounds()); }
     const sf::Transform &GetTransform() const { return getTransform(); };
+
+    // Resource management
+    void Kill();
+
+private:
+    virtual void RegisterGroup(SpriteGroup *group) { mSpriteGroups.emplace_back(group); };
+
+private:
+    SpriteGroupVector mSpriteGroups;
 };

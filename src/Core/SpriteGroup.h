@@ -6,18 +6,18 @@
 #include <SFML/Graphics.hpp>
 
 // Forward declared class
-class Sprite;
+class GameObject;
 
 class SpriteGroup
 {
 public:
-    using SpriteList = std::vector<std::shared_ptr<Sprite>>;
+    using SpriteList = std::vector<std::shared_ptr<GameObject>>;
 
-    void Add(const std::shared_ptr<Sprite> &sprite);
+    void Add(const std::shared_ptr<GameObject> &sprite);
     const SpriteList &GetSprites() const { return mSprites; }
     void YSortSprites();
     void Update(const sf::Time &timestamp);
-    void RemoveSprite(const Sprite &sprite);
+    void RemoveSprite(const GameObject &sprite);
 
 private:
     SpriteList mSprites;
