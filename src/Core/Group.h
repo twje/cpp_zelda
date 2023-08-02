@@ -8,7 +8,7 @@
 // Forward declared class
 class GameObject;
 
-class SpriteGroup
+class Group
 {
 public:
     using SpriteList = std::vector<std::shared_ptr<GameObject>>;

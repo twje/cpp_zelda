@@ -4,7 +4,7 @@
 
 // Core
 #include "Core/Layer.h"
-#include "Core/SpriteGroup.h"
+#include "Core/Group.h"
 
 // Forward declarations
 class Level;
@@ -26,6 +26,6 @@ private:
 private:
     sf::RenderWindow &mWindow;
     const Level &mLevel;
-    SpriteGroup mSortedSpriteGroup;
+    Group mSortedSpriteGroup;
     sf::View mView;
 };

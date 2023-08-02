@@ -1,6 +1,6 @@
 // Core
 #include "Core/Sprite.h"
-#include "Core/SpriteGroup.h"
+#include "Core/Group.h"
 #include "Core/Debug.h"
 #include "Core/TextureManager.h"
 #include "Core/RectUtils.h"
@@ -10,7 +10,7 @@
 #include "Player.h"
 #include "Settings.h"
 
-Player::Player(sf::Vector2f position, const SpriteGroup &obstacleSprites, Callback createAttack, Callback destroyAttack)
+Player::Player(sf::Vector2f position, const Group &obstacleSprites, Callback createAttack, Callback destroyAttack)
     : Sprite(),
       mObstacleSprites(obstacleSprites),
       mDirection(0, 0),

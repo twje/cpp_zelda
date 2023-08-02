@@ -34,8 +34,8 @@ add_library(ZeldaLibrary STATIC
     src/Core/OstreamOverloads.h    
     src/Core/Debug.h
     src/Core/Debug.cpp    
-    src/Core/SpriteGroup.h
-    src/Core/SpriteGroup.cpp
+    src/Core/Group.h
+    src/Core/Group.cpp
     src/Core/Sprite.h
     src/Core/Sprite.cpp    
     src/Core/Animation.h

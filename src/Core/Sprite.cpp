@@ -1,5 +1,5 @@
 #include "Core/Sprite.h"
-#include "Core/SpriteGroup.h"
+#include "Core/Group.h"
 
 Sprite::Sprite(const sf::Texture &texture)
     : mSprite(texture)

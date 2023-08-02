@@ -7,7 +7,7 @@
 
 // Core
 #include "Core/Layer.h"
-#include "Core/SpriteGroup.h"
+#include "Core/Group.h"
 #include "Core/Debug.h"
 
 // Game
@@ -26,7 +26,7 @@ public:
 
     void Update(const sf::Time &timestamp) override;
     const Player &GetPlayer() const { return *mPlayer; }
-    const SpriteGroup &GetVisibleSpriteGroup() const { return mVisibleSprites; }
+    const Group &GetVisibleSpriteGroup() const { return mVisibleSprites; }
     const sf::Texture &GetFloorTexture() const { return *mFloor; }
 
 private:
@@ -37,8 +37,8 @@ private:
 private:
     Ref<Player> mPlayer;
     Ref<Weapon> mCurrentAttack;
-    SpriteGroup mVisibleSprites;
-    SpriteGroup mObstacleSprites;
+    Group mVisibleSprites;
+    Group mObstacleSprites;
     TextureMap mGraphics;
     TexturePtr mInvisibleBlock;
     TexturePtr mFloor;

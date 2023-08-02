@@ -3,13 +3,13 @@
 #include <SFML/Graphics.hpp>
 
 // Forward class declaration
-class SpriteGroup;
+class Group;
 
-using SpriteGroupVector = std::vector<SpriteGroup *>;
+using GroupVector = std::vector<Group *>;
 
 class GameObject : private sf::Transformable
 {
-    friend SpriteGroup;
+    friend Group;
 
 public:
     // Hooks
@@ -32,8 +32,8 @@ public:
     void Kill();
 
 private:
-    virtual void RegisterGroup(SpriteGroup *group) { mSpriteGroups.emplace_back(group); };
+    virtual void RegisterGroup(Group *group) { mGroups.emplace_back(group); };
 
 private:
-    SpriteGroupVector mSpriteGroups;
+    GroupVector mGroups;
 };

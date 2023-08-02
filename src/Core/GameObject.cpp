@@ -1,10 +1,10 @@
 #include "GameObject.h"
 
-#include "SpriteGroup.h"
+#include "Core/Group.h"
 
 void GameObject::Kill()
 {
-    for (auto spriteGroup : mSpriteGroups)
+    for (auto spriteGroup : mGroups)
     {
         spriteGroup->RemoveSprite(*this);
     }
