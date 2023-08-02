@@ -27,7 +27,7 @@ private:
     static constexpr int ANIMATION_FRAMES_PER_SECOND = 8;
 
 public:
-    Player(sf::Vector2f position, const Group &obstacleSprites, Callback createAttack, Callback destroyAttack);
+    Player(sf::Vector2f position, const Group &obstacleSpriteGroup, Callback createAttack, Callback destroyAttack);
 
     void Update(const sf::Time &timestamp) override;
     virtual sf::FloatRect GetHitbox() const override { return mHitBox; }
@@ -53,7 +53,7 @@ private:
     Scope<TextureAnimationSequence> CreateAnimationSequence(const std::string &sequenceID);
 
 private:
-    const Group &mObstacleSprites;
+    const Group &mObstacleSpriteGroup;
     std::string mStatus;
     sf::Vector2f mDirection;
     sf::FloatRect mHitBox;

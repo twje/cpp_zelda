@@ -24,7 +24,7 @@ void LevelView::Draw(sf::RenderWindow &window)
     mWindow.setView(mView);
 
     mSortedSpriteGroup = mLevel.GetVisibleSpriteGroup();
-    mSortedSpriteGroup.YSortSprites();
+    mSortedSpriteGroup.YSortGameObjects();
 
     // Draw floor
     sf::Sprite floorSprite(mLevel.GetFloorTexture());
@@ -32,7 +32,7 @@ void LevelView::Draw(sf::RenderWindow &window)
     window.draw(floorSprite);
 
     // Draw Tiles
-    for (const auto &sprite : mSortedSpriteGroup.GetSprites())
+    for (const auto &sprite : mSortedSpriteGroup.GetGameObjects())
     {
         sprite->Draw(window);
     }
@@ -58,7 +58,7 @@ void LevelView::DebugDrawPlayer(sf::RenderWindow &window)
 
 void LevelView::DebugHitbox(sf::RenderWindow &window)
 {
-    for (const auto &sprite : mSortedSpriteGroup.GetSprites())
+    for (const auto &sprite : mSortedSpriteGroup.GetGameObjects())
     {
         DrawTransparentRectangle(window, sprite->GetHitbox(), sf::Color::Red, 2);
     }

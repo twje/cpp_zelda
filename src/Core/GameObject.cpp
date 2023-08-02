@@ -4,8 +4,8 @@
 
 void GameObject::Kill()
 {
-    for (auto spriteGroup : mGroups)
+    for (auto group : mGroups)
     {
-        spriteGroup->RemoveSprite(*this);
+        group->RemoveSprite(*this);
     }
 }

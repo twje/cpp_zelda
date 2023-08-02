@@ -26,7 +26,7 @@ public:
 
     void Update(const sf::Time &timestamp) override;
     const Player &GetPlayer() const { return *mPlayer; }
-    const Group &GetVisibleSpriteGroup() const { return mVisibleSprites; }
+    const Group &GetVisibleSpriteGroup() const { return mVisibleSpriteGroup; }
     const sf::Texture &GetFloorTexture() const { return *mFloor; }
 
 private:
@@ -37,8 +37,8 @@ private:
 private:
     Ref<Player> mPlayer;
     Ref<Weapon> mCurrentAttack;
-    Group mVisibleSprites;
-    Group mObstacleSprites;
+    Group mVisibleSpriteGroup;
+    Group mObstacleSpriteGroup;
     TextureMap mGraphics;
     TexturePtr mInvisibleBlock;
     TexturePtr mFloor;

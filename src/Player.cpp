@@ -10,9 +10,9 @@
 #include "Player.h"
 #include "Settings.h"
 
-Player::Player(sf::Vector2f position, const Group &obstacleSprites, Callback createAttack, Callback destroyAttack)
+Player::Player(sf::Vector2f position, const Group &obstacleSpriteGroup, Callback createAttack, Callback destroyAttack)
     : Sprite(),
-      mObstacleSprites(obstacleSprites),
+      mObstacleSpriteGroup(obstacleSpriteGroup),
       mDirection(0, 0),
       mStatus("down"),
       mIsAttacking(400, false),
@@ -181,7 +181,7 @@ void Player::Collision(Direction direction)
 {
     if (direction == Direction::HORIZONTAL)
     {
-        for (const auto &sprite : mObstacleSprites.GetSprites())
+        for (const auto &sprite : mObstacleSpriteGroup.GetGameObjects())
         {
             auto result = sprite->GetHitbox().findIntersection(mHitBox);
             if (result.has_value())
@@ -202,7 +202,7 @@ void Player::Collision(Direction direction)
 
     if (direction == Direction::VERTICAL)
     {
-        for (const auto &sprite : mObstacleSprites.GetSprites())
+        for (const auto &sprite : mObstacleSpriteGroup.GetGameObjects())
         {
             auto result = sprite->GetHitbox().findIntersection(mHitBox);
             if (result.has_value())

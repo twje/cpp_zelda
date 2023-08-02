@@ -16,7 +16,7 @@ Level::Level()
 
 void Level::Update(const sf::Time &timestamp)
 {
-    mVisibleSprites.Update(timestamp);
+    mVisibleSpriteGroup.Update(timestamp);
 }
 
 void Level::CreateMap()
@@ -71,36 +71,36 @@ void Level::CreateMap()
                 if (layoutPair.first == "boundary")
                 {
                     std::shared_ptr<Tile> tile = std::make_shared<Tile>(sf::Vector2f(x, y), SpriteType::INVISIBLE, *mInvisibleBlock);
-                    mObstacleSprites.Add(tile);
+                    mObstacleSpriteGroup.Add(tile);
                 }
 
                 if (layoutPair.first == "grass")
                 {
                     TexturePtr &texture = getRandomElement(mGraphics["grass"]);
                     std::shared_ptr<Tile> tile = std::make_shared<Tile>(sf::Vector2f(x, y), SpriteType::GRASS, *texture);
-                    mVisibleSprites.Add(tile);
-                    mObstacleSprites.Add(tile);
+                    mVisibleSpriteGroup.Add(tile);
+                    mObstacleSpriteGroup.Add(tile);
                 }
 
                 if (layoutPair.first == "object")
                 {
                     TexturePtr &texture = mGraphics["objects"].at(value);
                     std::shared_ptr<Tile> tile = std::make_shared<Tile>(sf::Vector2f(x, y), SpriteType::OBJECT, *texture);
-                    mVisibleSprites.Add(tile);
-                    mObstacleSprites.Add(tile);
+                    mVisibleSpriteGroup.Add(tile);
+                    mObstacleSpriteGroup.Add(tile);
                 }
             }
         }
     }
 
-    mPlayer = std::make_shared<Player>(sf::Vector2f(2000, 1430), mObstacleSprites, std::bind(&Level::CreateAttack, this), std::bind(&Level::DestroyAttack, this));
-    mVisibleSprites.Add(mPlayer);
+    mPlayer = std::make_shared<Player>(sf::Vector2f(2000, 1430), mObstacleSpriteGroup, std::bind(&Level::CreateAttack, this), std::bind(&Level::DestroyAttack, this));
+    mVisibleSpriteGroup.Add(mPlayer);
 }
 
 void Level::CreateAttack()
 {
     mCurrentAttack = std::make_shared<Weapon>(*mPlayer);
-    mVisibleSprites.Add(mCurrentAttack);
+    mVisibleSpriteGroup.Add(mCurrentAttack);
 }
 
 void Level::DestroyAttack()

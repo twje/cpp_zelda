@@ -11,14 +11,14 @@ class GameObject;
 class Group
 {
 public:
-    using SpriteList = std::vector<std::shared_ptr<GameObject>>;
+    using GameObjectVector = std::vector<std::shared_ptr<GameObject>>;
 
     void Add(const std::shared_ptr<GameObject> &sprite);
-    const SpriteList &GetSprites() const { return mSprites; }
-    void YSortSprites();
+    const GameObjectVector &GetGameObjects() const { return mGameObjects; }
+    void YSortGameObjects();
     void Update(const sf::Time &timestamp);
     void RemoveSprite(const GameObject &sprite);
 
 private:
-    SpriteList mSprites;
+    GameObjectVector mGameObjects;
 };
