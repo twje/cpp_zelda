@@ -42,6 +42,8 @@ add_library(ZeldaLibrary STATIC
     src/Core/Animation.cpp
     src/Core/AnimationSequence.h
     src/Core/AnimationSequence.cpp
+    src/Core/ResourceManager.h
+    src/Core/ResourceManager.inl
     src/Core/TextureManager.h
     src/Core/TextureManager.cpp
     src/Core/Toggles.h
@@ -55,6 +57,8 @@ add_library(ZeldaLibrary STATIC
     src/Core/Application.cpp
     src/Core/GameObject.h
     src/Core/GameObject.cpp
+    src/GuiStyle.h
+    src/GuiStyle.cpp
     src/Weapon.h
     src/Weapon.cpp
     src/Support.h
