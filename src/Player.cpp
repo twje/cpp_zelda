@@ -239,7 +239,7 @@ void Player::InitAnimation()
 {
     auto &textureManager = TextureManager::GetInstance();
 
-    IndexResourcesViaPrefix resourceCollector(textureManager);
+    GroupResourcesViaPrefix resourceCollector(textureManager);
     for (const auto &playerData : PLAYER_DATA)
     {
         resourceCollector.AddResource(playerData.first);

@@ -13,10 +13,10 @@
 // Thinl about const
 
 template <typename Derived, typename T>
-class IndexResourcesViaPrefix
+class GroupResourcesViaPrefix
 {
 public:
-    IndexResourcesViaPrefix(const ResourceManager<Derived, T> &manager)
+    GroupResourcesViaPrefix(const ResourceManager<Derived, T> &manager)
         : mManager(manager)
     {
     }
