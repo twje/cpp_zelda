@@ -16,8 +16,7 @@ template <typename Derived, typename T>
 void ResourceManager<typename Derived, typename T>::LoadResource(const std::string resourceID, const std::string &filePath)
 {
     assert(fs::is_regular_file(filePath));
-    ResourcePtr<T> resourcePtr = Load(filePath);
-    mResources[resourceID].emplace_back(resourcePtr);
+    mResources[resourceID] = Load(filePath);
 }
 
 template <typename Derived, typename T>
@@ -30,9 +29,7 @@ void ResourceManager<typename Derived, typename T>::LoadResources(TextureIDGener
         const fs::path &entryPath = entry.path();
         if (fs::is_regular_file(entryPath))
         {
-            ResourcePtr<T> resourcePtr = Load(entryPath.string());
-            ResourceVector<T> resourceVector{resourcePtr};
-            mResources.emplace(generator(entryPath.string()), std::move(resourceVector));
+            mResources[generator(entryPath.string())] = Load(entryPath.string());
         }
     }
 }
@@ -42,8 +39,8 @@ template <typename Derived, typename T>
 const ResourcePtr<T> &ResourceManager<typename Derived, typename T>::GetResource(const std::string &resourceID) const
 {
     auto iter = mResources.find(resourceID);
-    assert(iter != mResources.end() && iter->second.size() > 0);
-    return iter->second.at(0);
+    assert(iter != mResources.end());
+    return iter->second;
 }
 
 template <typename Derived, typename T>

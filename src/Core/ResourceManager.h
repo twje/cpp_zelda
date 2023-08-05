@@ -45,7 +45,7 @@ public:
     std::vector<std::string> GetResourceIDs() const;
 
 private:
-    ResourceMap<T> mResources;
+    std::map<std::string, ResourcePtr<T>> mResources;
 };
 
 #include "Core/ResourceManager.inl"
