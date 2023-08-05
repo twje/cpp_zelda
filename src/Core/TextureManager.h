@@ -29,7 +29,7 @@ public:
     }
 
     // Loaders
-    TexturePtr Load(const std::string &path)
+    ResourcePtr<T> Load(const std::string &path)
     {
         return static_cast<Derived *>(this)->Load(path);
     }
@@ -37,7 +37,7 @@ public:
     void LoadResource(const std::string resourceID, const std::string &filePath)
     {
         assert(fs::is_regular_file(filePath));
-        TexturePtr resourcePtr = Load(filePath);
+        ResourcePtr<T> resourcePtr = Load(filePath);
         mResources[resourceID].emplace_back(resourcePtr);
     }
 
@@ -45,13 +45,13 @@ public:
     {
         assert(fs::is_directory(directoryPath));
 
-        TextureVector resourceVector;
+        ResourceVector<T> resourceVector;
         for (const auto &entry : fs::directory_iterator(directoryPath))
         {
             const fs::path &entryPath = entry.path();
             if (fs::is_regular_file(entryPath))
             {
-                TexturePtr resourcePtr = Load(entryPath.string());
+                ResourcePtr<T> resourcePtr = Load(entryPath.string());
                 resourceVector.emplace_back(resourcePtr);
             }
         }
@@ -67,33 +67,33 @@ public:
             const fs::path &entryPath = entry.path();
             if (fs::is_regular_file(entryPath))
             {
-                TexturePtr resourcePtr = Load(entryPath.string());
-                TextureVector resourceVector{resourcePtr};
+                ResourcePtr<T> resourcePtr = Load(entryPath.string());
+                ResourceVector<T> resourceVector{resourcePtr};
                 mResources.emplace(generator(entryPath.string()), std::move(resourceVector));
             }
         }
     }
 
     // Getters
-    const TexturePtr &GetResource(const std::string &resourceID) const
+    const ResourcePtr<T> &GetResource(const std::string &resourceID) const
     {
         return GetResourceAtIndex(resourceID, 0);
     }
 
-    const TexturePtr &GetResourceAtIndex(const std::string &resourceID, size_t index) const
+    const ResourcePtr<T> &GetResourceAtIndex(const std::string &resourceID, size_t index) const
     {
         auto iter = mResources.find(resourceID);
         assert(iter != mResources.end() && iter->second.size() > 0);
         return iter->second.at(index);
     }
 
-    const TextureVector &GetResources(const std::string &resourceID) const
+    const ResourceVector<T> &GetResources(const std::string &resourceID) const
     {
         return mResources.at(resourceID);
     }
 
 private:
-    TextureMap mResources;
+    ResourceMap<T> mResources;
 };
 
 class TextureManager : public ResourceManager<TextureManager, sf::Texture>
