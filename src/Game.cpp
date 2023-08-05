@@ -4,19 +4,11 @@
 
 #include <SFML/Graphics.hpp>
 
-#include <sstream>
-#include <fstream>
-#include <iostream>
-#include <functional>
-#include <map>
+// Core
+#include "Core/TextureManager.h"
 
 // Game
-#include "Settings.h"
-#include "Level.h"
-#include "LevelView.h"
-#include "UI.h"
-
-#include "Core/TextureManager.h"
+#include "GamePlay.h"
 
 Game::Game()
     : Application(WIDTH, HEIGHT, BPP, CAPTION)
@@ -27,11 +19,6 @@ void Game::Setup()
 {
     TextureManager::Create("../config/textures.cfg");
 
-    auto level = std::make_unique<Level>();
-    auto levelView = std::make_unique<LevelView>(GetRenderWindow(), *level);
-    auto ui = std::make_unique<UI>(*level);
-
-    PushLayer(std::move(level));
-    PushLayer(std::move(levelView));
-    PushLayer(std::move(ui));
+    auto gamePlay = std::make_unique<GamePlay>(GetRenderWindow());
+    PushLayer(std::move(gamePlay));
 }

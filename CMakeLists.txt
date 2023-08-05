@@ -67,6 +67,8 @@ add_library(ZeldaLibrary STATIC
     src/Support.cpp
     src/Game.h
     src/Game.cpp
+    src/GamePlay.h
+    src/GamePlay.cpp
     src/UI.h
     src/UI.cpp
     src/Settings.h
