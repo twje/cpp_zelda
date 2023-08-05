@@ -25,6 +25,8 @@ Game::Game()
 
 void Game::Setup()
 {
+    TextureManager::Create("../config/textures.cfg");
+
     auto level = std::make_unique<Level>();
     auto levelView = std::make_unique<LevelView>(GetRenderWindow(), *level);
     auto ui = std::make_unique<UI>(*level);

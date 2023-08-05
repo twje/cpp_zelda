@@ -22,8 +22,6 @@ void Level::Update(const sf::Time &timestamp)
 
 void Level::CreateMap()
 {
-    TextureManager::Create("../config/textures.cfg");
-
     auto &textureManager = TextureManager::GetInstance();
 
     // graphics
