@@ -21,24 +21,6 @@ void ResourceManager<typename Derived, typename T>::LoadResource(const std::stri
 }
 
 template <typename Derived, typename T>
-void ResourceManager<typename Derived, typename T>::LoadResources(const std::string resourceID, const std::string &directoryPath)
-{
-    assert(fs::is_directory(directoryPath));
-
-    ResourceVector<T> resourceVector;
-    for (const auto &entry : fs::directory_iterator(directoryPath))
-    {
-        const fs::path &entryPath = entry.path();
-        if (fs::is_regular_file(entryPath))
-        {
-            ResourcePtr<T> resourcePtr = Load(entryPath.string());
-            resourceVector.emplace_back(resourcePtr);
-        }
-    }
-    mResources.emplace(resourceID, std::move(resourceVector));
-}
-
-template <typename Derived, typename T>
 void ResourceManager<typename Derived, typename T>::LoadResources(TextureIDGenerator generator, const std::string &directoryPath)
 {
     assert(fs::is_directory(directoryPath));
@@ -59,21 +41,20 @@ void ResourceManager<typename Derived, typename T>::LoadResources(TextureIDGener
 template <typename Derived, typename T>
 const ResourcePtr<T> &ResourceManager<typename Derived, typename T>::GetResource(const std::string &resourceID) const
 {
-    return GetResourceAtIndex(resourceID, 0);
-}
-
-template <typename Derived, typename T>
-const ResourcePtr<T> &ResourceManager<typename Derived, typename T>::GetResourceAtIndex(const std::string &resourceID, size_t index) const
-{
     auto iter = mResources.find(resourceID);
     assert(iter != mResources.end() && iter->second.size() > 0);
-    return iter->second.at(index);
+    return iter->second.at(0);
 }
 
 template <typename Derived, typename T>
-const ResourceVector<T> &ResourceManager<typename Derived, typename T>::GetResources(const std::string &resourceID) const
+const ResourceVector<T> &ResourceManager<typename Derived, typename T>::GetResources() const
 {
-    return mResources.at(resourceID);
+    ResourceVector<T> result;
+    for (const auto &pair : mResources)
+    {
+        result.push_back(pair.second[0]);
+    }
+    return result;
 }
 
 template <typename Derived, typename T>
