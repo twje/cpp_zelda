@@ -237,15 +237,8 @@ void Player::UpdateSequenceFrame()
 
 void Player::InitAnimation()
 {
-    auto &textureManager = TextureManager::GetInstance();
-
-    GroupResourcesViaPrefix resourceCollector(textureManager);
-    for (const auto &playerData : PLAYER_DATA)
-    {
-        resourceCollector.AddResource(playerData.first);
-    }
-
-    for (const auto &entry : resourceCollector.GetResources())
+    TextureMap textureMap = GroupResourcesByPrefix(TextureManager::GetInstance());
+    for (const auto &entry : textureMap)
     {
         auto sequence = CreateScope<TextureAnimationSequence>(ANIMATION_FRAMES_PER_SECOND, entry.second);
         mAnimation.AddAnimationSequence(entry.first, std::move(sequence));

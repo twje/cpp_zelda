@@ -13,10 +13,10 @@
 // Thinl about const
 
 template <typename Derived, typename T>
-class GroupResourcesViaPrefix
+class GroupResourcesByPrefixHelper
 {
 public:
-    GroupResourcesViaPrefix(const ResourceManager<Derived, T> &manager)
+    GroupResourcesByPrefixHelper(const ResourceManager<Derived, T> &manager)
         : mManager(manager)
     {
     }
@@ -57,3 +57,14 @@ private:
     const ResourceManager<Derived, T> &mManager;
     ResourceMap<T> mResourceMap;
 };
+
+template <typename Derived, typename T>
+ResourceMap<T> GroupResourcesByPrefix(const ResourceManager<Derived, T> &manager)
+{
+    GroupResourcesByPrefixHelper collector(manager);
+    for (const std::string &resourceID : manager.GetResourceIDs())
+    {
+        collector.AddResource(resourceID);
+    }
+    return collector.GetResources();
+}
