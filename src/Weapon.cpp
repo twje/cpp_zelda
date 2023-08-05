@@ -17,7 +17,7 @@ Weapon::Weapon(const Player &player)
     std::ostringstream oss;
     oss << player.GetWeapon() << "_" << direction;
     std::string textureID = oss.str();
-    SetTexture(*TextureManager::GetInstance().GetTexture(textureID), true);
+    SetTexture(*TextureManager::GetInstance().GetResource(textureID), true);
 
     // Set position
     if (direction == "right")

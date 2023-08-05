@@ -240,5 +240,5 @@ void Player::UpdateSequenceFrame()
 Scope<TextureAnimationSequence> Player::CreateAnimationSequence(const std::string &sequenceID)
 {
     auto &textureManager = TextureManager::GetInstance();
-    return CreateScope<TextureAnimationSequence>(ANIMATION_FRAMES_PER_SECOND, textureManager.GetTextures(sequenceID));
+    return CreateScope<TextureAnimationSequence>(ANIMATION_FRAMES_PER_SECOND, textureManager.GetResources(sequenceID));
 }

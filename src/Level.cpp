@@ -24,24 +24,24 @@ void Level::CreateMap()
     auto &textureManager = TextureManager::GetInstance();
 
     // graphics
-    textureManager.LoadTexture("ground", "../graphics/tilemap/ground.png");
-    textureManager.LoadTextures("grass", "../graphics/Grass");
-    textureManager.LoadTextures("objects", "../graphics/objects");
+    textureManager.LoadResource("ground", "../graphics/tilemap/ground.png");
+    textureManager.LoadResources("grass", "../graphics/Grass");
+    textureManager.LoadResources("objects", "../graphics/objects");
 
-    mGraphics.emplace("grass", textureManager.GetTextures("grass"));
-    mGraphics.emplace("objects", textureManager.GetTextures("objects"));
+    mGraphics.emplace("grass", textureManager.GetResources("grass"));
+    mGraphics.emplace("objects", textureManager.GetResources("objects"));
 
-    mFloor = textureManager.GetTexture("ground");
+    mFloor = textureManager.GetResource("ground");
     mInvisibleBlock = createTexture(TILESIZE, TILESIZE, sf::Color(0, 0, 0, 0));
 
     for (const auto &weaponData : WEAPON_DATA)
     {
-        textureManager.LoadTextures(TextureIDGeneratorPresets::ExtractLastDirectoryWithFilename, weaponData.second.mGraphics);
+        textureManager.LoadResources(TextureIDGeneratorPresets::ExtractLastDirectoryWithFilename, weaponData.second.mGraphics);
     }
 
     for (const auto &playerData : PLAYER_DATA)
     {
-        textureManager.LoadTextures(playerData.first, playerData.second.mGraphics);
+        textureManager.LoadResources(playerData.first, playerData.second.mGraphics);
     }
 
     // layouts

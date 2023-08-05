@@ -4,11 +4,19 @@
 
 #include <SFML/Graphics.hpp>
 
+#include <sstream>
+#include <fstream>
+#include <iostream>
+#include <functional>
+#include <map>
+
 // Game
 #include "Settings.h"
 #include "Level.h"
 #include "LevelView.h"
 #include "UI.h"
+
+#include "Core/TextureManager.h"
 
 Game::Game()
     : Application(WIDTH, HEIGHT, BPP, CAPTION)
