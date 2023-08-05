@@ -19,6 +19,7 @@ using ResourceMap = std::map<std::string, ResourceVector<T>>;
 namespace ResourceIDGeneratorPresets
 {
     std::string ExtractLastDirectoryWithFilename(const fs::path &filePath);
+    std::string Filename(const fs::path &filePath);
 }
 
 template <typename Derived, typename T>

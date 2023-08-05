@@ -18,4 +18,9 @@ namespace ResourceIDGeneratorPresets
 
         return lastDir.string() + "_" + filenameWithoutExtension;
     }
+
+    std::string Filename(const fs::path &filePath)
+    {
+        return filePath.stem().string();
+    }
 }

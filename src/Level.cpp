@@ -4,6 +4,7 @@
 #include <iostream>
 
 // Core
+#include "Core/ResourceManagerUtils.h"
 #include "Core/TextureManager.h"
 
 // Game
@@ -25,14 +26,8 @@ void Level::CreateMap()
 
     // graphics
     textureManager.LoadResource("ground", "../graphics/tilemap/ground.png");
-    textureManager.LoadResources("grass", "../graphics/Grass");
-    textureManager.LoadResources("objects", "../graphics/objects");
-
-    mGraphics.emplace("grass", textureManager.GetResources("grass"));
-    mGraphics.emplace("objects", textureManager.GetResources("objects"));
-
-    mFloor = textureManager.GetResource("ground");
-    mInvisibleBlock = createTexture(TILESIZE, TILESIZE, sf::Color(0, 0, 0, 0));
+    textureManager.LoadResources(ResourceIDGeneratorPresets::Filename, "../graphics/grass");
+    textureManager.LoadResources(ResourceIDGeneratorPresets::ExtractLastDirectoryWithFilename, "../graphics/objects");
 
     for (const auto &weaponData : WEAPON_DATA)
     {
@@ -43,6 +38,13 @@ void Level::CreateMap()
     {
         textureManager.LoadResource(playerData.first, playerData.second.mGraphic);
     }
+
+    TextureMap textureMap = GroupResourcesByPrefix(textureManager);
+    mGraphics.emplace("grass", textureMap["grass"]);
+    mGraphics.emplace("objects", textureMap["objects"]);
+
+    mFloor = textureManager.GetResource("ground");
+    mInvisibleBlock = createTexture(TILESIZE, TILESIZE, sf::Color(0, 0, 0, 0));
 
     // layouts
     std::map<std::string, std::unique_ptr<CSVData>> layouts;
