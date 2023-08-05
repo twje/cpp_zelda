@@ -2,6 +2,10 @@
 
 #include "Core/ResourceManager.h"
 
+using TexturePtr = ResourcePtr<sf::Texture>;
+using TextureVector = ResourceVector<sf::Texture>;
+using TextureMap = ResourceMap<sf::Texture>;
+
 namespace TextureIDGeneratorPresets
 {
     std::string ExtractLastDirectoryWithFilename(const fs::path &filePath);

@@ -7,6 +7,14 @@
 
 namespace fs = std::filesystem;
 
+// Type aliases
+template <typename T>
+using ResourcePtr = std::shared_ptr<T>;
+template <typename T>
+using ResourceVector = std::vector<ResourcePtr<T>>;
+template <typename T>
+using ResourceMap = std::unordered_map<std::string, ResourceVector<T>>;
+
 template <typename Derived, typename T>
 class ResourceManager
 {

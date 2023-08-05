@@ -21,14 +21,3 @@ constexpr Ref<T> CreateRef(Args &&...args)
 {
     return std::make_shared<T>(std::forward<Args>(args)...);
 }
-
-template <typename T>
-using ResourcePtr = std::shared_ptr<T>;
-template <typename T>
-using ResourceVector = std::vector<ResourcePtr<T>>;
-template <typename T>
-using ResourceMap = std::unordered_map<std::string, ResourceVector<T>>;
-
-using TexturePtr = ResourcePtr<sf::Texture>;
-using TextureVector = ResourceVector<sf::Texture>;
-using TextureMap = ResourceMap<sf::Texture>;

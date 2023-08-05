@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "Core/Base.h"
+#include "TextureManager.h"
 
 struct SequenceFrame
 {
