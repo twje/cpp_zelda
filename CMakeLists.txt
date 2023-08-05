@@ -44,8 +44,10 @@ add_library(ZeldaLibrary STATIC
     src/Core/AnimationSequence.cpp
     src/Core/ResourceManager.h
     src/Core/ResourceManager.inl
+    src/Core/ResourceManagerUtils.h
+    src/Core/ResourceManagerUtils.cpp   
     src/Core/ResourceManager.cpp
-    src/Core/TextureManager.h    
+    src/Core/TextureManager.h
     src/Core/Toggles.h
     src/Core/Toggles.cpp
     src/Core/RectUtils.h

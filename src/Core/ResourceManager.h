@@ -2,6 +2,7 @@
 
 #include <filesystem>
 #include <functional>
+#include <map>
 
 #include <Core/Base.h>
 
@@ -13,7 +14,7 @@ using ResourcePtr = std::shared_ptr<T>;
 template <typename T>
 using ResourceVector = std::vector<ResourcePtr<T>>;
 template <typename T>
-using ResourceMap = std::unordered_map<std::string, ResourceVector<T>>;
+using ResourceMap = std::map<std::string, ResourceVector<T>>;
 
 namespace ResourceIDGeneratorPresets
 {
@@ -43,6 +44,7 @@ public:
     const ResourcePtr<T> &GetResource(const std::string &resourceID) const;
     const ResourcePtr<T> &GetResourceAtIndex(const std::string &resourceID, size_t index) const;
     const ResourceVector<T> &GetResources(const std::string &resourceID) const;
+    std::vector<std::string> GetResourceIDs() const;
 
 private:
     ResourceMap<T> mResources;

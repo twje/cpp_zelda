@@ -50,7 +50,7 @@ private:
     bool IsMovingDown() { return mDirection.y > 0; }
     std::string GetWeaponByIndex(size_t index) const;
     void UpdateSequenceFrame();
-    Scope<TextureAnimationSequence> CreateAnimationSequence(const std::string &sequenceID);
+    void InitAnimation();
 
 private:
     const Group &mObstacleSpriteGroup;

@@ -2,6 +2,7 @@
 #include "Core/Sprite.h"
 #include "Core/Group.h"
 #include "Core/Debug.h"
+#include "Core/ResourceManagerUtils.h"
 #include "Core/TextureManager.h"
 #include "Core/RectUtils.h"
 
@@ -21,10 +22,7 @@ Player::Player(sf::Vector2f position, const Group &obstacleSpriteGroup, Callback
       mDestroyAttack(destroyAttack),
       mWeaponIndex(0)
 {
-    for (const auto &playerData : PLAYER_DATA)
-    {
-        mAnimation.AddAnimationSequence(playerData.first, std::move(CreateAnimationSequence(playerData.first)));
-    }
+    InitAnimation();
     mAnimation.SetAnimationSequence(mStatus);
     UpdateSequenceFrame();
     SetPosition(position);
@@ -237,8 +235,19 @@ void Player::UpdateSequenceFrame()
     SetTextureRect(frame.mTextureRect);
 }
 
-Scope<TextureAnimationSequence> Player::CreateAnimationSequence(const std::string &sequenceID)
+void Player::InitAnimation()
 {
     auto &textureManager = TextureManager::GetInstance();
-    return CreateScope<TextureAnimationSequence>(ANIMATION_FRAMES_PER_SECOND, textureManager.GetResources(sequenceID));
+
+    IndexResourcesViaPrefix resourceCollector(textureManager);
+    for (const auto &playerData : PLAYER_DATA)
+    {
+        resourceCollector.AddResource(playerData.first);
+    }
+
+    for (const auto &entry : resourceCollector.GetResources())
+    {
+        auto sequence = CreateScope<TextureAnimationSequence>(ANIMATION_FRAMES_PER_SECOND, entry.second);
+        mAnimation.AddAnimationSequence(entry.first, std::move(sequence));
+    }
 }

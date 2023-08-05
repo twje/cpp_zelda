@@ -41,7 +41,7 @@ void Level::CreateMap()
 
     for (const auto &playerData : PLAYER_DATA)
     {
-        textureManager.LoadResources(playerData.first, playerData.second.mGraphics);
+        textureManager.LoadResource(playerData.first, playerData.second.mGraphic);
     }
 
     // layouts

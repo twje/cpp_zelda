@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 #include <cstdint>
-#include <unordered_map>
+#include <map>
 #include <string>
 
 #include "GuiStyle.h"
@@ -44,11 +44,11 @@ struct WeaponData
 
 struct PlayerData
 {
-    std::string mGraphics;
+    std::string mGraphic;
 };
 
-extern const std::unordered_map<std::string, WeaponData> WEAPON_DATA;
-extern const std::unordered_map<std::string, PlayerData> PLAYER_DATA;
+extern const std::map<std::string, WeaponData> WEAPON_DATA;
+extern const std::map<std::string, PlayerData> PLAYER_DATA;
 
 // GUI
 extern const GuiStyle DEFAULT_STYLE;

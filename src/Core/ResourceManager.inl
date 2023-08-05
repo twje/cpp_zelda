@@ -75,3 +75,14 @@ const ResourceVector<T> &ResourceManager<typename Derived, typename T>::GetResou
 {
     return mResources.at(resourceID);
 }
+
+template <typename Derived, typename T>
+std::vector<std::string> ResourceManager<typename Derived, typename T>::GetResourceIDs() const
+{
+    std::vector<std::string> resourceIDs;
+    for (const auto &pair : mResources)
+    {
+        resourceIDs.emplace_back(pair.first);
+    }
+    return resourceIDs;
+}
