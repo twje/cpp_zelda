@@ -37,14 +37,14 @@ private:
     ResourceManager(const ResourceManager &) = delete;
     ResourceManager &operator=(const ResourceManager &) = delete;
 
-public:
-    static void Create(const std::string configFilePath);
-    static ResourceManager &GetInstance();
-
     // Loaders
     ResourcePtr<T> Load(const std::string &path);
     void LoadResource(const std::string resourceID, const std::string &filePath);
     void LoadResources(TextureIDGenerator generator, const std::string &directoryPath);
+
+public:
+    static void Create(const std::string configFilePath);
+    static ResourceManager &GetInstance();
 
     // Getters
     const ResourcePtr<T> &GetResource(const std::string &resourceID) const;

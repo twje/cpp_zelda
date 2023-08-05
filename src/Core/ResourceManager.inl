@@ -10,7 +10,7 @@ void ResourceManager<Derived, T>::Create(const std::string configFilePath)
     std::ifstream file(configFilePath);
     if (!file)
     {
-        throw std::runtime_error("Failed to load configuratuib file " + configFilePath);
+        throw std::runtime_error("Failed to load configuration file " + configFilePath);
     }
 
     std::string line;
