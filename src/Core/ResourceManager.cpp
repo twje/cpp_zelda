@@ -1,8 +1,8 @@
-#include "Core/TextureManager.h"
+#include "Core/ResourceManager.h"
 
 #include <cassert>
 
-namespace TextureIDGeneratorPresets
+namespace ResourceIDGeneratorPresets
 {
     std::string ExtractLastDirectoryWithFilename(const fs::path &filePath)
     {

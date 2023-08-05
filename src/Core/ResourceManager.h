@@ -15,6 +15,11 @@ using ResourceVector = std::vector<ResourcePtr<T>>;
 template <typename T>
 using ResourceMap = std::unordered_map<std::string, ResourceVector<T>>;
 
+namespace ResourceIDGeneratorPresets
+{
+    std::string ExtractLastDirectoryWithFilename(const fs::path &filePath);
+}
+
 template <typename Derived, typename T>
 class ResourceManager
 {
