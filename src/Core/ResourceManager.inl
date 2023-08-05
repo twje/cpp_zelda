@@ -47,17 +47,6 @@ const ResourcePtr<T> &ResourceManager<typename Derived, typename T>::GetResource
 }
 
 template <typename Derived, typename T>
-const ResourceVector<T> &ResourceManager<typename Derived, typename T>::GetResources() const
-{
-    ResourceVector<T> result;
-    for (const auto &pair : mResources)
-    {
-        result.push_back(pair.second[0]);
-    }
-    return result;
-}
-
-template <typename Derived, typename T>
 std::vector<std::string> ResourceManager<typename Derived, typename T>::GetResourceIDs() const
 {
     std::vector<std::string> resourceIDs;

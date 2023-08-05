@@ -42,7 +42,6 @@ public:
 
     // Getters
     const ResourcePtr<T> &GetResource(const std::string &resourceID) const;
-    const ResourceVector<T> &GetResources() const;
     std::vector<std::string> GetResourceIDs() const;
 
 private:
