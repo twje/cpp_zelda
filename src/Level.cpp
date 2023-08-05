@@ -22,23 +22,11 @@ void Level::Update(const sf::Time &timestamp)
 
 void Level::CreateMap()
 {
+    TextureManager::Create("../config/textures.cfg");
+
     auto &textureManager = TextureManager::GetInstance();
 
     // graphics
-    textureManager.LoadResource("ground", "../graphics/tilemap/ground.png");
-    textureManager.LoadResources(ResourceIDGeneratorPresets::Filename, "../graphics/grass");
-    textureManager.LoadResources(ResourceIDGeneratorPresets::ExtractLastDirectoryWithFilename, "../graphics/objects");
-
-    for (const auto &weaponData : WEAPON_DATA)
-    {
-        textureManager.LoadResources(ResourceIDGeneratorPresets::ExtractLastDirectoryWithFilename, weaponData.second.mGraphics);
-    }
-
-    for (const auto &playerData : PLAYER_DATA)
-    {
-        textureManager.LoadResource(playerData.first, playerData.second.mGraphic);
-    }
-
     TextureMap textureMap = GroupResourcesByPrefix(textureManager);
     mGraphics.emplace("grass", textureMap["grass"]);
     mGraphics.emplace("objects", textureMap["objects"]);

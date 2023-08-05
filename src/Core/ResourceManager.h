@@ -3,6 +3,9 @@
 #include <filesystem>
 #include <functional>
 #include <map>
+#include <cassert>
+#include <fstream>
+// #include <sstream>
 
 #include <Core/Base.h>
 
@@ -28,11 +31,14 @@ class ResourceManager
     using TextureIDGenerator = std::function<std::string(std::string)>;
 
 private:
+    static ResourceManager *mInstance;
+
     ResourceManager() = default;
     ResourceManager(const ResourceManager &) = delete;
     ResourceManager &operator=(const ResourceManager &) = delete;
 
 public:
+    static void Create(const std::string configFilePath);
     static ResourceManager &GetInstance();
 
     // Loaders

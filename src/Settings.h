@@ -39,16 +39,9 @@ struct WeaponData
 {
     int mCooldown;
     int mDamage;
-    std::string mGraphics;
-};
-
-struct PlayerData
-{
-    std::string mGraphic;
 };
 
 extern const std::map<std::string, WeaponData> WEAPON_DATA;
-extern const std::map<std::string, PlayerData> PLAYER_DATA;
 
 // GUI
 extern const GuiStyle DEFAULT_STYLE;

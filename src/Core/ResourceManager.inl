@@ -1,8 +1,55 @@
 template <typename Derived, typename T>
+ResourceManager<Derived, T> *ResourceManager<Derived, T>::mInstance = nullptr;
+
+template <typename Derived, typename T>
+void ResourceManager<Derived, T>::Create(const std::string configFilePath)
+{
+    assert(mInstance == nullptr);
+    mInstance = new ResourceManager();
+
+    std::ifstream file(configFilePath);
+    if (!file)
+    {
+        throw std::runtime_error("Failed to load configuratuib file " + configFilePath);
+    }
+
+    std::string line;
+    while (std::getline(file, line))
+    {
+        auto isSpace = [](char c)
+        {
+            return std::isspace(c);
+        };
+        if (line.empty() || std::all_of(line.begin(), line.end(), isSpace) || line[0] == '#')
+        {
+            continue;
+        }
+
+        std::istringstream iss(line);
+        std::string resourcePath, resourceID;
+        if (std::getline(iss >> std::ws, resourcePath, ',') && std::getline(iss >> std::ws, resourceID, ','))
+        {
+            if (resourceID == "#ExtractLastDirectoryWithFilename")
+            {
+                mInstance->LoadResources(ResourceIDGeneratorPresets::ExtractLastDirectoryWithFilename, resourcePath);
+            }
+            else if (resourceID == "#Filename")
+            {
+                mInstance->LoadResources(ResourceIDGeneratorPresets::Filename, resourcePath);
+            }
+            else
+            {
+                mInstance->LoadResource(resourceID, resourcePath);
+            }
+        }
+    }
+}
+
+template <typename Derived, typename T>
 ResourceManager<Derived, T> &ResourceManager<Derived, T>::GetInstance()
 {
-    static ResourceManager<typename Derived, typename T> instance;
-    return instance;
+    assert(mInstance != nullptr);
+    return *mInstance;
 }
 
 // Loaders
