@@ -7,6 +7,15 @@ include(FetchContent)
 
 enable_testing()
 
+# Add yaml-cpp
+set(YAML_CPP_BUILD_TESTS OFF)
+FetchContent_Declare(
+    yaml-cpp
+    GIT_REPOSITORY https://github.com/jbeder/yaml-cpp.git
+    GIT_TAG master
+)
+FetchContent_MakeAvailable(yaml-cpp)
+
 # Add googletest dependency
 FetchContent_Declare(
     googletest
@@ -26,6 +35,7 @@ FetchContent_MakeAvailable(SFML)
 # Configure project
 set(ZeldaIncludes
     ${SFML_SOURCE_DIR}/include
+    ${yaml-cpp_SOURCE_DIR}/include
     src
 )
 
@@ -59,8 +69,10 @@ add_library(ZeldaLibrary STATIC
     src/Core/Application.cpp
     src/Core/GameObject.h
     src/Core/GameObject.cpp
-    src/GuiStyle.h
-    src/GuiStyle.cpp
+    src/Core/GuiStyle.h
+    src/Core/GuiStyle.cpp
+    src/Core/GUIStyleManager.h
+    src/Core/FontManager.h
     src/Weapon.h
     src/Weapon.cpp
     src/Support.h
@@ -89,6 +101,7 @@ target_link_libraries(ZeldaLibrary PUBLIC
     sfml-graphics
     sfml-audio
     sfml-network
+    yaml-cpp
 )
 
 target_include_directories(ZeldaLibrary PUBLIC
