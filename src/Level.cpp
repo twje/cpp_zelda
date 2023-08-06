@@ -4,8 +4,8 @@
 #include <iostream>
 
 // Core
-#include "Core/ResourceManagerUtils.h"
-#include "Core/TextureManager.h"
+#include "Core/ResourceManager/ResourceManagerUtils.h"
+#include "Core/ResourceManager/TextureManager.h"
 
 // Game
 #include "Level.h"
