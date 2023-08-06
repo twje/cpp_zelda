@@ -7,8 +7,6 @@
 #include <map>
 #include <string>
 
-#include "GuiStyle.h"
-
 // Map
 constexpr char *CAPTION = "Zelda";
 constexpr uint16_t WIDTH = 1280;
@@ -42,6 +40,3 @@ struct WeaponData
 };
 
 extern const std::map<std::string, WeaponData> WEAPON_DATA;
-
-// GUI
-extern const GuiStyle DEFAULT_STYLE;
