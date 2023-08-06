@@ -6,7 +6,7 @@
 
 // Core
 #include "Core/RectUtils.h"
-#include "Core/TextureManager.h"
+#include "Core/ResourceManager/TextureManager.h"
 
 Weapon::Weapon(const Player &player)
     : Sprite()

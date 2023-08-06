@@ -1,4 +1,4 @@
-#include "Core/ResourceManagerUtils.h"
+#include "Core/ResourceManager/ResourceManagerUtils.h"
 
 std::string NormalzeResourceID(const std::string &resourceID)
 {

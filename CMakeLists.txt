@@ -40,6 +40,14 @@ set(ZeldaIncludes
 )
 
 add_library(ZeldaLibrary STATIC
+    src/Core/ResourceManager/ResourceManager.h
+    src/Core/ResourceManager/ResourceManager.inl
+    src/Core/ResourceManager/ResourceManagerUtils.h
+    src/Core/ResourceManager/ResourceManagerUtils.cpp   
+    src/Core/ResourceManager/ResourceManager.cpp
+    src/Core/ResourceManager/TextureManager.h
+    src/Core/ResourceManager/GUIStyleManager.h
+    src/Core/ResourceManager/FontManager.h
     src/Core/Base.h
     src/Core/OstreamOverloads.h    
     src/Core/Debug.h
@@ -52,12 +60,6 @@ add_library(ZeldaLibrary STATIC
     src/Core/Animation.cpp
     src/Core/AnimationSequence.h
     src/Core/AnimationSequence.cpp
-    src/Core/ResourceManager.h
-    src/Core/ResourceManager.inl
-    src/Core/ResourceManagerUtils.h
-    src/Core/ResourceManagerUtils.cpp   
-    src/Core/ResourceManager.cpp
-    src/Core/TextureManager.h
     src/Core/Toggles.h
     src/Core/Toggles.cpp
     src/Core/RectUtils.h
@@ -70,9 +72,7 @@ add_library(ZeldaLibrary STATIC
     src/Core/GameObject.h
     src/Core/GameObject.cpp
     src/Core/GuiStyle.h
-    src/Core/GuiStyle.cpp
-    src/Core/GUIStyleManager.h
-    src/Core/FontManager.h
+    src/Core/GuiStyle.cpp    
     src/Weapon.h
     src/Weapon.cpp
     src/Support.h

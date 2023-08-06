@@ -2,8 +2,8 @@
 #include "Core/Sprite.h"
 #include "Core/Group.h"
 #include "Core/Debug.h"
-#include "Core/ResourceManagerUtils.h"
-#include "Core/TextureManager.h"
+#include "Core/ResourceManager/ResourceManagerUtils.h"
+#include "Core/ResourceManager/TextureManager.h"
 #include "Core/RectUtils.h"
 
 // Game

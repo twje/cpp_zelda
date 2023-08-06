@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core/ResourceManager.h"
+#include "Core/ResourceManager/ResourceManager.h"
 
 std::string NormalzeResourceID(const std::string &resourceID);
 

@@ -5,9 +5,9 @@
 #include <SFML/Graphics.hpp>
 
 // Core
-#include "Core/FontManager.h"
-#include "Core/TextureManager.h"
-#include "Core/GUIStyleManager.h"
+#include "Core/ResourceManager/FontManager.h"
+#include "Core/ResourceManager/TextureManager.h"
+#include "Core/ResourceManager/GUIStyleManager.h"
 
 // Game
 #include "GamePlay.h"

@@ -1,4 +1,4 @@
-#include "Core/ResourceManager.h"
+#include "Core/ResourceManager/ResourceManager.h"
 
 #include <cassert>
 

@@ -5,7 +5,6 @@
 #include <map>
 #include <cassert>
 #include <fstream>
-// #include <sstream>
 
 #include <Core/Base.h>
 
@@ -54,4 +53,4 @@ private:
     std::map<std::string, ResourcePtr<T>> mResources;
 };
 
-#include "Core/ResourceManager.inl"
+#include "Core/ResourceManager/ResourceManager.inl"

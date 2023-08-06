@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core/ResourceManager.h"
+#include "Core/ResourceManager/ResourceManager.h"
 
 using TexturePtr = ResourcePtr<sf::Texture>;
 using TextureVector = ResourceVector<sf::Texture>;

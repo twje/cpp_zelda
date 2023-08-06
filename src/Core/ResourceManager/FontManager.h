@@ -7,7 +7,7 @@
 #include <SFML/Graphics.hpp>
 
 // Core Game
-#include "Core/ResourceManager.h"
+#include "Core/ResourceManager/ResourceManager.h"
 
 class FontManager : public ResourceManager<FontManager, sf::Font>
 {
