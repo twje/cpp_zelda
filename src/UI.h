@@ -1,24 +1,17 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-
 // Core
 #include "Core/Layer.h"
 
-// Game
-#include "Level.h"
+// Forward declarations
+class Level;
 
 class UI : public Layer
 {
 public:
-    UI(const Level &level)
-        : mLevel(level)
-    {
-    }
+    UI(const Level &level);
 
-    virtual void Draw(sf::RenderWindow &window)
-    {
-    }
+    virtual void Draw(sf::RenderWindow &window);
 
 private:
     void ShowBar() {}
