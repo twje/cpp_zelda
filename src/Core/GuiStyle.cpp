@@ -1,5 +1,5 @@
 #include "Core/GuiStyle.h"
-#include "Core/FontManager.h"
+#include "Core/ResourceManager/FontManager.h"
 
 GuiStyle::GuiStyle(
     sf::Color backgroundCol,
@@ -89,18 +89,30 @@ void GuiStyleSerializer::Serialize(const GuiStyle &style, const std::string &fil
 void GuiStyleSerializer::Deserialize(GuiStyle &styleOut, const std::string &filePath)
 {
   YAML::Node node = YAML::LoadFile(filePath);
-  styleOut.mBackgroundCol = node["mBackgroundCol"].as<sf::Color>();
-  styleOut.mBackgroundHighlightCol = node["mBackgroundHighlightCol"].as<sf::Color>();
-  styleOut.mForegroundCol = node["mForegroundCol"].as<sf::Color>();
-  styleOut.mForegroundHighlightCol = node["mForegroundHighlightCol"].as<sf::Color>();
-  styleOut.mBodyCol = node["mBodyCol"].as<sf::Color>();
-  styleOut.mBodyHighlightCol = node["mBodyHighlightCol"].as<sf::Color>();
-  styleOut.mBorderCol = node["mBorderCol"].as<sf::Color>();
-  styleOut.mBorderHighlightCol = node["mBorderHighlightCol"].as<sf::Color>();
-  styleOut.mTextCol = node["mTextCol"].as<sf::Color>();
-  styleOut.mTextHighlightCol = node["mTextHighlightCol"].as<sf::Color>();
-  node["mBorderSize"] = node["mBorderSize"].as<float>();
+  if (node["mBackgroundCol"])
+    styleOut.mBackgroundCol = node["mBackgroundCol"].as<sf::Color>();
+  if (node["mBackgroundHighlightCol"])
+    styleOut.mBackgroundHighlightCol = node["mBackgroundHighlightCol"].as<sf::Color>();
+  if (node["mForegroundCol"])
+    styleOut.mForegroundCol = node["mForegroundCol"].as<sf::Color>();
+  if (node["mForegroundHighlightCol"])
+    styleOut.mForegroundHighlightCol = node["mForegroundHighlightCol"].as<sf::Color>();
+  if (node["mBodyCol"])
+    styleOut.mBodyCol = node["mBodyCol"].as<sf::Color>();
+  if (node["mBodyHighlightCol"])
+    styleOut.mBodyHighlightCol = node["mBodyHighlightCol"].as<sf::Color>();
+  if (node["mBorderCol"])
+    styleOut.mBorderCol = node["mBorderCol"].as<sf::Color>();
+  if (node["mBorderHighlightCol"])
+    styleOut.mBorderHighlightCol = node["mBorderHighlightCol"].as<sf::Color>();
+  if (node["mTextCol"])
+    styleOut.mTextCol = node["mTextCol"].as<sf::Color>();
+  if (node["mTextHighlightCol"])
+    styleOut.mTextHighlightCol = node["mTextHighlightCol"].as<sf::Color>();
+  if (node["mBorderSize"])
+    styleOut.mBorderSize = node["mBorderSize"].as<float>();
 
   // Resource dependencies
-  styleOut.InitFont(node["mFontResourceID"].as<std::string>());
+  if (node["mFontResourceID"])
+    styleOut.InitFont(node["mFontResourceID"].as<std::string>());
 }
