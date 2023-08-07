@@ -26,8 +26,8 @@ void ResourceManager<Derived, T>::Create(const std::string configFilePath)
         }
 
         std::istringstream iss(line);
-        std::string resourcePath, resourceID;
-        if (std::getline(iss >> std::ws, resourcePath, ',') && std::getline(iss >> std::ws, resourceID, ','))
+        std::string resourceID, resourcePath;
+        if (std::getline(iss >> std::ws, resourceID, ',') && std::getline(iss >> std::ws, resourcePath, ','))
         {
             mInstance->LoadResource(resourceID, resourcePath);
         }

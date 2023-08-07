@@ -20,3 +20,13 @@ def filename(directory_path):
             resourceID = file_path.stem
             print(f"{resourcePath}, {resourceID}")
 
+
+def reverse_csv(input_filepath, output_filepath):
+    with open(input_filepath, "r") as input_file:        
+        lines = input_file.readlines()        
+    
+    with open(output_filepath, "w") as output_file:
+        for line in lines:
+            resourcePath = line.split(", ")[0].strip()
+            resourceID = line.split(", ")[1].strip()            
+            output_file.write(f"{resourceID}, {resourcePath}\n")
