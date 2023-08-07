@@ -11,6 +11,8 @@
 #include "Level.h"
 
 Level::Level()
+    : mLevelView(std::make_unique<LevelView>(*this)),
+      mUI(std::make_unique<UI>(*this))
 {
     CreateMap();
 }
@@ -18,6 +20,18 @@ Level::Level()
 void Level::Update(const sf::Time &timestamp)
 {
     mVisibleSpriteGroup.Update(timestamp);
+}
+
+void Level::Draw(sf::RenderWindow &window)
+{
+    mLevelView->Draw(window);
+    mUI->Draw(window);
+}
+
+void Level::OnWindowResize(sf::Vector2u size)
+{
+    mLevelView->OnWindowResize(size);
+    mUI->OnWindowResize(size);
 }
 
 void Level::CreateMap()

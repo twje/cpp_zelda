@@ -15,9 +15,9 @@
 #include "Support.h"
 #include "Tile.h"
 #include "Player.h"
-
-// Game
 #include "Weapon.h"
+#include "LevelView.h"
+#include "UI.h"
 
 class Level : public Layer
 {
@@ -25,6 +25,10 @@ public:
     Level();
 
     void Update(const sf::Time &timestamp) override;
+    void Draw(sf::RenderWindow &window) override;
+    void OnWindowResize(sf::Vector2u size) override;
+
+    // Getters
     const Player &GetPlayer() const { return *mPlayer; }
     const Group &GetVisibleSpriteGroup() const { return mVisibleSpriteGroup; }
     const sf::Texture &GetFloorTexture() const { return *mFloor; }
@@ -42,4 +46,7 @@ private:
     TextureMap mGraphics;
     TexturePtr mInvisibleBlock;
     TexturePtr mFloor;
+    std::unique_ptr<Level> mLevel;
+    std::unique_ptr<LevelView> mLevelView;
+    std::unique_ptr<UI> mUI;
 };

@@ -10,7 +10,7 @@
 #include "Core/ResourceManager/GUIStyleManager.h"
 
 // Game
-#include "GamePlay.h"
+#include "Level.h"
 #include "Core/GuiStyle.h"
 
 Game::Game()
@@ -24,6 +24,6 @@ void Game::Setup()
     TextureManager::Create("../config/textures.cfg");
     GUIStyleManager::Create("../config/styles.cfg");
 
-    auto gamePlay = std::make_unique<GamePlay>();
-    PushLayer(std::move(gamePlay));
+    auto level = std::make_unique<Level>();
+    PushLayer(std::move(level));
 }
