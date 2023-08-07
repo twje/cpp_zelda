@@ -46,7 +46,6 @@ private:
     TextureMap mGraphics;
     TexturePtr mInvisibleBlock;
     TexturePtr mFloor;
-    std::unique_ptr<Level> mLevel;
     std::unique_ptr<LevelView> mLevelView;
     std::unique_ptr<UI> mUI;
 };
