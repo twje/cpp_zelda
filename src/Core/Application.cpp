@@ -15,13 +15,20 @@ Application::Application(uint16_t width, uint16_t height, uint16_t bpp, std::str
 
 void Application::Run()
 {
+    mLayers.OnWindowResize(mWindow.getSize());
     while (mWindow.isOpen())
     {
         sf::Event event;
         while (mWindow.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
+            {
                 mWindow.close();
+            }
+            else if (event.type == sf::Event::Resized)
+            {
+                mLayers.OnWindowResize(sf::Vector2u(event.size.width, event.size.height));
+            }
         }
 
         mWindow.clear();

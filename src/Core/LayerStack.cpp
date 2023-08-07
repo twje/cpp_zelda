@@ -21,3 +21,11 @@ void LayerStack::Draw(sf::RenderWindow &window)
         layer->Draw(window);
     }
 }
+
+void LayerStack::OnWindowResize(sf::Vector2u size)
+{
+    for (auto &layer : mLayers)
+    {
+        layer->OnWindowResize(size);
+    }
+}

@@ -13,9 +13,10 @@ class Sprite;
 class LevelView : public Layer
 {
 public:
-    LevelView(sf::RenderWindow &window, const Level &level);
+    LevelView(const Level &level);
 
     void Draw(sf::RenderWindow &window) override;
+    void OnWindowResize(sf::Vector2u size) override;
 
 private:
     void DebugWorldDraw(sf::RenderWindow &window);
@@ -24,7 +25,6 @@ private:
     void DebugHUDDraw(sf::RenderWindow &window);
 
 private:
-    sf::RenderWindow &mWindow;
     const Level &mLevel;
     Group mSortedSpriteGroup;
     sf::View mView;

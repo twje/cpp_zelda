@@ -1,10 +1,10 @@
 
 #include "GamePlay.h"
 
-GamePlay::GamePlay(sf::RenderWindow &window)
+GamePlay::GamePlay()
 {
     mLevel = std::make_unique<Level>();
-    mLevelView = std::make_unique<LevelView>(window, *mLevel);
+    mLevelView = std::make_unique<LevelView>(*mLevel);
     mUI = std::make_unique<UI>(*mLevel);
 }
 

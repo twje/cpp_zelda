@@ -10,10 +10,8 @@
 #include "Core/OstreamOverloads.h"
 #include <iostream>
 
-LevelView::LevelView(sf::RenderWindow &window, const Level &level)
-    : mWindow(window),
-      mLevel(level),
-      mView(sf::Vector2f(), sf::Vector2f(window.getSize()))
+LevelView::LevelView(const Level &level)
+    : mLevel(level)
 {
 }
 
@@ -21,7 +19,7 @@ void LevelView::Draw(sf::RenderWindow &window)
 {
     const Player &player = mLevel.GetPlayer();
     mView.setCenter(player.GetCenter());
-    mWindow.setView(mView);
+    window.setView(mView);
 
     mSortedSpriteGroup = mLevel.GetVisibleSpriteGroup();
     mSortedSpriteGroup.YSortGameObjects();
@@ -40,6 +38,11 @@ void LevelView::Draw(sf::RenderWindow &window)
     DebugWorldDraw(window);
     window.setView(window.getDefaultView());
     DebugHUDDraw(window);
+}
+
+void LevelView::OnWindowResize(sf::Vector2u size)
+{
+    mView.setSize(sf::Vector2f(size));
 }
 
 void LevelView::DebugWorldDraw(sf::RenderWindow &window)

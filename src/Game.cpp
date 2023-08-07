@@ -24,6 +24,6 @@ void Game::Setup()
     TextureManager::Create("../config/textures.cfg");
     GUIStyleManager::Create("../config/styles.cfg");
 
-    auto gamePlay = std::make_unique<GamePlay>(GetRenderWindow());
+    auto gamePlay = std::make_unique<GamePlay>();
     PushLayer(std::move(gamePlay));
 }
