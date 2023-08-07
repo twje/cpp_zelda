@@ -29,18 +29,7 @@ void ResourceManager<Derived, T>::Create(const std::string configFilePath)
         std::string resourcePath, resourceID;
         if (std::getline(iss >> std::ws, resourcePath, ',') && std::getline(iss >> std::ws, resourceID, ','))
         {
-            if (resourceID == "#ExtractLastDirectoryWithFilename")
-            {
-                mInstance->LoadResources(ResourceIDGeneratorPresets::ExtractLastDirectoryWithFilename, resourcePath);
-            }
-            else if (resourceID == "#Filename")
-            {
-                mInstance->LoadResources(ResourceIDGeneratorPresets::Filename, resourcePath);
-            }
-            else
-            {
-                mInstance->LoadResource(resourceID, resourcePath);
-            }
+            mInstance->LoadResource(resourceID, resourcePath);
         }
     }
 }
