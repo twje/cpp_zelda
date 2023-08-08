@@ -5,7 +5,7 @@
 std::string NormalzeResourceID(const std::string &resourceID);
 
 template <typename Derived, typename T>
-ResourceMap<T> GroupResourcesByPrefix(const ResourceManager<Derived, T> &manager)
+ResourceMap<T> GroupResourcesByPrefix(ResourceManager<Derived, T> &manager)
 {
     ResourceMap<T> result;
     for (const std::string &resourceID : manager.GetResourceIDs())

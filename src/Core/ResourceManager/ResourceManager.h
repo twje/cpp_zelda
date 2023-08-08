@@ -40,7 +40,7 @@ public:
     static ResourceManager &GetInstance();
 
     // Getters
-    const ResourcePtr<T> &GetResource(const std::string &resourceID) const;
+    const ResourcePtr<T> &GetResource(const std::string &resourceID);
     std::vector<std::string> GetResourceIDs() const;
 
 private:

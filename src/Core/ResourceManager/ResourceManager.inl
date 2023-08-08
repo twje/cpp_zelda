@@ -72,7 +72,7 @@ void ResourceManager<typename Derived, typename T>::LoadResources(TextureIDGener
 
 // Getters
 template <typename Derived, typename T>
-const ResourcePtr<T> &ResourceManager<typename Derived, typename T>::GetResource(const std::string &resourceID) const
+const ResourcePtr<T> &ResourceManager<typename Derived, typename T>::GetResource(const std::string &resourceID)
 {
     auto iter = mResources.find(resourceID);
     assert(iter != mResources.end());
