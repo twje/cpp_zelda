@@ -29,7 +29,7 @@ void ResourceManager<Derived, T>::Create(const std::string configFilePath)
         std::string resourceID, resourcePath;
         if (std::getline(iss >> std::ws, resourceID, ',') && std::getline(iss >> std::ws, resourcePath, ','))
         {
-            mInstance->LoadResource(resourceID, resourcePath);
+            mInstance->mManifest.emplace(resourceID, resourcePath);
         }
     }
 }
@@ -41,34 +41,35 @@ ResourceManager<Derived, T> &ResourceManager<Derived, T>::GetInstance()
     return *mInstance;
 }
 
-// Loaders
 template <typename Derived, typename T>
 ResourcePtr<T> ResourceManager<typename Derived, typename T>::Load(const std::string &path)
 {
     return static_cast<Derived *>(this)->Load(path);
 }
 
-template <typename Derived, typename T>
-void ResourceManager<typename Derived, typename T>::LoadResource(const std::string resourceID, const std::string &filePath)
-{
-    assert(fs::is_regular_file(filePath));
-    mResources[resourceID] = Load(filePath);
-}
-
 // Getters
 template <typename Derived, typename T>
-const ResourcePtr<T> &ResourceManager<typename Derived, typename T>::GetResource(const std::string &resourceID)
+std::shared_ptr<T> ResourceManager<typename Derived, typename T>::GetResource(const std::string &resourceID)
 {
     auto iter = mResources.find(resourceID);
-    assert(iter != mResources.end());
-    return iter->second;
+    if (iter != mResources.end())
+    {
+        if (auto resource = iter->second.lock())
+        {
+            return resource;
+        }
+    }
+
+    ResourcePtr<T> resource = Load(mManifest[resourceID]);
+    mResources[resourceID] = resource;
+    return resource;
 }
 
 template <typename Derived, typename T>
 std::vector<std::string> ResourceManager<typename Derived, typename T>::GetResourceIDs() const
 {
     std::vector<std::string> resourceIDs;
-    for (const auto &pair : mResources)
+    for (const auto &pair : mManifest)
     {
         resourceIDs.emplace_back(pair.first);
     }

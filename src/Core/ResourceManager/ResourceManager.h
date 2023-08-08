@@ -30,20 +30,19 @@ private:
     ResourceManager(const ResourceManager &) = delete;
     ResourceManager &operator=(const ResourceManager &) = delete;
 
-    // Loaders
     ResourcePtr<T> Load(const std::string &path);
-    void LoadResource(const std::string resourceID, const std::string &filePath);
 
 public:
     static void Create(const std::string configFilePath);
     static ResourceManager &GetInstance();
 
     // Getters
-    const ResourcePtr<T> &GetResource(const std::string &resourceID);
+    std::shared_ptr<T> GetResource(const std::string &resourceID);
     std::vector<std::string> GetResourceIDs() const;
 
 private:
-    std::map<std::string, ResourcePtr<T>> mResources;
+    std::map<std::string, std::weak_ptr<T>> mResources;
+    std::map<std::string, std::string> mManifest;
 };
 
 #include "Core/ResourceManager/ResourceManager.inl"
