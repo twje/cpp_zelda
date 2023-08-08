@@ -55,21 +55,6 @@ void ResourceManager<typename Derived, typename T>::LoadResource(const std::stri
     mResources[resourceID] = Load(filePath);
 }
 
-template <typename Derived, typename T>
-void ResourceManager<typename Derived, typename T>::LoadResources(TextureIDGenerator generator, const std::string &directoryPath)
-{
-    assert(fs::is_directory(directoryPath));
-
-    for (const auto &entry : fs::directory_iterator(directoryPath))
-    {
-        const fs::path &entryPath = entry.path();
-        if (fs::is_regular_file(entryPath))
-        {
-            mResources[generator(entryPath.string())] = Load(entryPath.string());
-        }
-    }
-}
-
 // Getters
 template <typename Derived, typename T>
 const ResourcePtr<T> &ResourceManager<typename Derived, typename T>::GetResource(const std::string &resourceID)
