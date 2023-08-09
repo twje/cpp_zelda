@@ -11,7 +11,8 @@
 class Bar : public GameObject
 {
 public:
-    Bar(const GuiStyle &style, uint16_t width, uint16_t height, float currentValue, float maxValue);
+    Bar() = default;
+    Bar(const std::shared_ptr<GuiStyle> &style, uint16_t width, uint16_t height, float currentValue, float maxValue);
 
     virtual void Draw(sf::RenderWindow &window);
 
@@ -23,7 +24,7 @@ public:
     virtual sf::FloatRect GetLocalBounds() const { return mLocalBounds; }
 
 private:
-    GuiStyle mStyle;
+    std::shared_ptr<GuiStyle> mStyle;
     sf::FloatRect mLocalBounds;
     sf::FloatRect mBackground;
     sf::FloatRect mForeground;
