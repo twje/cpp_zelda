@@ -5,10 +5,9 @@
 #include <map>
 #include <cassert>
 #include <fstream>
+#include <filesystem>
 
 #include <Core/Base.h>
-
-namespace fs = std::filesystem;
 
 // Type aliases
 template <typename T>

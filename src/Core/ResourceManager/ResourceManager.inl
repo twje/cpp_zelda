@@ -4,14 +4,13 @@ ResourceManager<Derived, T> *ResourceManager<Derived, T>::mInstance = nullptr;
 template <typename Derived, typename T>
 void ResourceManager<Derived, T>::Create(const std::string configFilePath)
 {
+    namespace fs = std::filesystem;
+
     assert(mInstance == nullptr);
     mInstance = new ResourceManager();
 
     std::ifstream file(configFilePath);
-    if (!file)
-    {
-        throw std::runtime_error("Failed to load configuration file " + configFilePath);
-    }
+    assert(file);
 
     std::string line;
     while (std::getline(file, line))
@@ -29,6 +28,7 @@ void ResourceManager<Derived, T>::Create(const std::string configFilePath)
         std::string resourceID, resourcePath;
         if (std::getline(iss >> std::ws, resourceID, ',') && std::getline(iss >> std::ws, resourcePath, ','))
         {
+            assert(fs::is_regular_file(resourcePath));
             mInstance->mManifest.emplace(resourceID, resourcePath);
         }
     }
