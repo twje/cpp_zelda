@@ -2,10 +2,11 @@
 
 sf::FloatRect InflateRect(const sf::FloatRect &source, float x, float y)
 {
+    // x and y is the total amount that rect is inflated by
     sf::FloatRect target = source;
-    target.left = source.left - x;
+    target.left = source.left - x / 2;
     target.width = source.width + x;
-    target.top = source.top - y;
+    target.top = source.top - y / 2;
     target.height = source.height + y;
     return target;
 }

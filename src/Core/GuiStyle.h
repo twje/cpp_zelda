@@ -25,6 +25,7 @@ public:
         sf::Color borderHighlightCol,
         sf::Color textCol,
         sf::Color textHighlightCol,
+        uint16_t textSize,
         float borderSize);
 
     // Resource dependencies
@@ -41,7 +42,8 @@ public:
     sf::Color GetBorderHighlightCol() const { return mBorderHighlightCol; }
     sf::Color GetTextCol() const { return mTextCol; }
     sf::Color GetTextHighlightCol() const { return mTextHighlightCol; }
-    sf::Font *GetFont() const {}
+    uint16_t GetTextSize() const { return mTextSize; }
+    const sf::Font &GetFont() const { return *mFont; }
     float GetBorderSize() const { return mBorderSize; }
 
 private:
@@ -57,6 +59,7 @@ private:
     sf::Color mTextHighlightCol{sf::Color::Black};
     std::string mFontResourceID{""};
     std::shared_ptr<sf::Font> mFont;
+    uint16_t mTextSize{20};
     float mBorderSize{0};
 };
 

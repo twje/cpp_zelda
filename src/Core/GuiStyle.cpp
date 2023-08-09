@@ -12,6 +12,7 @@ GuiStyle::GuiStyle(
     sf::Color borderHighlightCol,
     sf::Color textCol,
     sf::Color textHighlightCol,
+    uint16_t textSize,
     float borderSize)
     : mBackgroundCol(backgroundCol),
       mBackgroundHighlightCol(backgroundHighlightCol),
@@ -23,6 +24,7 @@ GuiStyle::GuiStyle(
       mBorderHighlightCol(borderHighlightCol),
       mTextCol(textCol),
       mTextHighlightCol(textHighlightCol),
+      mTextSize(textSize),
       mBorderSize(borderSize)
 {
 }
@@ -78,6 +80,7 @@ void GuiStyleSerializer::Serialize(const GuiStyle &style, const std::string &fil
   emitter << YAML::Key << "mBorderHighlightCol" << YAML::Value << style.mBorderHighlightCol;
   emitter << YAML::Key << "mTextCol" << YAML::Value << style.mTextCol;
   emitter << YAML::Key << "mTextHighlightCol" << YAML::Value << style.mTextHighlightCol;
+  emitter << YAML::Key << "mTextSize" << YAML::Value << style.mTextSize;
   emitter << YAML::Key << "mBorderSize" << YAML::Value << style.mBorderSize;
   emitter << YAML::Key << "mFontResourceID" << YAML::Value << style.mFontResourceID;
   emitter << YAML::EndMap;
@@ -109,6 +112,8 @@ void GuiStyleSerializer::Deserialize(GuiStyle &styleOut, const std::string &file
     styleOut.mTextCol = node["mTextCol"].as<sf::Color>();
   if (node["mTextHighlightCol"])
     styleOut.mTextHighlightCol = node["mTextHighlightCol"].as<sf::Color>();
+  if (node["mTextSize"])
+    styleOut.mTextSize = node["mTextSize"].as<uint16_t>();
   if (node["mBorderSize"])
     styleOut.mBorderSize = node["mBorderSize"].as<float>();
 
