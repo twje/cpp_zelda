@@ -10,7 +10,10 @@ void ResourceManager<Derived, T>::Create(const std::string configFilePath)
     mInstance = new ResourceManager();
 
     std::ifstream file(configFilePath);
-    assert(file);
+    if (!file.is_open())
+    {
+        throw std::runtime_error("Failed to load configuration file " + configFilePath);
+    }
 
     std::string line;
     while (std::getline(file, line))
@@ -28,7 +31,10 @@ void ResourceManager<Derived, T>::Create(const std::string configFilePath)
         std::string resourceID, resourcePath;
         if (std::getline(iss >> std::ws, resourceID, ',') && std::getline(iss >> std::ws, resourcePath, ','))
         {
-            assert(fs::is_regular_file(resourcePath));
+            if (!fs::is_regular_file(resourcePath))
+            {
+                throw std::runtime_error("Resouce " + resourcePath + " does not exist");
+            }
             mInstance->mManifest.emplace(resourceID, resourcePath);
         }
     }
