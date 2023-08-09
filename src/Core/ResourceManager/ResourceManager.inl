@@ -57,6 +57,8 @@ ResourcePtr<T> ResourceManager<typename Derived, typename T>::Load(const std::st
 template <typename Derived, typename T>
 std::shared_ptr<T> ResourceManager<typename Derived, typename T>::GetResource(const std::string &resourceID)
 {
+    assert(mManifest.find(resourceID) != mManifest.end());
+
     auto iter = mResources.find(resourceID);
     if (iter != mResources.end())
     {
