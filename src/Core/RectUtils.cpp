@@ -3,9 +3,9 @@
 sf::FloatRect InflateRect(const sf::FloatRect &source, float x, float y)
 {
     sf::FloatRect target = source;
-    target.left = source.left - x / 2;
+    target.left = source.left - x;
     target.width = source.width + x;
-    target.top = source.top - y / 2;
+    target.top = source.top - y;
     target.height = source.height + y;
     return target;
 }
