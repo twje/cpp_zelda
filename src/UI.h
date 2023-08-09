@@ -3,6 +3,9 @@
 // Core
 #include "Core/Layer.h"
 
+// Game
+#include "Bar.h"
+
 // Forward declarations
 class Level;
 
@@ -21,4 +24,6 @@ private:
 
 private:
     const Level &mLevel;
+    Bar mHealthBar;
+    Bar mEnergyBar;
 };
