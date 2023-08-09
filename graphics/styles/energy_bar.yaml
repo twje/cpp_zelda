@@ -1,4 +1,4 @@
 mBackgroundCol: [34, 34, 34, 255]
-mBodyCol: [255, 0, 0, 255]
+mBodyCol: [0, 0, 255, 255]
 mBorderCol: [17, 17, 17, 255]
 mBorderSize: 3
