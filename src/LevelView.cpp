@@ -36,8 +36,6 @@ void LevelView::Draw(sf::RenderWindow &window)
     }
 
     DebugWorldDraw(window);
-    window.setView(window.getDefaultView());
-    DebugHUDDraw(window);
 }
 
 void LevelView::OnWindowResize(sf::Vector2u size)
@@ -65,12 +63,4 @@ void LevelView::DebugHitbox(sf::RenderWindow &window)
     {
         DrawTransparentRectangle(window, sprite->GetHitbox(), sf::Color::Red, 2);
     }
-}
-
-void LevelView::DebugHUDDraw(sf::RenderWindow &window)
-{
-#ifdef DEBUG_BUILD
-    const Player &player = mLevel.GetPlayer();
-    DrawDebugString(window, player.GetAnimationGetSequenceID());
-#endif
 }

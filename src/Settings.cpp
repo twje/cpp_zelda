@@ -6,3 +6,10 @@ const std::map<std::string, WeaponData> WEAPON_DATA = {
     {"axe", {300, 20}},
     {"rapier", {50, 8}},
     {"sai", {80, 10}}};
+
+const std::map<std::string, uint16_t> PLAYER_STATS = {
+    {"health", 100},
+    {"energy", 60},
+    {"attack", 10},
+    {"magic", 4},
+    {"speed", 5}};

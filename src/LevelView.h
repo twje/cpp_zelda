@@ -22,7 +22,6 @@ private:
     void DebugWorldDraw(sf::RenderWindow &window);
     void DebugDrawPlayer(sf::RenderWindow &window);
     void DebugHitbox(sf::RenderWindow &window);
-    void DebugHUDDraw(sf::RenderWindow &window);
 
 private:
     const Level &mLevel;

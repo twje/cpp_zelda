@@ -19,6 +19,7 @@ constexpr uint16_t TILESIZE = 64;
 constexpr uint16_t BAR_HEIGHT = 20;
 constexpr uint16_t HEALTH_BAR_WIDTH = 200;
 constexpr uint16_t ENERGY_BAR_WIDTH = 140;
+constexpr uint16_t ITEM_BOX_SIZE = 80;
 
 enum class Direction
 {
@@ -40,3 +41,5 @@ struct WeaponData
 };
 
 extern const std::map<std::string, WeaponData> WEAPON_DATA;
+
+extern const std::map<std::string, uint16_t> PLAYER_STATS;

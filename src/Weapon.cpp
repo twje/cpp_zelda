@@ -11,15 +11,9 @@
 Weapon::Weapon(const Player &player)
     : Sprite()
 {
+    SetTexture(*GetDirectionTexture(player), true);
+
     std::string direction = player.GetDirection();
-
-    // Init texture
-    std::ostringstream oss;
-    oss << player.GetWeapon() << "_" << direction;
-    std::string textureID = oss.str();
-    SetTexture(*TextureManager::GetInstance().GetResource(textureID), true);
-
-    // Set position
     if (direction == "right")
     {
         SetPosition(GetRectMidRight(player.GetGlobalBounds()) - GetRectMidLeft(GetLocalBounds()) + sf::Vector2f(0, 16));
@@ -36,4 +30,20 @@ Weapon::Weapon(const Player &player)
     {
         SetPosition(GetRectMidTop(player.GetGlobalBounds()) - GetRectMidBottom(GetLocalBounds()) + sf::Vector2f(-10, 0));
     }
+}
+
+std::shared_ptr<sf::Texture> Weapon::GetDirectionTexture(const Player &player)
+{
+    std::string direction = player.GetDirection();
+    std::ostringstream oss;
+    oss << player.GetWeapon() << "_" << direction;
+    return TextureManager::GetInstance().GetResource(oss.str());
+}
+
+std::shared_ptr<sf::Texture> Weapon::GetIconTexture(const Player &player)
+{
+    std::string direction = player.GetDirection();
+    std::ostringstream oss;
+    oss << player.GetWeapon() << "_full";
+    return TextureManager::GetInstance().GetResource(oss.str());
 }

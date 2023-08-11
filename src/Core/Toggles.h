@@ -8,7 +8,7 @@ public:
     CooldownToggle(uint16_t cooldownTime, bool defaultState);
 
     bool Update(const sf::Time &timestamp);
-    bool Value() { return mState; }
+    bool Value() const { return mState; }
     void ToggleForCooldownTime(bool forceToggle = false);
 
 private:

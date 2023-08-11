@@ -2,5 +2,5 @@ mBackgroundCol: [34, 34, 34, 255]
 mBorderCol: [17, 17, 17, 255]
 mBorderSize: 3
 mFontResourceID: "joystix"
-mTextCol: [255, 255, 255, 255]
-mTextSize: 10
+mTextCol: [238, 238, 238, 255]
+mTextSize: 20

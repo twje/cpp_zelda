@@ -3,21 +3,96 @@
 
 // Core
 #include "Core/ResourceManager/GUIStyleManager.h"
+#include "Core/ResourceManager/TextureManager.h"
+
+// Game
+#include "Settings.h"
+#include "Weapon.h"
+
+namespace UIFactory
+{
+    static std::unique_ptr<Bar> CreateHealthBar(const Player &player)
+    {
+        return std::make_unique<Bar>(
+            GUIStyleManager::GetInstance().GetResource("health_bar"),
+            HEALTH_BAR_WIDTH,
+            BAR_HEIGHT,
+            player.GetHealth(),
+            PLAYER_STATS.at("health"));
+    }
+
+    static std::unique_ptr<Bar> CreateEnergyBar(const Player &player)
+    {
+        return std::make_unique<Bar>(
+            GUIStyleManager::GetInstance().GetResource("energy_bar"),
+            ENERGY_BAR_WIDTH,
+            BAR_HEIGHT,
+            player.GetEnergy(),
+            PLAYER_STATS.at("energy"));
+    }
+
+    static std::unique_ptr<InflatableTextBox> CreateEXPTextbox(const Player &player)
+    {
+        return std::make_unique<InflatableTextBox>(
+            GUIStyleManager::GetInstance().GetResource("player_exp_textbox"),
+            20.0f,
+            20.0f,
+            std::to_string(player.GetEXP()));
+    }
+
+    static std::unique_ptr<TextureOverlay> CreateWeaponOverlay(const Player &player)
+    {
+        return std::make_unique<TextureOverlay>(
+            GUIStyleManager::GetInstance().GetResource("weapon_overlay"),
+            TextureManager::GetInstance().GetResource("sai_up"), // fix
+            ITEM_BOX_SIZE,
+            ITEM_BOX_SIZE);
+    }
+}
 
 UI::UI(const Level &level)
-    : mLevel(level)
+    : mLevel(level),
+      mHealthBar(UIFactory::CreateHealthBar(level.GetPlayer())),
+      mEnergyBar(UIFactory::CreateEnergyBar(level.GetPlayer())),
+      mPlayerExp(UIFactory::CreateEXPTextbox(level.GetPlayer())),
+      mWeaponOverlay(UIFactory::CreateWeaponOverlay(level.GetPlayer()))
 {
-    auto &manager = GUIStyleManager::GetInstance();
+}
 
-    mHealthBar = Bar(manager.GetResource("health_bar"), HEALTH_BAR_WIDTH, BAR_HEIGHT, 50, 100);
-    mHealthBar.SetPosition(sf::Vector2f(10, 10));
-
-    mEnergyBar = Bar(manager.GetResource("energy_bar"), ENERGY_BAR_WIDTH, BAR_HEIGHT, 48, 60);
-    mEnergyBar.SetPosition(sf::Vector2f(10, 34));
+void UI::Update(const sf::Time &timestamp)
+{
+    const Player &player = mLevel.GetPlayer();
+    if (player.CanSwitchWeapon())
+    {
+        mWeaponOverlay->SetActive(false);
+    }
+    else
+    {
+        mWeaponOverlay->SetActive(true);
+    }
+    mWeaponOverlay->SetTexture(*Weapon::GetIconTexture(player));
+    mHealthBar->SetCurrentValue(player.GetHealth());
+    mEnergyBar->SetCurrentValue(player.GetEnergy());
+    mPlayerExp->SetText(std::to_string(player.GetEXP()));
 }
 
 void UI::Draw(sf::RenderWindow &window)
 {
-    mHealthBar.Draw(window);
-    mEnergyBar.Draw(window);
+    window.setView(mView);
+
+    mHealthBar->Draw(window);
+    mEnergyBar->Draw(window);
+    mPlayerExp->Draw(window);
+    mWeaponOverlay->Draw(window);
+}
+
+void UI::OnWindowResize(sf::Vector2u size)
+{
+    mView.setSize(sf::Vector2f(size));
+    mView.setCenter(sf::Vector2f(size) / 2.f);
+
+    mHealthBar->SetPosition(sf::Vector2f(10, 10));
+    mEnergyBar->SetPosition(sf::Vector2f(10, 34));
+    mPlayerExp->SetPosition(sf::Vector2f(size) - mPlayerExp->GetSize() - sf::Vector2f(10, 10));
+    mWeaponOverlay->SetPosition(sf::Vector2f(10, 630));
 }

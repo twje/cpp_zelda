@@ -3,7 +3,7 @@
 Bar::Bar(const std::shared_ptr<GuiStyle> &style, uint16_t width, uint16_t height, float currentValue, float maxValue)
     : mStyle(style),
       mLocalBounds(sf::FloatRect(sf::Vector2f(), sf::Vector2f(width, height))),
-      mBackground(InflateRect(mLocalBounds, -style->GetBorderSize(), -style->GetBorderSize(), true)),
+      mBackground(InflateRect(mLocalBounds, -style->GetBorderSize() * 2, -style->GetBorderSize() * 2)),
       mForeground(mBackground),
       mCurrentValue(currentValue),
       mMaxValue(maxValue)

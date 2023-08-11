@@ -72,7 +72,11 @@ add_library(ZeldaLibrary STATIC
     src/Core/GameObject.h
     src/Core/GameObject.cpp
     src/Core/GuiStyle.h
-    src/Core/GuiStyle.cpp    
+    src/Core/GuiStyle.cpp
+    src/Core/InflatableTextBox.h
+    src/Core/InflatableTextBox.cpp
+    src/Core/TextureOverlay.h
+    src/Core/TextureOverlay.cpp
     src/Bar.h
     src/Bar.cpp
     src/Weapon.h

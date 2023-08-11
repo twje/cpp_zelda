@@ -30,10 +30,16 @@ public:
     Player(sf::Vector2f position, const Group &obstacleSpriteGroup, Callback createAttack, Callback destroyAttack);
 
     void Update(const sf::Time &timestamp) override;
+    bool CanSwitchWeapon() const { return mCanSwitchWeapons.Value(); }
+
+    // Getters
     virtual sf::FloatRect GetHitbox() const override { return mHitBox; }
     std::string GetAnimationGetSequenceID() const { return mAnimation.GetSequenceID(); }
     std::string GetDirection() const;
     std::string GetWeapon() const { return GetWeaponByIndex(mWeaponIndex); }
+    uint16_t GetHealth() const { return mHealth; }
+    uint16_t GetEnergy() const { return mEnergy; }
+    uint16_t GetEXP() const { return mEXP; }
 
 private:
     void Input();
@@ -63,4 +69,8 @@ private:
     Callback mCreateAttack;
     Callback mDestroyAttack;
     size_t mWeaponIndex;
+    float mHealth;
+    float mEnergy;
+    float mEXP;
+    float mSpeed;
 };

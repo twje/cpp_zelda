@@ -1,14 +1,13 @@
 #include "Core/RectUtils.h"
 
-sf::FloatRect InflateRect(const sf::FloatRect &source, float x, float y, bool isFullInflate)
+sf::FloatRect InflateRect(const sf::FloatRect &source, float inflateX, float inflateY)
 {
     sf::FloatRect target = source;
 
-    float multiplayer = isFullInflate ? 2 : 1;
-    target.left = source.left - x / 2.0 * multiplayer;
-    target.width = source.width + x * multiplayer;
-    target.top = source.top - y / 2.0 * multiplayer;
-    target.height = source.height + y * multiplayer;
+    target.left = source.left - inflateX / 2.0;
+    target.width = source.width + inflateX;
+    target.top = source.top - inflateY / 2.0;
+    target.height = source.height + inflateY;
     return target;
 }
 

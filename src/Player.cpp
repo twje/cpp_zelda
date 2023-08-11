@@ -20,7 +20,11 @@ Player::Player(sf::Vector2f position, const Group &obstacleSpriteGroup, Callback
       mCanSwitchWeapons(200, true),
       mCreateAttack(createAttack),
       mDestroyAttack(destroyAttack),
-      mWeaponIndex(0)
+      mWeaponIndex(0),
+      mHealth(PLAYER_STATS.at("health") * 0.5),
+      mEnergy(PLAYER_STATS.at("energy") * 0.8),
+      mSpeed(PLAYER_STATS.at("speed")),
+      mEXP(123)
 {
     InitAnimation();
     mAnimation.SetAnimationSequence(mStatus);
@@ -168,9 +172,10 @@ void Player::Move(const sf::Time &timestamp)
         mDirection = mDirection.normalized();
     }
 
-    mHitBox.left += mDirection.x * SPEED * timestamp.asSeconds();
+    float speed = mSpeed * FPS * timestamp.asSeconds();
+    mHitBox.left += mDirection.x * speed;
     Collision(Direction::HORIZONTAL);
-    mHitBox.top += mDirection.y * SPEED * timestamp.asSeconds();
+    mHitBox.top += mDirection.y * speed;
     Collision(Direction::VERTICAL);
     SetPosition(GetRectCenter(mHitBox) - .5f * GetSize());
 }
