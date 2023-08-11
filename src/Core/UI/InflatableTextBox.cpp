@@ -1,4 +1,4 @@
-#include "Core/InflatableTextBox.h"
+#include "Core/UI/InflatableTextBox.h"
 
 // Core
 #include "Core/RectUtils.h"

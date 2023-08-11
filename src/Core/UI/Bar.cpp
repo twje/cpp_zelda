@@ -1,4 +1,4 @@
-#include "Bar.h"
+#include "Core/UI/Bar.h"
 
 Bar::Bar(const std::shared_ptr<GuiStyle> &style, uint16_t width, uint16_t height, float currentValue, float maxValue)
     : mStyle(style),

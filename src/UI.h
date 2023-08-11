@@ -3,11 +3,9 @@
 // Core
 #include "Core/Layer.h"
 #include "Core/RectUtils.h"
-#include "Core/InflatableTextBox.h"
-#include "Core/TextureOverlay.h"
-
-// Game
-#include "Bar.h"
+#include "Core/UI/InflatableTextBox.h"
+#include "Core/UI/TextureOverlay.h"
+#include "Core/UI/Bar.h"
 
 // Forward declarations
 class Level;
