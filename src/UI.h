@@ -9,6 +9,7 @@
 
 // Forward declarations
 class Level;
+class Player;
 
 class UI : public Layer
 {
@@ -20,16 +21,11 @@ public:
     virtual void OnWindowResize(sf::Vector2u size);
 
 private:
-    void ShowBar() {}
-    void ShowExperience() {}
-    void SelectionBox() {}
-    void WeaponOverlay() {}
-
-private:
     const Level &mLevel;
     std::unique_ptr<Bar> mHealthBar;
     std::unique_ptr<Bar> mEnergyBar;
     std::unique_ptr<InflatableTextBox> mPlayerExp;
     std::unique_ptr<TextureOverlay> mWeaponOverlay;
+    std::unique_ptr<TextureOverlay> mMagicOverlay;
     sf::View mView;
 };

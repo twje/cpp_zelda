@@ -8,8 +8,8 @@ const std::map<std::string, WeaponData> WEAPON_DATA = {
     {"sai", {80, 10}}};
 
 const std::map<std::string, MagicData> MAGIC_DATA = {
-    {"sword", {5, 20}},
-    {"lance", {20, 10}}};
+    {"flame", {5, 20}},
+    {"heal", {20, 10}}};
 
 const std::map<std::string, uint16_t> PLAYER_STATS = {
     {"health", 100},

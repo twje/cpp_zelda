@@ -43,8 +43,17 @@ namespace Factory
     static std::unique_ptr<TextureOverlay> CreateWeaponOverlay(const Player &player)
     {
         return std::make_unique<TextureOverlay>(
-            GUIStyleManager::GetInstance().GetResource("weapon_overlay"),
-            TextureManager::GetInstance().GetResource("sai_up"), // fix
+            GUIStyleManager::GetInstance().GetResource("overlay"),
+            player.GetWeaponIcon(),
+            ITEM_BOX_SIZE,
+            ITEM_BOX_SIZE);
+    }
+
+    static std::unique_ptr<TextureOverlay> CreateMagicOverlay(const Player &player)
+    {
+        return std::make_unique<TextureOverlay>(
+            GUIStyleManager::GetInstance().GetResource("overlay"),
+            player.GetMagicIcon(),
             ITEM_BOX_SIZE,
             ITEM_BOX_SIZE);
     }
@@ -55,7 +64,8 @@ UI::UI(const Level &level)
       mHealthBar(Factory::CreateHealthBar(level.GetPlayer())),
       mEnergyBar(Factory::CreateEnergyBar(level.GetPlayer())),
       mPlayerExp(Factory::CreateEXPTextbox(level.GetPlayer())),
-      mWeaponOverlay(Factory::CreateWeaponOverlay(level.GetPlayer()))
+      mWeaponOverlay(Factory::CreateWeaponOverlay(level.GetPlayer())),
+      mMagicOverlay(Factory::CreateMagicOverlay(level.GetPlayer()))
 {
 }
 
@@ -70,7 +80,18 @@ void UI::Update(const sf::Time &timestamp)
     {
         mWeaponOverlay->SetActive(true);
     }
-    mWeaponOverlay->SetTexture(*Weapon::GetIconTexture(player));
+
+    if (player.CanSwitchMagic())
+    {
+        mMagicOverlay->SetActive(false);
+    }
+    else
+    {
+        mMagicOverlay->SetActive(true);
+    }
+
+    mWeaponOverlay->SetTexture(player.GetWeaponIcon());
+    mMagicOverlay->SetTexture(player.GetMagicIcon());
     mHealthBar->SetCurrentValue(player.GetHealth());
     mEnergyBar->SetCurrentValue(player.GetEnergy());
     mPlayerExp->SetText(std::to_string(player.GetEXP()));
@@ -84,6 +105,7 @@ void UI::Draw(sf::RenderWindow &window)
     mEnergyBar->Draw(window);
     mPlayerExp->Draw(window);
     mWeaponOverlay->Draw(window);
+    mMagicOverlay->Draw(window);
 }
 
 void UI::OnWindowResize(sf::Vector2u size)
@@ -95,4 +117,5 @@ void UI::OnWindowResize(sf::Vector2u size)
     mEnergyBar->SetPosition(sf::Vector2f(10, 34));
     mPlayerExp->SetPosition(sf::Vector2f(size) - mPlayerExp->GetSize() - sf::Vector2f(10, 10));
     mWeaponOverlay->SetPosition(sf::Vector2f(10, 630));
+    mMagicOverlay->SetPosition(sf::Vector2f(80, 635));
 }

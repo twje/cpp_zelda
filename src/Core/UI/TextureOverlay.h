@@ -15,7 +15,7 @@ public:
 
     // Setters
     void SetActive(bool value) { mIsActive = value; }
-    void SetTexture(const sf::Texture &texture);
+    void TextureOverlay::SetTexture(const std::shared_ptr<sf::Texture> &texture);
 
     // Getters
     virtual sf::FloatRect GetLocalBounds() const { return mLocalBounds; }

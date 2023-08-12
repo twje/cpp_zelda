@@ -13,5 +13,4 @@ public:
 
     // Getters
     static std::shared_ptr<sf::Texture> GetDirectionTexture(const Player &player);
-    static std::shared_ptr<sf::Texture> GetIconTexture(const Player &player);
 };

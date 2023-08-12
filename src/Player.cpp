@@ -1,3 +1,5 @@
+#include <sstream>
+
 // Core
 #include "Core/Sprite.h"
 #include "Core/Group.h"
@@ -55,6 +57,19 @@ std::string Player::GetDirection() const
     return mStatus.substr(0, index);
 }
 
+std::shared_ptr<sf::Texture> Player::GetWeaponIcon() const
+{
+    std::string direction = GetDirection();
+    std::ostringstream oss;
+    oss << GetWeaponName() << "_full";
+    return TextureManager::GetInstance().GetResource(oss.str());
+}
+
+std::shared_ptr<sf::Texture> Player::GetMagicIcon() const
+{
+    return TextureManager::GetInstance().GetResource(GetMagicName());
+}
+
 void Player::Input()
 {
     if (!mIsAttacking.Value())
@@ -104,13 +119,14 @@ void Player::Input()
             CreateMagicAttack();
         }
 
-        // Switch weapons
+        // Switch weapon
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && mCanSwitchWeapons.Value())
         {
             mCanSwitchWeapons.ToggleForCooldownTime();
             mWeaponIndex = (mWeaponIndex + 1) % WEAPON_DATA.size();
         }
 
+        // Switch magic
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && mCanSwitchMagic.Value())
         {
             mCanSwitchMagic.ToggleForCooldownTime();
@@ -240,6 +256,14 @@ std::string Player::GetWeaponByIndex(size_t index) const
 {
     assert(index < WEAPON_DATA.size());
     auto it = WEAPON_DATA.begin();
+    std::advance(it, index);
+    return it->first;
+}
+
+std::string Player::GetMagicByIndex(size_t index) const
+{
+    assert(index < MAGIC_DATA.size());
+    auto it = MAGIC_DATA.begin();
     std::advance(it, index);
     return it->first;
 }

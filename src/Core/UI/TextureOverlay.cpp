@@ -28,9 +28,10 @@ void TextureOverlay::Draw(sf::RenderWindow &window)
     window.draw(mSprite, GetTransform());
 }
 
-void TextureOverlay::SetTexture(const sf::Texture &texture)
+void TextureOverlay::SetTexture(const std::shared_ptr<sf::Texture> &texture)
 {
-    mSprite.setTexture(texture, true);
+    mTexture = texture;
+    mSprite.setTexture(*mTexture, true);
     CenterSprite();
 }
 

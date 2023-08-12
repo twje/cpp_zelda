@@ -36,14 +36,6 @@ std::shared_ptr<sf::Texture> Weapon::GetDirectionTexture(const Player &player)
 {
     std::string direction = player.GetDirection();
     std::ostringstream oss;
-    oss << player.GetWeapon() << "_" << direction;
-    return TextureManager::GetInstance().GetResource(oss.str());
-}
-
-std::shared_ptr<sf::Texture> Weapon::GetIconTexture(const Player &player)
-{
-    std::string direction = player.GetDirection();
-    std::ostringstream oss;
-    oss << player.GetWeapon() << "_full";
+    oss << player.GetWeaponName() << "_" << direction;
     return TextureManager::GetInstance().GetResource(oss.str());
 }
