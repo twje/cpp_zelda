@@ -9,7 +9,7 @@
 
 struct SequenceFrame
 {
-    const TexturePtr &mTexture;
+    TexturePtr mTexture;
     sf::IntRect mTextureRect;
 };
 
