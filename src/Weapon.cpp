@@ -11,7 +11,7 @@
 Weapon::Weapon(const Player &player)
     : Sprite()
 {
-    SetTexture(*GetDirectionTexture(player), true);
+    SetTexture(GetDirectionTexture(player), true);
 
     std::string direction = player.GetDirection();
     if (direction == "right")

@@ -7,7 +7,7 @@
 #include "Tile.h"
 #include "Support.h"
 
-Tile::Tile(sf::Vector2f position, SpriteType spriteType, sf::Texture &texture)
+Tile::Tile(sf::Vector2f position, SpriteType spriteType, const std::shared_ptr<sf::Texture> &texture)
     : Sprite(texture),
       mSpriteType(spriteType)
 {

@@ -1,14 +1,21 @@
 #include "Core/Sprite.h"
 #include "Core/Group.h"
 
-Sprite::Sprite(const sf::Texture &texture)
-    : mSprite(texture)
+Sprite::Sprite(const std::shared_ptr<sf::Texture> &texture)
+    : mTexture(texture),
+      mSprite(*texture)
 {
 }
 
 Sprite::Sprite()
     : mSprite(GetPlaceholderTexture())
 {
+}
+
+void Sprite::SetTexture(const std::shared_ptr<sf::Texture> &texture, bool resetRect)
+{
+    mTexture = texture;
+    mSprite.setTexture(*mTexture, resetRect);
 }
 
 const sf::Texture &Sprite::GetPlaceholderTexture()

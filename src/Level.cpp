@@ -73,14 +73,14 @@ void Level::CreateMap()
 
                 if (layoutPair.first == "boundary")
                 {
-                    std::shared_ptr<Tile> tile = std::make_shared<Tile>(sf::Vector2f(x, y), SpriteType::INVISIBLE, *mInvisibleBlock);
+                    std::shared_ptr<Tile> tile = std::make_shared<Tile>(sf::Vector2f(x, y), SpriteType::INVISIBLE, mInvisibleBlock);
                     mObstacleSpriteGroup.Add(tile);
                 }
 
                 if (layoutPair.first == "grass")
                 {
                     TexturePtr &texture = getRandomElement(mGraphics["grass"]);
-                    std::shared_ptr<Tile> tile = std::make_shared<Tile>(sf::Vector2f(x, y), SpriteType::GRASS, *texture);
+                    std::shared_ptr<Tile> tile = std::make_shared<Tile>(sf::Vector2f(x, y), SpriteType::GRASS, texture);
                     mVisibleSpriteGroup.Add(tile);
                     mObstacleSpriteGroup.Add(tile);
                 }
@@ -88,7 +88,7 @@ void Level::CreateMap()
                 if (layoutPair.first == "object")
                 {
                     TexturePtr &texture = mGraphics["objects"].at(value);
-                    std::shared_ptr<Tile> tile = std::make_shared<Tile>(sf::Vector2f(x, y), SpriteType::OBJECT, *texture);
+                    std::shared_ptr<Tile> tile = std::make_shared<Tile>(sf::Vector2f(x, y), SpriteType::OBJECT, texture);
                     mVisibleSpriteGroup.Add(tile);
                     mObstacleSpriteGroup.Add(tile);
                 }
