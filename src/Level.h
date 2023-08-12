@@ -35,6 +35,11 @@ public:
 
 private:
     void CreateMap();
+
+    // Factory methods
+    static std::shared_ptr<Player> CreatePlayer(Level *level, float x, float y, const Group &obstacles);
+
+    // Callbacks
     void CreateAttack();
     void DestroyAttack();
 

@@ -96,8 +96,17 @@ void Level::CreateMap()
         }
     }
 
-    mPlayer = std::make_shared<Player>(sf::Vector2f(2000, 1430), mObstacleSpriteGroup, std::bind(&Level::CreateAttack, this), std::bind(&Level::DestroyAttack, this));
+    mPlayer = CreatePlayer(this, 2000, 1430, mObstacleSpriteGroup);
     mVisibleSpriteGroup.Add(mPlayer);
+}
+
+std::shared_ptr<Player> Level::CreatePlayer(Level *level, float x, float y, const Group &obstacles)
+{
+    return std::make_shared<Player>(
+        sf::Vector2f(x, y),
+        obstacles,
+        std::bind(&Level::CreateAttack, level),
+        std::bind(&Level::DestroyAttack, level));
 }
 
 void Level::CreateAttack()
