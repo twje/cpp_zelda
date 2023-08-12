@@ -24,7 +24,6 @@ class Player : public Sprite
     using Callback = std::function<void(Args...)>;
 
 private:
-    static constexpr int SPEED = 300;
     static constexpr int ANIMATION_FRAMES_PER_SECOND = 8;
 
 public:
