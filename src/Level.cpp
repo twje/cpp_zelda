@@ -102,10 +102,13 @@ void Level::CreateMap()
 
 std::shared_ptr<Player> Level::CreatePlayer(Level *level, float x, float y, const Group &obstacles)
 {
+    using namespace std::placeholders;
+
     return std::make_shared<Player>(
         sf::Vector2f(x, y),
         obstacles,
         std::bind(&Level::CreateAttack, level),
+        std::bind(&Level::CreateMagic, level, _1, _2, _3),
         std::bind(&Level::DestroyAttack, level));
 }
 
@@ -113,6 +116,13 @@ void Level::CreateAttack()
 {
     mCurrentAttack = std::make_shared<Weapon>(*mPlayer);
     mVisibleSpriteGroup.Add(mCurrentAttack);
+}
+
+void Level::CreateMagic(std::string style, uint16_t strength, uint16_t cost)
+{
+    std::cout << style << std::endl;
+    std::cout << strength << std::endl;
+    std::cout << cost << std::endl;
 }
 
 void Level::DestroyAttack()

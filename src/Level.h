@@ -41,6 +41,7 @@ private:
 
     // Callbacks
     void CreateAttack();
+    void CreateMagic(std::string style, uint16_t strength, uint16_t cost);
     void DestroyAttack();
 
 private:

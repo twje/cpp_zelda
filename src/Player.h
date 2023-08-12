@@ -20,14 +20,19 @@ class Group;
 
 class Player : public Sprite
 {
+    // Type aliases
     template <typename... Args>
     using Callback = std::function<void(Args...)>;
+
+    using CreateAttackCB = Callback<>;
+    using CreateMagicCB = Callback<std::string, uint16_t, uint16_t>;
+    using DestroyAttackCB = Callback<>;
 
 private:
     static constexpr int ANIMATION_FRAMES_PER_SECOND = 8;
 
 public:
-    Player(sf::Vector2f position, const Group &obstacleSpriteGroup, Callback<> createAttack, Callback<> destroyAttack);
+    Player(sf::Vector2f position, const Group &obstacleSpriteGroup, CreateAttackCB createAttack, CreateMagicCB mCreateMagic, DestroyAttackCB destroyAttack);
 
     void Update(const sf::Time &timestamp) override;
     bool CanSwitchWeapon() const { return mCanSwitchWeapons.Value(); }
@@ -66,8 +71,9 @@ private:
     CooldownToggle mIsAttacking;
     CooldownToggle mCanSwitchWeapons;
     Animation mAnimation;
-    Callback<> mCreateAttack;
-    Callback<> mDestroyAttack;
+    CreateAttackCB mCreateAttack;
+    CreateMagicCB mCreateMagic;
+    DestroyAttackCB mDestroyAttack;
     size_t mWeaponIndex;
     float mHealth;
     float mEnergy;

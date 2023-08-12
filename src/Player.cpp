@@ -11,7 +11,7 @@
 #include "Player.h"
 #include "Settings.h"
 
-Player::Player(sf::Vector2f position, const Group &obstacleSpriteGroup, Callback<> createAttack, Callback<> destroyAttack)
+Player::Player(sf::Vector2f position, const Group &obstacleSpriteGroup, CreateAttackCB createAttack, CreateMagicCB createMagic, DestroyAttackCB destroyAttack)
     : Sprite(),
       mObstacleSpriteGroup(obstacleSpriteGroup),
       mDirection(0, 0),
@@ -19,6 +19,7 @@ Player::Player(sf::Vector2f position, const Group &obstacleSpriteGroup, Callback
       mIsAttacking(400, false),
       mCanSwitchWeapons(200, true),
       mCreateAttack(createAttack),
+      mCreateMagic(createMagic),
       mDestroyAttack(destroyAttack),
       mWeaponIndex(0),
       mHealth(PLAYER_STATS.at("health") * 0.5),
