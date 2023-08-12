@@ -11,7 +11,7 @@
 #include "Player.h"
 #include "Settings.h"
 
-Player::Player(sf::Vector2f position, const Group &obstacleSpriteGroup, Callback createAttack, Callback destroyAttack)
+Player::Player(sf::Vector2f position, const Group &obstacleSpriteGroup, Callback<> createAttack, Callback<> destroyAttack)
     : Sprite(),
       mObstacleSpriteGroup(obstacleSpriteGroup),
       mDirection(0, 0),

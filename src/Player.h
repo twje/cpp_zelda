@@ -20,14 +20,15 @@ class Group;
 
 class Player : public Sprite
 {
-    using Callback = std::function<void()>;
+    template <typename... Args>
+    using Callback = std::function<void(Args...)>;
 
 private:
     static constexpr int SPEED = 300;
     static constexpr int ANIMATION_FRAMES_PER_SECOND = 8;
 
 public:
-    Player(sf::Vector2f position, const Group &obstacleSpriteGroup, Callback createAttack, Callback destroyAttack);
+    Player(sf::Vector2f position, const Group &obstacleSpriteGroup, Callback<> createAttack, Callback<> destroyAttack);
 
     void Update(const sf::Time &timestamp) override;
     bool CanSwitchWeapon() const { return mCanSwitchWeapons.Value(); }
@@ -66,8 +67,8 @@ private:
     CooldownToggle mIsAttacking;
     CooldownToggle mCanSwitchWeapons;
     Animation mAnimation;
-    Callback mCreateAttack;
-    Callback mDestroyAttack;
+    Callback<> mCreateAttack;
+    Callback<> mDestroyAttack;
     size_t mWeaponIndex;
     float mHealth;
     float mEnergy;
