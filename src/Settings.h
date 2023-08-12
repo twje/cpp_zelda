@@ -36,10 +36,16 @@ enum class SpriteType
 
 struct WeaponData
 {
-    int mCooldown;
-    int mDamage;
+    uint16_t mCooldown;
+    uint16_t mDamage;
+};
+
+struct MagicData
+{
+    uint16_t mStrength;
+    uint16_t mCost;
 };
 
 extern const std::map<std::string, WeaponData> WEAPON_DATA;
-
+extern const std::map<std::string, MagicData> MAGIC_DATA;
 extern const std::map<std::string, uint16_t> PLAYER_STATS;

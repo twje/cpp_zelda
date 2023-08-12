@@ -59,7 +59,9 @@ private:
     bool IsMovingLeft() { return mDirection.x < 0; }
     bool IsMovingUp() { return mDirection.y < 0; }
     bool IsMovingDown() { return mDirection.y > 0; }
+
     std::string GetWeaponByIndex(size_t index) const;
+    void CreateMagicAttack();
     void UpdateSequenceFrame();
     void InitAnimation();
 
@@ -70,11 +72,13 @@ private:
     sf::FloatRect mHitBox;
     CooldownToggle mIsAttacking;
     CooldownToggle mCanSwitchWeapons;
+    CooldownToggle mCanSwitchMagic;
     Animation mAnimation;
     CreateAttackCB mCreateAttack;
     CreateMagicCB mCreateMagic;
     DestroyAttackCB mDestroyAttack;
     size_t mWeaponIndex;
+    size_t mMagicIndex;
     float mHealth;
     float mEnergy;
     float mEXP;

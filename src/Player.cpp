@@ -18,10 +18,12 @@ Player::Player(sf::Vector2f position, const Group &obstacleSpriteGroup, CreateAt
       mStatus("down"),
       mIsAttacking(400, false),
       mCanSwitchWeapons(200, true),
+      mCanSwitchMagic(200, true),
       mCreateAttack(createAttack),
       mCreateMagic(createMagic),
       mDestroyAttack(destroyAttack),
       mWeaponIndex(0),
+      mMagicIndex(0),
       mHealth(PLAYER_STATS.at("health") * 0.5),
       mEnergy(PLAYER_STATS.at("energy") * 0.8),
       mSpeed(PLAYER_STATS.at("speed")),
@@ -99,6 +101,7 @@ void Player::Input()
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
         {
             mIsAttacking.ToggleForCooldownTime();
+            CreateMagicAttack();
         }
 
         // Switch weapons
@@ -106,6 +109,12 @@ void Player::Input()
         {
             mCanSwitchWeapons.ToggleForCooldownTime();
             mWeaponIndex = (mWeaponIndex + 1) % WEAPON_DATA.size();
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && mCanSwitchMagic.Value())
+        {
+            mCanSwitchMagic.ToggleForCooldownTime();
+            mMagicIndex = (mMagicIndex + 1) % MAGIC_DATA.size();
         }
     }
 }
@@ -152,6 +161,7 @@ void Player::Cooldowns(const sf::Time &timestamp)
         mDestroyAttack();
     }
     mCanSwitchWeapons.Update(timestamp);
+    mCanSwitchMagic.Update(timestamp);
 }
 
 void Player::Animate(const sf::Time &timestamp)
@@ -232,6 +242,17 @@ std::string Player::GetWeaponByIndex(size_t index) const
     auto it = WEAPON_DATA.begin();
     std::advance(it, index);
     return it->first;
+}
+
+void Player::CreateMagicAttack()
+{
+    auto it = MAGIC_DATA.begin();
+    std::advance(it, mMagicIndex);
+
+    std::string style = it->first;
+    float strength = it->second.mStrength + PLAYER_STATS.at("magic");
+    float cost = it->second.mCost;
+    mCreateMagic(style, strength, cost);
 }
 
 void Player::UpdateSequenceFrame()
