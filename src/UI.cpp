@@ -9,7 +9,7 @@
 #include "Settings.h"
 #include "Weapon.h"
 
-namespace UIFactory
+namespace Factory
 {
     static std::unique_ptr<Bar> CreateHealthBar(const Player &player)
     {
@@ -52,10 +52,10 @@ namespace UIFactory
 
 UI::UI(const Level &level)
     : mLevel(level),
-      mHealthBar(UIFactory::CreateHealthBar(level.GetPlayer())),
-      mEnergyBar(UIFactory::CreateEnergyBar(level.GetPlayer())),
-      mPlayerExp(UIFactory::CreateEXPTextbox(level.GetPlayer())),
-      mWeaponOverlay(UIFactory::CreateWeaponOverlay(level.GetPlayer()))
+      mHealthBar(Factory::CreateHealthBar(level.GetPlayer())),
+      mEnergyBar(Factory::CreateEnergyBar(level.GetPlayer())),
+      mPlayerExp(Factory::CreateEXPTextbox(level.GetPlayer())),
+      mWeaponOverlay(Factory::CreateWeaponOverlay(level.GetPlayer()))
 {
 }
 
