@@ -1,4 +1,4 @@
-#include "Core/AnimationSequence.h"
+#include "Core/Animation/AnimationSequence.h"
 
 AnimationSequence::AnimationSequence(float framesPerSecond)
     : mFrameTime(1.0f / framesPerSecond),

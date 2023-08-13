@@ -6,7 +6,7 @@
 
 // Core Game
 #include "Core/ResourceManager/ResourceManager.h"
-#include "Core/Animation.h"
+#include "Core/Animation/Animation.h"
 
 class AnimationManager : public ResourceManager<AnimationManager, Animation>
 {

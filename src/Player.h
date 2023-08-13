@@ -6,9 +6,9 @@
 #include <SFML/Graphics.hpp>
 
 // Core
+#include "Core/Animation/Animation.h"
 #include "Core/Base.h"
 #include "Core/Sprite.h"
-#include "Core/Animation.h"
 #include "Core/Toggles.h"
 
 // Game

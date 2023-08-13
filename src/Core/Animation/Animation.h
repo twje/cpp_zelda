@@ -4,8 +4,9 @@
 
 #include <SFML/Graphics.hpp>
 
+// Core
 #include "Core/Base.h"
-#include "Core/AnimationSequence.h"
+#include "Core/Animation/AnimationSequence.h"
 
 class Animation
 {

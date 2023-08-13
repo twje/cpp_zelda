@@ -57,10 +57,10 @@ add_library(ZeldaLibrary STATIC
     src/Core/Group.cpp
     src/Core/Sprite.h
     src/Core/Sprite.cpp    
-    src/Core/Animation.h
-    src/Core/Animation.cpp
-    src/Core/AnimationSequence.h
-    src/Core/AnimationSequence.cpp
+    src/Core/Animation/Animation.h
+    src/Core/Animation/Animation.cpp
+    src/Core/Animation/AnimationSequence.h
+    src/Core/Animation/AnimationSequence.cpp
     src/Core/Toggles.h
     src/Core/Toggles.cpp
     src/Core/RectUtils.h
