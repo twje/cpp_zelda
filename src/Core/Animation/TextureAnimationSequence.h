@@ -2,10 +2,15 @@
 
 #include "Core/Animation/AnimationSequence.h"
 
+// Forward declarations
+class FrameGenerator;
+
 class TextureAnimationSequence : public AnimationSequence
 {
 public:
-    TextureAnimationSequence(uint8_t framesPerSecond, const TextureVector &textures);
+    TextureAnimationSequence(uint8_t framesPerSecond, std::unique_ptr<FrameGenerator> frameGenerator);
+
+    void Serialize() override;
 
 private:
     virtual const size_t GetFrameCount() const { return mTextures.size(); }
@@ -13,4 +18,5 @@ private:
 
 private:
     TextureVector mTextures;
+    std::unique_ptr<FrameGenerator> mFrameGenerator;
 };

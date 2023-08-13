@@ -15,3 +15,15 @@ ResourceMap<T> GroupResourcesByPrefix(ResourceManager<Derived, T> &manager)
     }
     return result;
 }
+
+template <typename Derived, typename T>
+std::map<std::string, std::vector<std::string>> GroupResources(ResourceManager<Derived, T> &manager)
+{
+    std::map<std::string, std::vector<std::string>> result;
+    for (const std::string &resourceID : manager.GetResourceIDs())
+    {
+        std::string prefix = NormalzeResourceID(resourceID);
+        result[prefix].emplace_back(resourceID);
+    }
+    return result;
+}

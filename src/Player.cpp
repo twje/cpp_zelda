@@ -7,6 +7,7 @@
 #include "Core/ResourceManager/ResourceManagerUtils.h"
 #include "Core/ResourceManager/TextureManager.h"
 #include "Core/Animation/TextureAnimationSequence.h"
+#include "Core/Animation/FrameGenerators.h"
 #include "Core/RectUtils.h"
 
 // Game
@@ -296,10 +297,10 @@ void Player::UpdateSequenceFrame()
 
 void Player::InitAnimation()
 {
-    TextureMap textureMap = GroupResourcesByPrefix(TextureManager::GetInstance());
+    std::map<std::string, std::vector<std::string>> textureMap = GroupResources(TextureManager::GetInstance());
     for (const auto &entry : textureMap)
     {
-        auto sequence = CreateScope<TextureAnimationSequence>(ANIMATION_FRAMES_PER_SECOND, entry.second);
+        auto sequence = CreateScope<TextureAnimationSequence>(ANIMATION_FRAMES_PER_SECOND, std::make_unique<ListFrameGenerator>(entry.second));
         mAnimation.AddAnimationSequence(entry.first, std::move(sequence));
     }
 }
