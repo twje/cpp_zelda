@@ -48,6 +48,7 @@ add_library(ZeldaLibrary STATIC
     src/Core/ResourceManager/TextureManager.h
     src/Core/ResourceManager/GUIStyleManager.h
     src/Core/ResourceManager/FontManager.h
+    src/Core/ResourceManager/AnimationManager.h
     src/Core/Base.h
     src/Core/OstreamOverloads.h    
     src/Core/Debug.h

@@ -1,0 +1,8 @@
+- key: down
+  frames:
+    textures:
+      prefix: 'down_'
+      start: 0
+      end: 3
+      zeroPad: 1
+  frameRate: 10

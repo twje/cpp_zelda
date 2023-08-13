@@ -8,6 +8,7 @@
 #include "Core/ResourceManager/FontManager.h"
 #include "Core/ResourceManager/TextureManager.h"
 #include "Core/ResourceManager/GUIStyleManager.h"
+#include "Core/ResourceManager/AnimationManager.h"
 
 // Game
 #include "Level.h"
@@ -23,6 +24,7 @@ void Game::Setup()
     FontManager::Create("../config/fonts.cfg");
     TextureManager::Create("../config/textures.cfg");
     GUIStyleManager::Create("../config/styles.cfg");
+    AnimationManager::Create("../config/animations.cfg");
 
     auto level = std::make_unique<Level>();
     PushLayer(std::move(level));
