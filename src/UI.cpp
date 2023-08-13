@@ -44,7 +44,7 @@ namespace Factory
     {
         return std::make_unique<TextureOverlay>(
             GUIStyleManager::GetInstance().GetResource("overlay"),
-            player.GetWeaponIcon(),
+            player.GetWeaponIconTexture(),
             ITEM_BOX_SIZE,
             ITEM_BOX_SIZE);
     }
@@ -53,7 +53,7 @@ namespace Factory
     {
         return std::make_unique<TextureOverlay>(
             GUIStyleManager::GetInstance().GetResource("overlay"),
-            player.GetMagicIcon(),
+            player.GetMagicIconTexture(),
             ITEM_BOX_SIZE,
             ITEM_BOX_SIZE);
     }

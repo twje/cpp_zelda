@@ -57,7 +57,7 @@ std::string Player::GetDirection() const
     return mStatus.substr(0, index);
 }
 
-std::shared_ptr<sf::Texture> Player::GetWeaponIcon() const
+std::shared_ptr<sf::Texture> Player::GetWeaponIconTexture() const
 {
     std::string direction = GetDirection();
     std::ostringstream oss;
@@ -65,7 +65,7 @@ std::shared_ptr<sf::Texture> Player::GetWeaponIcon() const
     return TextureManager::GetInstance().GetResource(oss.str());
 }
 
-std::shared_ptr<sf::Texture> Player::GetMagicIcon() const
+std::shared_ptr<sf::Texture> Player::GetMagicIconTexture() const
 {
     return TextureManager::GetInstance().GetResource(GetMagicName());
 }
