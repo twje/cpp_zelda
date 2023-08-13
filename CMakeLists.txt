@@ -49,6 +49,12 @@ add_library(ZeldaLibrary STATIC
     src/Core/ResourceManager/GUIStyleManager.h
     src/Core/ResourceManager/FontManager.h
     src/Core/ResourceManager/AnimationManager.h
+    src/Core/Animation/Animation.h
+    src/Core/Animation/Animation.cpp
+    src/Core/Animation/AnimationSequence.h
+    src/Core/Animation/AnimationSequence.cpp
+    src/Core/Animation/TextureAnimationSequence.h
+    src/Core/Animation/TextureAnimationSequence.cpp
     src/Core/Base.h
     src/Core/OstreamOverloads.h    
     src/Core/Debug.h
@@ -57,10 +63,6 @@ add_library(ZeldaLibrary STATIC
     src/Core/Group.cpp
     src/Core/Sprite.h
     src/Core/Sprite.cpp    
-    src/Core/Animation/Animation.h
-    src/Core/Animation/Animation.cpp
-    src/Core/Animation/AnimationSequence.h
-    src/Core/Animation/AnimationSequence.cpp
     src/Core/Toggles.h
     src/Core/Toggles.cpp
     src/Core/RectUtils.h
