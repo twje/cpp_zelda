@@ -20,16 +20,13 @@ class Group;
 
 class Player : public Sprite
 {
-    // Type aliases
-    template <typename... Args>
-    using Callback = std::function<void(Args...)>;
-
-    using CreateAttackCB = Callback<>;
-    using CreateMagicCB = Callback<std::string, uint16_t, uint16_t>;
-    using DestroyAttackCB = Callback<>;
+    using CreateAttackCB = std::function<void()>;
+    using CreateMagicCB = std::function<void(std::string, uint16_t, uint16_t)>;
+    using DestroyAttackCB = std::function<void()>;
 
 private:
     static constexpr int ANIMATION_FRAMES_PER_SECOND = 8;
+    static constexpr int TOGGLE_COOLDONW_MS = 200;
 
 public:
     Player(sf::Vector2f position, const Group &obstacleSpriteGroup, CreateAttackCB createAttack, CreateMagicCB mCreateMagic, DestroyAttackCB destroyAttack);
@@ -40,13 +37,11 @@ public:
 
     // Getters
     virtual sf::FloatRect GetHitbox() const override { return mHitBox; }
-    std::string GetAnimationGetSequenceID() const { return mAnimation.GetSequenceID(); }
     std::string GetDirection() const;
     uint16_t GetHealth() const { return mHealth; }
     uint16_t GetEnergy() const { return mEnergy; }
     uint16_t GetEXP() const { return mEXP; }
-    std::string GetWeaponName() const { return GetWeaponByIndex(mWeaponIndex); }
-    std::string GetMagicName() const { return GetMagicByIndex(mMagicIndex); }
+
     std::shared_ptr<sf::Texture> Player::GetWeaponTexture() const;
     std::shared_ptr<sf::Texture> GetWeaponIconTexture() const;
     std::shared_ptr<sf::Texture> GetMagicIconTexture() const;
@@ -65,6 +60,8 @@ private:
     bool IsMovingUp() { return mDirection.y < 0; }
     bool IsMovingDown() { return mDirection.y > 0; }
 
+    std::string GetWeaponName() const { return GetWeaponByIndex(mWeaponIndex); }
+    std::string GetMagicName() const { return GetMagicByIndex(mMagicIndex); }
     std::string GetWeaponByIndex(size_t index) const;
     std::string GetMagicByIndex(size_t index) const;
     void CreateMagicAttack();
