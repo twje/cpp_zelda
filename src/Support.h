@@ -12,8 +12,6 @@ using Textures = std::vector<sf::Texture>;
 
 namespace fs = std::filesystem;
 
-std::unique_ptr<sf::Texture> createTexture(uint16_t width, uint16_t height, sf::Color color);
-
 std::unique_ptr<CSVData> readCSV(const std::string &csvFilepath);
 
 template <typename T>

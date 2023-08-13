@@ -7,19 +7,6 @@
 #include <cstdlib>
 #include <iostream>
 
-std::unique_ptr<sf::Texture> createTexture(uint16_t width, uint16_t height, sf::Color color)
-{
-    sf::Image image;
-    image.create(sf::Vector2u(width, height), color);
-    auto texture = std::make_unique<sf::Texture>();
-    if (!texture->loadFromImage(image))
-    {
-        throw std::runtime_error("Failed to create texture");
-    }
-
-    return texture;
-}
-
 std::unique_ptr<CSVData> readCSV(const std::string &csvFilepath)
 {
     std::ifstream file(csvFilepath);

@@ -45,7 +45,7 @@ void Level::CreateMap()
     mGraphics.emplace("objects", textureMap["objects"]);
 
     mFloor = textureManager.GetResource("ground");
-    mInvisibleBlock = createTexture(TILESIZE, TILESIZE, sf::Color(0, 0, 0, 0));
+    mInvisibleBlock = textureManager.GetResource("invisible_block");
 
     // layouts
     std::map<std::string, std::unique_ptr<CSVData>> layouts;
