@@ -19,8 +19,19 @@
 #include "LevelView.h"
 #include "UI.h"
 
+namespace Factory
+{
+    class LevelFriend
+    {
+    public:
+        static std::shared_ptr<Player> CreatePlayer(Level *level, float x, float y, const Group &obstacles);
+    };
+}
+
 class Level : public Layer
 {
+    friend class Factory::LevelFriend;
+
 public:
     Level();
 
@@ -35,9 +46,6 @@ public:
 
 private:
     void CreateMap();
-
-    // Factory methods
-    static std::shared_ptr<Player> CreatePlayer(Level *level, float x, float y, const Group &obstacles);
 
     // Callbacks
     void CreateAttack();

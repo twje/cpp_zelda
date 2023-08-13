@@ -15,7 +15,7 @@ namespace fs = std::filesystem;
 std::unique_ptr<CSVData> readCSV(const std::string &csvFilepath);
 
 template <typename T>
-T &getRandomElement(std::vector<T> &vec)
+const T &getRandomElement(const std::vector<T> &vec)
 {
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
 

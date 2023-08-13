@@ -10,6 +10,46 @@
 // Game
 #include "Level.h"
 
+namespace Factory
+{
+    std::shared_ptr<Player> LevelFriend::CreatePlayer(Level *level, float x, float y, const Group &obstacles)
+    {
+        using namespace std::placeholders;
+
+        return std::make_shared<Player>(
+            sf::Vector2f(x, y),
+            obstacles,
+            std::bind(&Level::CreateAttack, level),
+            std::bind(&Level::CreateMagic, level, _1, _2, _3),
+            std::bind(&Level::DestroyAttack, level));
+    }
+
+    static std::shared_ptr<Tile>
+    CreateInvisibleTile(float x, float y)
+    {
+        return std::make_shared<Tile>(
+            sf::Vector2f(x, y),
+            SpriteType::INVISIBLE,
+            TextureManager::GetInstance().GetResource("invisible_block"));
+    }
+
+    static std::shared_ptr<Tile> CreateGrassTile(const TextureMap &graphics, float x, float y)
+    {
+        return std::make_shared<Tile>(
+            sf::Vector2f(x, y),
+            SpriteType::GRASS,
+            getRandomElement(graphics.at("grass")));
+    }
+
+    static std::shared_ptr<Tile> CreateObjectTile(const TextureMap &graphics, uint16_t objectID, float x, float y)
+    {
+        return std::make_shared<Tile>(
+            sf::Vector2f(x, y),
+            SpriteType::OBJECT,
+            graphics.at("objects")[objectID]);
+    }
+}
+
 Level::Level()
 {
     CreateMap();
@@ -73,22 +113,20 @@ void Level::CreateMap()
 
                 if (layoutPair.first == "boundary")
                 {
-                    std::shared_ptr<Tile> tile = std::make_shared<Tile>(sf::Vector2f(x, y), SpriteType::INVISIBLE, mInvisibleBlock);
+                    std::shared_ptr<Tile> tile = Factory::CreateInvisibleTile(x, y);
                     mObstacleSpriteGroup.Add(tile);
                 }
 
                 if (layoutPair.first == "grass")
                 {
-                    TexturePtr &texture = getRandomElement(mGraphics["grass"]);
-                    std::shared_ptr<Tile> tile = std::make_shared<Tile>(sf::Vector2f(x, y), SpriteType::GRASS, texture);
+                    std::shared_ptr<Tile> tile = Factory::CreateGrassTile(mGraphics, x, y);
                     mVisibleSpriteGroup.Add(tile);
                     mObstacleSpriteGroup.Add(tile);
                 }
 
                 if (layoutPair.first == "object")
                 {
-                    TexturePtr &texture = mGraphics["objects"].at(value);
-                    std::shared_ptr<Tile> tile = std::make_shared<Tile>(sf::Vector2f(x, y), SpriteType::OBJECT, texture);
+                    std::shared_ptr<Tile> tile = Factory::CreateObjectTile(mGraphics, value, x, y);
                     mVisibleSpriteGroup.Add(tile);
                     mObstacleSpriteGroup.Add(tile);
                 }
@@ -96,20 +134,8 @@ void Level::CreateMap()
         }
     }
 
-    mPlayer = CreatePlayer(this, 2000, 1430, mObstacleSpriteGroup);
+    mPlayer = Factory::LevelFriend::CreatePlayer(this, 2000, 1430, mObstacleSpriteGroup);
     mVisibleSpriteGroup.Add(mPlayer);
-}
-
-std::shared_ptr<Player> Level::CreatePlayer(Level *level, float x, float y, const Group &obstacles)
-{
-    using namespace std::placeholders;
-
-    return std::make_shared<Player>(
-        sf::Vector2f(x, y),
-        obstacles,
-        std::bind(&Level::CreateAttack, level),
-        std::bind(&Level::CreateMagic, level, _1, _2, _3),
-        std::bind(&Level::DestroyAttack, level));
 }
 
 void Level::CreateAttack()
