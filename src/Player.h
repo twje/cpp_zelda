@@ -47,6 +47,7 @@ public:
     uint16_t GetEXP() const { return mEXP; }
     std::string GetWeaponName() const { return GetWeaponByIndex(mWeaponIndex); }
     std::string GetMagicName() const { return GetMagicByIndex(mMagicIndex); }
+    std::shared_ptr<sf::Texture> Player::GetWeaponTexture() const;
     std::shared_ptr<sf::Texture> GetWeaponIconTexture() const;
     std::shared_ptr<sf::Texture> GetMagicIconTexture() const;
 

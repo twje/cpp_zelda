@@ -10,7 +10,4 @@ class Weapon : public Sprite
 {
 public:
     Weapon(const Player &player);
-
-    // Getters
-    static std::shared_ptr<sf::Texture> GetDirectionTexture(const Player &player);
 };

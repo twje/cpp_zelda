@@ -90,8 +90,8 @@ void UI::Update(const sf::Time &timestamp)
         mMagicOverlay->SetActive(true);
     }
 
-    mWeaponOverlay->SetTexture(player.GetWeaponIcon());
-    mMagicOverlay->SetTexture(player.GetMagicIcon());
+    mWeaponOverlay->SetTexture(player.GetWeaponIconTexture());
+    mMagicOverlay->SetTexture(player.GetMagicIconTexture());
     mHealthBar->SetCurrentValue(player.GetHealth());
     mEnergyBar->SetCurrentValue(player.GetEnergy());
     mPlayerExp->SetText(std::to_string(player.GetEXP()));
