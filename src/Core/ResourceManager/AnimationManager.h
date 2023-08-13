@@ -13,6 +13,6 @@ class AnimationManager : public ResourceManager<AnimationManager, Animation>
 public:
     std::shared_ptr<Animation> Load(const std::string &filePath)
     {
-        return nullptr;
+        return std::make_shared<Animation>();
     }
 };

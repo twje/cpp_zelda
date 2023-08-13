@@ -6,6 +6,7 @@
 #include "Core/Debug.h"
 #include "Core/ResourceManager/ResourceManagerUtils.h"
 #include "Core/ResourceManager/TextureManager.h"
+#include "Core/Animation/TextureAnimationSequence.h"
 #include "Core/RectUtils.h"
 
 // Game
