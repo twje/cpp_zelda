@@ -36,12 +36,15 @@ public:
     static ResourceManager &GetInstance();
 
     // Getters
+    std::unique_ptr<T> LoadUnique(const std::string &resourceID);
     std::shared_ptr<T> GetResource(const std::string &resourceID);
     std::vector<std::string> GetResourceIDs() const;
 
+protected:
+    std::map<std::string, std::string> mManifest;
+
 private:
     std::map<std::string, std::weak_ptr<T>> mResources;
-    std::map<std::string, std::string> mManifest;
 };
 
 #include "Core/ResourceManager/ResourceManager.inl"

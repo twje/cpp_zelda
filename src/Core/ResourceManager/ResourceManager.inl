@@ -53,6 +53,12 @@ ResourcePtr<T> ResourceManager<typename Derived, typename T>::Load(const std::st
     return static_cast<Derived *>(this)->Load(path);
 }
 
+template <typename Derived, typename T>
+std::unique_ptr<T> ResourceManager<typename Derived, typename T>::LoadUnique(const std::string &resourceID)
+{
+    return static_cast<Derived *>(this)->LoadUnique(resourceID);
+}
+
 // Getters
 template <typename Derived, typename T>
 std::shared_ptr<T> ResourceManager<typename Derived, typename T>::GetResource(const std::string &resourceID)

@@ -1,8 +1,84 @@
 - key: down
   frames:
-    textures:
-      prefix: 'down_'
-      start: 0
-      end: 3
-      zeroPad: 1
-  frameRate: 10
+    TextureAnimationSequence:
+      framesPerSecond: 8
+      textures:
+        - down_0
+        - down_1
+        - down_2
+        - down_3
+- key: down_attack
+  frames:
+    TextureAnimationSequence:
+      framesPerSecond: 8
+      textures:
+        - down_attack
+- key: down_idle
+  frames:
+    TextureAnimationSequence:      
+      framesPerSecond: 8
+      textures:
+        - down_idle
+- key: left
+  frames:
+    TextureAnimationSequence:
+      framesPerSecond: 8
+      textures:
+        - left_0
+        - left_1
+        - left_2
+        - left_3
+- key: left_attack
+  frames:
+    TextureAnimationSequence:
+      framesPerSecond: 8
+      textures:
+        - left_attack
+- key: left_idle
+  frames:
+    TextureAnimationSequence:      
+      framesPerSecond: 8
+      textures:
+        - left_idle
+- key: right
+  frames:
+    TextureAnimationSequence:     
+      framesPerSecond: 8
+      textures:
+        - right_0
+        - right_1
+        - right_2
+        - right_3
+- key: right_attack
+  frames:
+    TextureAnimationSequence:      
+      framesPerSecond: 8
+      textures:
+        - right_attack
+- key: right_idle
+  frames:
+    TextureAnimationSequence:      
+      framesPerSecond: 8
+      textures:
+        - right_idle
+- key: up
+  frames:
+    TextureAnimationSequence:      
+      framesPerSecond: 8
+      textures:
+        - up_0
+        - up_1
+        - up_2
+        - up_3
+- key: up_attack
+  frames:
+    TextureAnimationSequence:
+      framesPerSecond: 8
+      textures:
+        - up_attack
+- key: up_idle
+  frames:
+    TextureAnimationSequence:
+      framesPerSecond: 8
+      textures:
+        - up_idle

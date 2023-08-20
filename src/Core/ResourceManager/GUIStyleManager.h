@@ -17,4 +17,9 @@ public:
         GuiStyleSerializer::Deserialize(*guiStyle, filePath);
         return guiStyle;
     }
+
+    std::unique_ptr<GuiStyle> LoadUnique(const std::string resourceID)
+    {
+        throw std::runtime_error("Not implemented");
+    }
 };

@@ -25,7 +25,6 @@ class Player : public Sprite
     using DestroyAttackCB = std::function<void()>;
 
 private:
-    static constexpr int ANIMATION_FRAMES_PER_SECOND = 8;
     static constexpr int TOGGLE_COOLDONW_MS = 200;
 
 public:
@@ -66,7 +65,6 @@ private:
     std::string GetMagicByIndex(size_t index) const;
     void CreateMagicAttack();
     void UpdateSequenceFrame();
-    void InitAnimation();
 
 private:
     const Group &mObstacleSpriteGroup;
@@ -76,7 +74,7 @@ private:
     CooldownToggle mIsAttacking;
     CooldownToggle mCanSwitchWeapons;
     CooldownToggle mCanSwitchMagic;
-    Animation mAnimation;
+    std::unique_ptr<Animation> mAnimation;
     CreateAttackCB mCreateAttack;
     CreateMagicCB mCreateMagic;
     DestroyAttackCB mDestroyAttack;

@@ -21,4 +21,9 @@ public:
         }
         return font;
     }
+
+    std::unique_ptr<sf::Font> LoadUnique(const std::string resourceID)
+    {
+        throw std::runtime_error("Not implemented");
+    }
 };

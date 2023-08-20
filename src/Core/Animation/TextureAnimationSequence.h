@@ -2,21 +2,23 @@
 
 #include "Core/Animation/AnimationSequence.h"
 
-// Forward declarations
-class FrameGenerator;
-
 class TextureAnimationSequence : public AnimationSequence
 {
-public:
-    TextureAnimationSequence(uint8_t framesPerSecond, std::unique_ptr<FrameGenerator> frameGenerator);
+    using TexturePair = std::pair<std::string, std::shared_ptr<sf::Texture>>;
 
-    void Serialize() override;
+public:
+    TextureAnimationSequence();
+    TextureAnimationSequence(uint8_t framesPerSecond, std::vector<std::string> frameIDs);
+    void AddFrame(std::string frameID);
+
+    // Serializable
+    void Serialize(YAML::Emitter &emitter) override;
+    void Deserialize(const YAML::Node &node) override;
 
 private:
-    virtual const size_t GetFrameCount() const { return mTextures.size(); }
+    virtual const size_t GetFrameCount() const { return mFrames.size(); }
     SequenceFrame GetTextureAtIndex(size_t index) const override;
 
 private:
-    TextureVector mTextures;
-    std::unique_ptr<FrameGenerator> mFrameGenerator;
+    std::vector<TexturePair> mFrames;
 };

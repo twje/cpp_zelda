@@ -6,9 +6,10 @@
 
 // Core
 #include "Core/Base.h"
+#include "Core/Serializable.h"
 #include "Core/Animation/AnimationSequence.h"
 
-class Animation
+class Animation : public Serializable
 {
     using SequenceMap = std::map<std::string, Scope<AnimationSequence>>;
 
@@ -20,6 +21,12 @@ public:
     void SetAnimationSequence(const std::string &sequenceID);
     SequenceFrame GetSequenceFrame() const { return mCurrentSequence->GetSequenceFrame(); }
     const std::string &GetSequenceID() const { return mSequenceID; }
+
+    // Serializable
+    void LoadFromFile(const std::string &filePath);
+    void SaveToFile(const std::string &filePath);
+    void Serialize(YAML::Emitter &emitter) override;
+    void Deserialize(const YAML::Node &node) override;
 
 private:
     std::string mSequenceID;

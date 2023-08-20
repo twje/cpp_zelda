@@ -6,8 +6,8 @@
 #include "Core/Debug.h"
 #include "Core/ResourceManager/ResourceManagerUtils.h"
 #include "Core/ResourceManager/TextureManager.h"
+#include "Core/ResourceManager/AnimationManager.h"
 #include "Core/Animation/TextureAnimationSequence.h"
-#include "Core/Animation/FrameGenerators.h"
 #include "Core/RectUtils.h"
 
 // Game
@@ -23,6 +23,7 @@ Player::Player(sf::Vector2f position, const Group &obstacleSpriteGroup, CreateAt
       mIsAttacking(400, false),
       mCanSwitchWeapons(TOGGLE_COOLDONW_MS, true),
       mCanSwitchMagic(TOGGLE_COOLDONW_MS, true),
+      mAnimation(AnimationManager::GetInstance().LoadUnique("player")),
       mCreateAttack(createAttack),
       mCreateMagic(createMagic),
       mDestroyAttack(destroyAttack),
@@ -33,8 +34,7 @@ Player::Player(sf::Vector2f position, const Group &obstacleSpriteGroup, CreateAt
       mSpeed(PLAYER_STATS.at("speed")),
       mEXP(123)
 {
-    InitAnimation();
-    mAnimation.SetAnimationSequence(mStatus);
+    mAnimation->SetAnimationSequence(mStatus);
     UpdateSequenceFrame();
     SetPosition(position);
     mHitBox = InflateRect(GetGlobalBounds(), 0, -26);
@@ -191,12 +191,12 @@ void Player::Cooldowns(const sf::Time &timestamp)
 
 void Player::Animate(const sf::Time &timestamp)
 {
-    if (mStatus != mAnimation.GetSequenceID())
+    if (mStatus != mAnimation->GetSequenceID())
     {
-        mAnimation.SetAnimationSequence(mStatus);
+        mAnimation->SetAnimationSequence(mStatus);
     }
 
-    mAnimation.Update(timestamp);
+    mAnimation->Update(timestamp);
     UpdateSequenceFrame();
     SetPosition(GetRectCenter(mHitBox) - .5f * GetSize());
 }
@@ -290,17 +290,7 @@ void Player::CreateMagicAttack()
 
 void Player::UpdateSequenceFrame()
 {
-    SequenceFrame &frame = mAnimation.GetSequenceFrame();
+    SequenceFrame &frame = mAnimation->GetSequenceFrame();
     SetTexture(frame.mTexture);
     SetTextureRect(frame.mTextureRect);
-}
-
-void Player::InitAnimation()
-{
-    std::map<std::string, std::vector<std::string>> textureMap = GroupResources(TextureManager::GetInstance());
-    for (const auto &entry : textureMap)
-    {
-        auto sequence = CreateScope<TextureAnimationSequence>(ANIMATION_FRAMES_PER_SECOND, std::make_unique<ListFrameGenerator>(entry.second));
-        mAnimation.AddAnimationSequence(entry.first, std::move(sequence));
-    }
 }
