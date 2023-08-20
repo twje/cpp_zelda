@@ -8,17 +8,17 @@
 // Core
 #include "Core/Animation/Animation.h"
 #include "Core/Base.h"
-#include "Core/Sprite.h"
 #include "Core/Toggles.h"
 
 // Game
 #include "Support.h"
 #include "Settings.h"
+#include "Entity.h"
 
 // Forward Declarations
 class Group;
 
-class Player : public Sprite
+class Player : public Entity
 {
     using CreateAttackCB = std::function<void()>;
     using CreateMagicCB = std::function<void(std::string, uint16_t, uint16_t)>;
@@ -50,14 +50,6 @@ private:
     void Cooldowns(const sf::Time &timestamp);
     void UpdateStatus();
     void Animate(const sf::Time &timestamp);
-    void Move(const sf::Time &timestamp);
-    void Collision(Direction direction);
-
-    // Helper Methods
-    bool IsMovingRight() { return mDirection.x > 0; }
-    bool IsMovingLeft() { return mDirection.x < 0; }
-    bool IsMovingUp() { return mDirection.y < 0; }
-    bool IsMovingDown() { return mDirection.y > 0; }
 
     std::string GetWeaponName() const { return GetWeaponByIndex(mWeaponIndex); }
     std::string GetMagicName() const { return GetMagicByIndex(mMagicIndex); }
@@ -67,10 +59,7 @@ private:
     void UpdateSequenceFrame();
 
 private:
-    const Group &mObstacleSpriteGroup;
     std::string mStatus;
-    sf::Vector2f mDirection;
-    sf::FloatRect mHitBox;
     CooldownToggle mIsAttacking;
     CooldownToggle mCanSwitchWeapons;
     CooldownToggle mCanSwitchMagic;

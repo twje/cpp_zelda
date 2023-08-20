@@ -15,10 +15,8 @@
 #include "Player.h"
 #include "Settings.h"
 
-Player::Player(sf::Vector2f position, const Group &obstacleSpriteGroup, CreateAttackCB createAttack, CreateMagicCB createMagic, DestroyAttackCB destroyAttack)
-    : Sprite(),
-      mObstacleSpriteGroup(obstacleSpriteGroup),
-      mDirection(0, 0),
+Player::Player(sf::Vector2f position, const Group &obstacles, CreateAttackCB createAttack, CreateMagicCB createMagic, DestroyAttackCB destroyAttack)
+    : Entity(obstacles),
       mStatus("down"),
       mIsAttacking(400, false),
       mCanSwitchWeapons(TOGGLE_COOLDONW_MS, true),
@@ -46,7 +44,7 @@ void Player::Update(const sf::Time &timestamp)
     Cooldowns(timestamp);
     UpdateStatus();
     Animate(timestamp);
-    Move(timestamp);
+    Move(timestamp, mSpeed);
 }
 
 std::string Player::GetDirection() const
@@ -199,66 +197,6 @@ void Player::Animate(const sf::Time &timestamp)
     mAnimation->Update(timestamp);
     UpdateSequenceFrame();
     SetPosition(GetRectCenter(mHitBox) - .5f * GetSize());
-}
-
-void Player::Move(const sf::Time &timestamp)
-{
-    if (mDirection.lengthSq() != 0)
-    {
-        mDirection = mDirection.normalized();
-    }
-
-    float speed = mSpeed * FPS * timestamp.asSeconds();
-    mHitBox.left += mDirection.x * speed;
-    Collision(Direction::HORIZONTAL);
-    mHitBox.top += mDirection.y * speed;
-    Collision(Direction::VERTICAL);
-    SetPosition(GetRectCenter(mHitBox) - .5f * GetSize());
-}
-
-void Player::Collision(Direction direction)
-{
-    if (direction == Direction::HORIZONTAL)
-    {
-        for (const auto &sprite : mObstacleSpriteGroup.GetGameObjects())
-        {
-            auto result = sprite->GetHitbox().findIntersection(mHitBox);
-            if (result.has_value())
-            {
-                const auto spriteHitbox = sprite->GetHitbox();
-                if (IsMovingRight())
-                {
-                    mHitBox.left = spriteHitbox.left - mHitBox.width;
-                }
-
-                if (IsMovingLeft())
-                {
-                    mHitBox.left = spriteHitbox.left + spriteHitbox.width;
-                }
-            }
-        }
-    }
-
-    if (direction == Direction::VERTICAL)
-    {
-        for (const auto &sprite : mObstacleSpriteGroup.GetGameObjects())
-        {
-            auto result = sprite->GetHitbox().findIntersection(mHitBox);
-            if (result.has_value())
-            {
-                const auto spriteHitbox = sprite->GetHitbox();
-                if (IsMovingDown())
-                {
-                    mHitBox.top = spriteHitbox.top - mHitBox.height;
-                }
-
-                if (IsMovingUp())
-                {
-                    mHitBox.top = spriteHitbox.top + spriteHitbox.height;
-                }
-            }
-        }
-    }
 }
 
 std::string Player::GetWeaponByIndex(size_t index) const

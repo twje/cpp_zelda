@@ -54,7 +54,8 @@ add_library(ZeldaLibrary STATIC
     src/Core/Animation/AnimationSequence.h
     src/Core/Animation/AnimationSequence.cpp
     src/Core/Animation/TextureAnimationSequence.h
-    src/Core/Animation/TextureAnimationSequence.cpp
+    src/Core/Animation/TextureAnimationSequence.cpp    
+    src/Core/Serializable.h
     src/Core/Base.h
     src/Core/OstreamOverloads.h    
     src/Core/Debug.h
@@ -82,6 +83,8 @@ add_library(ZeldaLibrary STATIC
     src/Core/UI/TextureOverlay.cpp
     src/Core/UI/Bar.h
     src/Core/UI/Bar.cpp
+    src/Entity.h
+    src/Entity.cpp
     src/Weapon.h
     src/Weapon.cpp
     src/Support.h
