@@ -11,7 +11,7 @@ class Entity : public Sprite
 public:
     Entity(const Group &obstacles);
 
-    void Move(const sf::Time &timestamp, float speed);
+    void Move(const sf::Time &timestamp, float pixelsPerFrame);
     void Collision(Direction direction);
 
     // Helper Methods
