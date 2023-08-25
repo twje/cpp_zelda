@@ -31,7 +31,8 @@ enum class SpriteType
 {
     GRASS,
     OBJECT,
-    INVISIBLE
+    INVISIBLE,
+    ENEMY
 };
 
 struct WeaponData
@@ -46,6 +47,20 @@ struct MagicData
     uint16_t mCost;
 };
 
+struct MonsterData
+{
+    uint16_t health;
+    uint16_t exp;
+    uint16_t damage;
+    uint16_t speed;
+    uint16_t resistance;
+    uint16_t attack_radius;
+    uint16_t notice_radius;
+    std::string attack_type;
+    std::string attack_sound;
+};
+
 extern const std::map<std::string, WeaponData> WEAPON_DATA;
 extern const std::map<std::string, MagicData> MAGIC_DATA;
+extern const std::map<std::string, MonsterData> MONSTER_DATA;
 extern const std::map<std::string, uint16_t> PLAYER_STATS;

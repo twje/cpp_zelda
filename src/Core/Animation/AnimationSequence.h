@@ -23,6 +23,7 @@ public:
 
     void Update(const sf::Time &timestamp);
     SequenceFrame GetSequenceFrame() const { return GetTextureAtIndex(mFrameIndex); }
+    bool IsAllFramesPlayed() const { return mIsAllFramesPlayed; }
     void Reset();
 
     // Serializable
@@ -39,4 +40,5 @@ private:
     float mFrameTime{0.0f};
     float mElapsedTime{0.0f};
     size_t mFrameIndex{0};
+    bool mIsAllFramesPlayed{false};
 };

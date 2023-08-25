@@ -36,6 +36,7 @@ public:
     Level();
 
     void Update(const sf::Time &timestamp) override;
+    void UpdateEnemies(const sf::Time &timestamp);
     void Draw(sf::RenderWindow &window) override;
     void OnWindowResize(sf::Vector2u size) override;
 
@@ -55,6 +56,7 @@ private:
 private:
     Ref<Player> mPlayer;
     Ref<Weapon> mCurrentAttack;
+    Group mEnemies;
     Group mVisibleSpriteGroup;
     Group mObstacleSpriteGroup;
     TextureMap mGraphics;

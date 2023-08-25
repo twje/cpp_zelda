@@ -1,0 +1,27 @@
+- key: attack
+  frames:
+    TextureAnimationSequence:
+      framesPerSecond: 8
+      textures:
+        - spirit_attack_0
+        - spirit_attack_0
+        - spirit_attack_0
+        - spirit_attack_0
+- key: idle
+  frames:
+    TextureAnimationSequence:
+      framesPerSecond: 8
+      textures:
+        - spirit_idle_0
+        - spirit_idle_1
+        - spirit_idle_2
+        - spirit_idle_3
+- key: move
+  frames:
+    TextureAnimationSequence:
+      framesPerSecond: 8
+      textures:
+        - spirit_move_0
+        - spirit_move_1
+        - spirit_move_2
+        - spirit_move_3

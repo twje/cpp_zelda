@@ -1,0 +1,30 @@
+- key: attack
+  frames:
+    TextureAnimationSequence:
+      framesPerSecond: 8
+      textures:
+        - raccoon_attack_0
+        - raccoon_attack_1
+        - raccoon_attack_2
+        - raccoon_attack_3
+- key: idle
+  frames:
+    TextureAnimationSequence:
+      framesPerSecond: 8
+      textures:        
+        - raccoon_idle_0
+        - raccoon_idle_1
+        - raccoon_idle_2
+        - raccoon_idle_3
+        - raccoon_idle_4
+        - raccoon_idle_5
+- key: move
+  frames:
+    TextureAnimationSequence:
+      framesPerSecond: 8
+      textures:           
+        - raccoon_move_0
+        - raccoon_move_1
+        - raccoon_move_2
+        - raccoon_move_3
+        - raccoon_move_4

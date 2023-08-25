@@ -21,6 +21,10 @@ void CooldownToggle::ToggleForCooldownTime(bool forceToggle)
 {
     if (forceToggle || !IsOn())
     {
+        if (forceToggle)
+        {
+            mElapsedTime = 0;
+        }
         TurnOn();
     }
 }

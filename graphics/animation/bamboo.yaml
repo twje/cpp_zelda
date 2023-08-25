@@ -1,0 +1,24 @@
+- key: attack
+  frames:
+    TextureAnimationSequence:
+      framesPerSecond: 8
+      textures:
+        - bamboo_attack_0
+- key: idle
+  frames:
+    TextureAnimationSequence:
+      framesPerSecond: 8
+      textures:
+        - bamboo_idle_0
+        - bamboo_idle_1
+        - bamboo_idle_2
+        - bamboo_idle_3
+- key: move
+  frames:
+    TextureAnimationSequence:
+      framesPerSecond: 8
+      textures:
+        - bamboo_move_0
+        - bamboo_move_1
+        - bamboo_move_2
+        - bamboo_move_3

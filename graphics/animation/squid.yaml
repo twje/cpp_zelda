@@ -1,0 +1,25 @@
+- key: attack
+  frames:
+    TextureAnimationSequence:
+      framesPerSecond: 8
+      textures:
+        - squid_attack_0        
+- key: idle
+  frames:
+    TextureAnimationSequence:
+      framesPerSecond: 8
+      textures:
+        - squid_idle_0        
+        - squid_idle_1
+        - squid_idle_2
+        - squid_idle_3
+        - squid_idle_4
+- key: move
+  frames:
+    TextureAnimationSequence:
+      framesPerSecond: 8
+      textures:
+        - squid_move_0
+        - squid_move_1
+        - squid_move_2
+        - squid_move_3

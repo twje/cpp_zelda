@@ -9,6 +9,7 @@
 
 // Game
 #include "Level.h"
+#include "Enemy.h"
 
 namespace Factory
 {
@@ -48,6 +49,11 @@ namespace Factory
             SpriteType::OBJECT,
             graphics.at("objects")[objectID]);
     }
+
+    static std::shared_ptr<Enemy> CreateEnemy(std::string name, float x, float y, const Group &obstacles)
+    {
+        return std::make_shared<Enemy>(name, sf::Vector2f(x, y), obstacles);
+    }
 }
 
 Level::Level()
@@ -61,6 +67,16 @@ void Level::Update(const sf::Time &timestamp)
 {
     mVisibleSpriteGroup.Update(timestamp);
     mUI->Update(timestamp);
+    UpdateEnemies(timestamp);
+}
+
+void Level::UpdateEnemies(const sf::Time &timestamp)
+{
+    for (auto &gameObject : mEnemies.GetGameObjects())
+    {
+        auto enemy = std::static_pointer_cast<Enemy>(gameObject);
+        enemy->EnemyUpdate(*mPlayer);
+    }
 }
 
 void Level::Draw(sf::RenderWindow &window)
@@ -92,6 +108,7 @@ void Level::CreateMap()
     layouts.emplace("boundary", readCSV("../map/map_FloorBlocks.csv"));
     layouts.emplace("grass", readCSV("../map/map_Grass.csv"));
     layouts.emplace("object", readCSV("../map/map_Objects.csv"));
+    layouts.emplace("entities", readCSV("../map/map_Entities.csv"));
 
     for (const auto &layoutPair : layouts)
     {
@@ -130,12 +147,37 @@ void Level::CreateMap()
                     mVisibleSpriteGroup.Add(tile);
                     mObstacleSpriteGroup.Add(tile);
                 }
+
+                if (layoutPair.first == "entities")
+                {
+                    if (value == 394)
+                    {
+                        mPlayer = Factory::LevelFriend::CreatePlayer(this, x, y, mObstacleSpriteGroup);
+                        mVisibleSpriteGroup.Add(mPlayer);
+                    }
+                    else
+                    {
+                        std::string name = "squid";
+                        switch (value)
+                        {
+                        case 390:
+                            name = "bamboo";
+                            break;
+                        case 391:
+                            name = "spirit";
+                            break;
+                        case 392:
+                            name = "raccoon";
+                            break;
+                        }
+                        auto enemy = Factory::CreateEnemy(name, x, y, mObstacleSpriteGroup);
+                        mVisibleSpriteGroup.Add(enemy);
+                        mEnemies.Add(enemy);
+                    }
+                }
             }
         }
     }
-
-    mPlayer = Factory::LevelFriend::CreatePlayer(this, 2000, 1430, mObstacleSpriteGroup);
-    mVisibleSpriteGroup.Add(mPlayer);
 }
 
 void Level::CreateAttack()

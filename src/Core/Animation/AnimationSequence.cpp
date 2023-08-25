@@ -12,7 +12,13 @@ void AnimationSequence::Update(const sf::Time &timestamp)
     if (mElapsedTime > mFrameTime)
     {
         mElapsedTime -= mFrameTime;
-        mFrameIndex = (mFrameIndex + 1) % GetFrameCount();
+
+        mFrameIndex++;
+        if (mFrameIndex >= GetFrameCount())
+        {
+            mFrameIndex = 0;
+            mIsAllFramesPlayed = true;
+        }
     }
 }
 
@@ -20,6 +26,7 @@ void AnimationSequence::Reset()
 {
     mElapsedTime = 0.0f;
     mFrameIndex = 0;
+    mIsAllFramesPlayed = false;
 }
 
 // ------------

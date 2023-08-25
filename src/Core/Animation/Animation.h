@@ -21,6 +21,7 @@ public:
     void SetAnimationSequence(const std::string &sequenceID);
     SequenceFrame GetSequenceFrame() const { return mCurrentSequence->GetSequenceFrame(); }
     const std::string &GetSequenceID() const { return mSequenceID; }
+    bool IsAllFramesPlayed() { return mCurrentSequence->IsAllFramesPlayed(); }
 
     // Serializable
     void LoadFromFile(const std::string &filePath);

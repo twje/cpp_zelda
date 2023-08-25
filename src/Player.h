@@ -28,7 +28,7 @@ private:
     static constexpr int TOGGLE_COOLDONW_MS = 200;
 
 public:
-    Player(sf::Vector2f position, const Group &obstacleSpriteGroup, CreateAttackCB createAttack, CreateMagicCB mCreateMagic, DestroyAttackCB destroyAttack);
+    Player(sf::Vector2f position, const Group &obstacles, CreateAttackCB createAttack, CreateMagicCB mCreateMagic, DestroyAttackCB destroyAttack);
 
     void Update(const sf::Time &timestamp) override;
     bool CanSwitchWeapon() const { return mCanSwitchWeapons.Value(); }
