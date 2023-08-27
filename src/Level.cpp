@@ -65,7 +65,7 @@ Level::Level()
 
 void Level::Update(const sf::Time &timestamp)
 {
-    mVisibleSpriteGroup.Update(timestamp);
+    mVisibleGroup.Update(timestamp);
     mUI->Update(timestamp);
     UpdateEnemies(timestamp);
 }
@@ -131,29 +131,29 @@ void Level::CreateMap()
                 if (layoutPair.first == "boundary")
                 {
                     std::shared_ptr<Tile> tile = Factory::CreateInvisibleTile(x, y);
-                    mObstacleSpriteGroup.Add(tile);
+                    mObstacleGroup.Add(tile);
                 }
 
                 if (layoutPair.first == "grass")
                 {
                     std::shared_ptr<Tile> tile = Factory::CreateGrassTile(mGraphics, x, y);
-                    mVisibleSpriteGroup.Add(tile);
-                    mObstacleSpriteGroup.Add(tile);
+                    mVisibleGroup.Add(tile);
+                    mObstacleGroup.Add(tile);
                 }
 
                 if (layoutPair.first == "object")
                 {
                     std::shared_ptr<Tile> tile = Factory::CreateObjectTile(mGraphics, value, x, y);
-                    mVisibleSpriteGroup.Add(tile);
-                    mObstacleSpriteGroup.Add(tile);
+                    mVisibleGroup.Add(tile);
+                    mObstacleGroup.Add(tile);
                 }
 
                 if (layoutPair.first == "entities")
                 {
                     if (value == 394)
                     {
-                        mPlayer = Factory::LevelFriend::CreatePlayer(this, x, y, mObstacleSpriteGroup);
-                        mVisibleSpriteGroup.Add(mPlayer);
+                        mPlayer = Factory::LevelFriend::CreatePlayer(this, x, y, mObstacleGroup);
+                        mVisibleGroup.Add(mPlayer);
                     }
                     else
                     {
@@ -170,8 +170,8 @@ void Level::CreateMap()
                             name = "raccoon";
                             break;
                         }
-                        auto enemy = Factory::CreateEnemy(name, x, y, mObstacleSpriteGroup);
-                        mVisibleSpriteGroup.Add(enemy);
+                        auto enemy = Factory::CreateEnemy(name, x, y, mObstacleGroup);
+                        mVisibleGroup.Add(enemy);
                         mEnemies.Add(enemy);
                     }
                 }
@@ -183,7 +183,7 @@ void Level::CreateMap()
 void Level::CreateAttack()
 {
     mCurrentAttack = std::make_shared<Weapon>(*mPlayer);
-    mVisibleSpriteGroup.Add(mCurrentAttack);
+    mVisibleGroup.Add(mCurrentAttack);
 }
 
 void Level::CreateMagic(std::string style, uint16_t strength, uint16_t cost)

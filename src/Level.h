@@ -42,7 +42,7 @@ public:
 
     // Getters
     const Player &GetPlayer() const { return *mPlayer; }
-    const Group &GetVisibleSpriteGroup() const { return mVisibleSpriteGroup; }
+    const Group &GetVisibleSpriteGroup() const { return mVisibleGroup; }
     const sf::Texture &GetFloorTexture() const { return *mFloor; }
 
 private:
@@ -57,8 +57,8 @@ private:
     Ref<Player> mPlayer;
     Ref<Weapon> mCurrentAttack;
     Group mEnemies;
-    Group mVisibleSpriteGroup;
-    Group mObstacleSpriteGroup;
+    Group mVisibleGroup;
+    Group mObstacleGroup;
     TextureMap mGraphics;
     TexturePtr mInvisibleBlock;
     TexturePtr mFloor;
