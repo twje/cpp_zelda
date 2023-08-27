@@ -85,6 +85,8 @@ add_library(ZeldaLibrary STATIC
     src/Core/UI/Bar.cpp
     src/Entity.h
     src/Entity.cpp
+    src/Enemy.h
+    src/Enemy.cpp
     src/Weapon.h
     src/Weapon.cpp
     src/Support.h
