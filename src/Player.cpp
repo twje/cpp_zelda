@@ -30,6 +30,7 @@ Player::Player(sf::Vector2f position, const Group &obstacles, CreateAttackCB cre
       mHealth(PLAYER_STATS.at("health") * 0.5),
       mEnergy(PLAYER_STATS.at("energy") * 0.8),
       mSpeed(PLAYER_STATS.at("speed")),
+      mAttack(PLAYER_STATS.at("attack")),
       mEXP(123)
 {
     mAnimation->SetAnimationSequence(mStatus);
@@ -55,6 +56,11 @@ std::string Player::GetDirection() const
         return mStatus;
     }
     return mStatus.substr(0, index);
+}
+
+uint16_t Player::GetFullWeaponDamage() const
+{
+    return mAttack + WEAPON_DATA.at(GetWeaponName()).mDamage;
 }
 
 std::shared_ptr<sf::Texture> Player::GetWeaponTexture() const

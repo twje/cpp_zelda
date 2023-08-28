@@ -15,6 +15,7 @@
 #include "Support.h"
 #include "Tile.h"
 #include "Player.h"
+#include "Enemy.h"
 #include "Weapon.h"
 #include "LevelView.h"
 #include "UI.h"
@@ -25,6 +26,7 @@ namespace Factory
     {
     public:
         static std::shared_ptr<Player> CreatePlayer(Level *level, float x, float y, const Group &obstacles);
+        static std::shared_ptr<Enemy> CreateEnemy(Level *level, std::string name, float x, float y, const Group &obstacles);
     };
 }
 
@@ -52,6 +54,8 @@ private:
     void CreateAttack();
     void CreateMagic(std::string style, uint16_t strength, uint16_t cost);
     void DestroyAttack();
+    void HandlePlayerAttack();
+    void DemagePlayer(uint16_t amount, std::string attackType);
 
 private:
     Ref<Player> mPlayer;
@@ -59,6 +63,8 @@ private:
     Group mEnemies;
     Group mVisibleGroup;
     Group mObstacleGroup;
+    Group mAttackableGroup;
+    Group mAttackGroup;
     TextureMap mGraphics;
     TexturePtr mInvisibleBlock;
     TexturePtr mFloor;

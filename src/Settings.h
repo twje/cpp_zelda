@@ -32,7 +32,8 @@ enum class SpriteType
     GRASS,
     OBJECT,
     INVISIBLE,
-    ENEMY
+    ENEMY,
+    WEAPON
 };
 
 struct WeaponData

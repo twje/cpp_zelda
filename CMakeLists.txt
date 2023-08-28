@@ -83,6 +83,9 @@ add_library(ZeldaLibrary STATIC
     src/Core/UI/TextureOverlay.cpp
     src/Core/UI/Bar.h
     src/Core/UI/Bar.cpp
+    src/Core/Component.h    
+    src/Core/Iterator.h
+    src/Components.h
     src/Entity.h
     src/Entity.cpp
     src/Enemy.h

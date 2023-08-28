@@ -1,7 +1,22 @@
 #pragma once
 
-// Game
+#include <iostream>
+
+// Core
 #include "Core/Sprite.h"
+
+// Game
+#include "Components.h"
+
+// Forward declaration
+class Player;
+class Tile;
+
+class TileAttackableComponent : public AttackableComponent
+{
+public:
+    bool IsDead() override { return true; };
+};
 
 class Tile : public Sprite
 {

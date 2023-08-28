@@ -28,7 +28,7 @@ private:
     static constexpr int TOGGLE_COOLDONW_MS = 200;
 
 public:
-    Player(sf::Vector2f position, const Group &obstacles, CreateAttackCB createAttack, CreateMagicCB mCreateMagic, DestroyAttackCB destroyAttack);
+    Player(sf::Vector2f position, const Group &obstacles, CreateAttackCB createAttack, CreateMagicCB createMagic, DestroyAttackCB destroyAttack);
 
     void Update(const sf::Time &timestamp) override;
     bool CanSwitchWeapon() const { return mCanSwitchWeapons.Value(); }
@@ -40,10 +40,13 @@ public:
     uint16_t GetHealth() const { return mHealth; }
     uint16_t GetEnergy() const { return mEnergy; }
     uint16_t GetEXP() const { return mEXP; }
+    uint16_t GetFullWeaponDamage() const;
 
     std::shared_ptr<sf::Texture> Player::GetWeaponTexture() const;
     std::shared_ptr<sf::Texture> GetWeaponIconTexture() const;
     std::shared_ptr<sf::Texture> GetMagicIconTexture() const;
+
+    // Setters
 
 private:
     void Input();
@@ -72,5 +75,6 @@ private:
     float mHealth;
     float mEnergy;
     float mEXP;
+    float mAttack;
     float mSpeed;
 };

@@ -13,9 +13,37 @@
 #include "Settings.h"
 #include "Player.h"
 
-Enemy::Enemy(const std::string &name, sf::Vector2f position, const Group &obstacles)
+// ----------
+// Components
+// ----------
+EnemyAttackableComponent::EnemyAttackableComponent(Enemy &owner)
+    : mOwner(owner)
+{
+}
+
+void EnemyAttackableComponent::InflictDemage(const Player &player, GameObject &attacker)
+{
+    if (auto typeComponent = attacker.GetComponent<TypeComponent>())
+    {
+        if (typeComponent->GetSpriteType() == SpriteType::WEAPON)
+        {
+            mOwner.InflictDemage(player, player.GetFullWeaponDamage());
+        }
+    }
+}
+
+bool EnemyAttackableComponent::IsDead()
+{
+    return mOwner.GetHealth() <= 0;
+}
+
+// -----
+// Enemy
+// -----
+Enemy::Enemy(const std::string &name, sf::Vector2f position, const Group &obstacles, DemagePlayerCB demagePlayer)
     : Entity(obstacles),
       mName(name),
+      mDemagePlayer(demagePlayer),
       mSpriteType(SpriteType::ENEMY),
       mAnimation(AnimationManager::GetInstance().LoadUnique(name)),
       mStatus("idle"),
@@ -27,19 +55,32 @@ Enemy::Enemy(const std::string &name, sf::Vector2f position, const Group &obstac
       mAttackRadius(MONSTER_DATA.at(name).attack_radius),
       mNoticeRadius(MONSTER_DATA.at(name).notice_radius),
       mAttackType(MONSTER_DATA.at(name).attack_type),
-      mCanAttack(400, true)
+      mCanAttack(400, true),
+      mIsVulnerable(300, true)
 {
     mAnimation->SetAnimationSequence(mStatus);
     UpdateSequenceFrame();
     SetPosition(position);
     mHitBox = InflateRect(GetGlobalBounds(), 0, -10);
+
+    AddComponent(std::make_unique<EnemyAttackableComponent>(*this));
 }
 
 void Enemy::Update(const sf::Time &timestamp)
 {
+    HitReaction();
     Move(timestamp, mSpeed);
     Animate(timestamp);
     Cooldown(timestamp);
+}
+
+void Enemy::HitReaction()
+{
+    if (!mIsVulnerable.Value())
+    {
+        mDirection.x *= -mResistance;
+        mDirection.y *= -mResistance;
+    }
 }
 
 void Enemy::Animate(const sf::Time &timestamp)
@@ -52,6 +93,15 @@ void Enemy::Animate(const sf::Time &timestamp)
     mAnimation->Update(timestamp);
     UpdateSequenceFrame();
     SetPosition(GetRectCenter(mHitBox) - .5f * GetSize());
+
+    if (mIsVulnerable.Value())
+    {
+        SetAlpha(255);
+    }
+    else
+    {
+        SetAlpha(0);
+    }
 }
 
 void Enemy::UpdateSequenceFrame()
@@ -64,12 +114,23 @@ void Enemy::UpdateSequenceFrame()
 void Enemy::Cooldown(const sf::Time &timestamp)
 {
     mCanAttack.Update(timestamp);
+    mIsVulnerable.Update(timestamp);
 }
 
 void Enemy::EnemyUpdate(const Player &player)
 {
     GetStatus(player);
     Actions(player);
+}
+
+void Enemy::InflictDemage(const Player &player, uint16_t demage)
+{
+    if (mIsVulnerable.Value())
+    {
+        mDirection = GetPlayerDistanceDirection(player).second;
+        mHealth = std::max(mHealth - demage, 0);
+        mIsVulnerable.ToggleForCooldownTime();
+    }
 }
 
 bool Enemy::IsAttackAnimationPlaying()
@@ -120,9 +181,9 @@ void Enemy::Actions(const Player &player)
     // change that lasts for the duration of the attack cooldown period.
     if (mStatus == "attack")
     {
-        // reset attack cooldown
+        // restart attack cooldown
         mCanAttack.ToggleForCooldownTime(true);
-        std::cout << "attack" << std::endl;
+        std::cout << "attacked" << std::endl;
     }
     else if (mStatus == "move")
     {

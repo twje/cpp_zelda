@@ -7,6 +7,9 @@
 #include "Tile.h"
 #include "Support.h"
 
+// ----
+// Tile
+// ----
 Tile::Tile(sf::Vector2f position, SpriteType spriteType, const std::shared_ptr<sf::Texture> &texture)
     : Sprite(texture),
       mSpriteType(spriteType)
@@ -18,4 +21,6 @@ Tile::Tile(sf::Vector2f position, SpriteType spriteType, const std::shared_ptr<s
         Move(sf::Vector2f(0, -TILESIZE));
     }
     mHitBox = InflateRect(GetGlobalBounds(), 0, -10);
+
+    AddComponent(std::make_unique<TileAttackableComponent>());
 }

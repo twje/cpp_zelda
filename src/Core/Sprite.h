@@ -18,6 +18,7 @@ public:
     // Setters
     void SetTexture(const std::shared_ptr<sf::Texture> &texture, bool resetRect = false);
     void SetTextureRect(const sf::IntRect &rectangle) { mSprite.setTextureRect(rectangle); }
+    void SetAlpha(uint8_t value);
 
     // Getters
     sf::FloatRect GetLocalBounds() const override { return mSprite.getLocalBounds(); }

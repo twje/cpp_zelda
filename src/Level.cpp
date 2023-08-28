@@ -10,6 +10,7 @@
 // Game
 #include "Level.h"
 #include "Enemy.h"
+#include "Components.h"
 
 namespace Factory
 {
@@ -25,8 +26,18 @@ namespace Factory
             std::bind(&Level::DestroyAttack, level));
     }
 
-    static std::shared_ptr<Tile>
-    CreateInvisibleTile(float x, float y)
+    std::shared_ptr<Enemy> LevelFriend::CreateEnemy(Level *level, std::string name, float x, float y, const Group &obstacles)
+    {
+        using namespace std::placeholders;
+
+        return std::make_shared<Enemy>(
+            name,
+            sf::Vector2f(x, y),
+            obstacles,
+            std::bind(&Level::DemagePlayer, level, _1, _2));
+    }
+
+    static std::shared_ptr<Tile> CreateInvisibleTile(float x, float y)
     {
         return std::make_shared<Tile>(
             sf::Vector2f(x, y),
@@ -49,11 +60,6 @@ namespace Factory
             SpriteType::OBJECT,
             graphics.at("objects")[objectID]);
     }
-
-    static std::shared_ptr<Enemy> CreateEnemy(std::string name, float x, float y, const Group &obstacles)
-    {
-        return std::make_shared<Enemy>(name, sf::Vector2f(x, y), obstacles);
-    }
 }
 
 Level::Level()
@@ -68,6 +74,7 @@ void Level::Update(const sf::Time &timestamp)
     mVisibleGroup.Update(timestamp);
     mUI->Update(timestamp);
     UpdateEnemies(timestamp);
+    HandlePlayerAttack();
 }
 
 void Level::UpdateEnemies(const sf::Time &timestamp)
@@ -139,6 +146,7 @@ void Level::CreateMap()
                     std::shared_ptr<Tile> tile = Factory::CreateGrassTile(mGraphics, x, y);
                     mVisibleGroup.Add(tile);
                     mObstacleGroup.Add(tile);
+                    mAttackableGroup.Add(tile);
                 }
 
                 if (layoutPair.first == "object")
@@ -170,9 +178,10 @@ void Level::CreateMap()
                             name = "raccoon";
                             break;
                         }
-                        auto enemy = Factory::CreateEnemy(name, x, y, mObstacleGroup);
+                        auto enemy = Factory::LevelFriend::CreateEnemy(this, name, x, y, mObstacleGroup);
                         mVisibleGroup.Add(enemy);
                         mEnemies.Add(enemy);
+                        mAttackableGroup.Add(enemy);
                     }
                 }
             }
@@ -184,6 +193,7 @@ void Level::CreateAttack()
 {
     mCurrentAttack = std::make_shared<Weapon>(*mPlayer);
     mVisibleGroup.Add(mCurrentAttack);
+    mAttackGroup.Add(mCurrentAttack);
 }
 
 void Level::CreateMagic(std::string style, uint16_t strength, uint16_t cost)
@@ -200,4 +210,40 @@ void Level::DestroyAttack()
         mCurrentAttack->Kill();
         mCurrentAttack.reset();
     }
+}
+
+void Level::HandlePlayerAttack()
+{
+    std::vector<GameObject *> killed;
+
+    // Detect killed sprites
+    for (auto &attacker : mAttackGroup)
+    {
+        for (auto &attacked : mAttackableGroup)
+        {
+            if (!attacker->CollidesWith(*attacked))
+            {
+                continue;
+            }
+
+            if (auto attackableComponent = attacked->GetComponent<AttackableComponent>())
+            {
+                attackableComponent->InflictDemage(*mPlayer, *attacker);
+                if (attackableComponent->IsDead())
+                {
+                    killed.emplace_back(attacked.get());
+                }
+            }
+        }
+    }
+
+    // Kill sprites
+    for (GameObject *attacked : killed)
+    {
+        attacked->Kill();
+    }
+}
+
+void Level::DemagePlayer(uint16_t amount, std::string attackType)
+{
 }

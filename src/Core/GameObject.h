@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "Core/Component.h"
 
 // Forward class declaration
 class Group;
@@ -12,6 +13,14 @@ class GameObject : private sf::Transformable
     friend Group;
 
 public:
+    bool CollidesWith(const GameObject &other);
+
+    // Components
+    void AddComponent(std::unique_ptr<Component> component);
+
+    template <typename ComponentType>
+    ComponentType *GetComponent();
+
     // Hooks
     virtual void Draw(sf::RenderWindow &window) {}
     virtual void Update(const sf::Time &timestamp) {}
@@ -32,8 +41,25 @@ public:
     void Kill();
 
 private:
-    virtual void RegisterGroup(Group *group) { mGroups.emplace_back(group); };
+    void RegisterGroup(Group *group) { mGroups.emplace_back(group); };
 
 private:
     GroupVector mGroups;
+    std::vector<std::unique_ptr<Component>> mCmponents;
 };
+
+// -------------------------------
+// Template Method Implementations
+// -------------------------------
+template <typename ComponentType>
+ComponentType *GameObject::GetComponent()
+{
+    for (auto &component : mCmponents)
+    {
+        if (auto typedComponent = dynamic_cast<ComponentType *>(component.get()))
+        {
+            return typedComponent;
+        }
+    }
+    return nullptr;
+}
