@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cmath>
+
 #include <SFML/Graphics.hpp>
 
 // Core
@@ -13,8 +15,9 @@ public:
 
     void Move(const sf::Time &timestamp, float pixelsPerFrame);
     void Collision(Direction direction);
+    uint8_t WaveValue();
 
-    // Helper Methods
+private:
     bool IsMovingRight() { return mDirection.x > 0; }
     bool IsMovingLeft() { return mDirection.x < 0; }
     bool IsMovingUp() { return mDirection.y < 0; }
@@ -24,4 +27,5 @@ protected:
     const Group &mObstacles;
     sf::Vector2f mDirection;
     sf::FloatRect mHitBox;
+    sf::Clock mWaveClock;
 };

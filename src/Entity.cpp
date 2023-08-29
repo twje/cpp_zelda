@@ -74,3 +74,9 @@ void Entity::Collision(Direction direction)
         }
     }
 }
+
+uint8_t Entity::WaveValue()
+{
+    double value = std::sin(mWaveClock.getElapsedTime().asMicroseconds());
+    return value >= 0 ? 255 : 0;
+}

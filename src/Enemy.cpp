@@ -100,7 +100,7 @@ void Enemy::Animate(const sf::Time &timestamp)
     }
     else
     {
-        SetAlpha(0);
+        SetAlpha(WaveValue());
     }
 }
 
@@ -183,7 +183,7 @@ void Enemy::Actions(const Player &player)
     {
         // restart attack cooldown
         mCanAttack.ToggleForCooldownTime(true);
-        std::cout << "attacked" << std::endl;
+        mDemagePlayer(mAttackDamage, mAttackType);
     }
     else if (mStatus == "move")
     {

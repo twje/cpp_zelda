@@ -33,6 +33,8 @@ public:
     void Update(const sf::Time &timestamp) override;
     bool CanSwitchWeapon() const { return mCanSwitchWeapons.Value(); }
     bool CanSwitchMagic() const { return mCanSwitchMagic.Value(); }
+    void BecomeTemporarilyInvulnerable() { mVulnerable.ToggleForCooldownTime(); }
+    void TakeDemage(uint16_t amount) { mHealth = std::max(0, int(mHealth - amount)); }
 
     // Getters
     virtual sf::FloatRect GetHitbox() const override { return mHitBox; }
@@ -41,12 +43,11 @@ public:
     uint16_t GetEnergy() const { return mEnergy; }
     uint16_t GetEXP() const { return mEXP; }
     uint16_t GetFullWeaponDamage() const;
+    bool IsVulnerable() const { return mVulnerable.Value(); }
 
     std::shared_ptr<sf::Texture> Player::GetWeaponTexture() const;
     std::shared_ptr<sf::Texture> GetWeaponIconTexture() const;
     std::shared_ptr<sf::Texture> GetMagicIconTexture() const;
-
-    // Setters
 
 private:
     void Input();
@@ -66,6 +67,7 @@ private:
     CooldownToggle mIsAttacking;
     CooldownToggle mCanSwitchWeapons;
     CooldownToggle mCanSwitchMagic;
+    CooldownToggle mVulnerable;
     std::unique_ptr<Animation> mAnimation;
     CreateAttackCB mCreateAttack;
     CreateMagicCB mCreateMagic;

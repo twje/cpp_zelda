@@ -21,6 +21,7 @@ Player::Player(sf::Vector2f position, const Group &obstacles, CreateAttackCB cre
       mIsAttacking(400, false),
       mCanSwitchWeapons(TOGGLE_COOLDONW_MS, true),
       mCanSwitchMagic(TOGGLE_COOLDONW_MS, true),
+      mVulnerable(500, true),
       mAnimation(AnimationManager::GetInstance().LoadUnique("player")),
       mCreateAttack(createAttack),
       mCreateMagic(createMagic),
@@ -191,6 +192,7 @@ void Player::Cooldowns(const sf::Time &timestamp)
     }
     mCanSwitchWeapons.Update(timestamp);
     mCanSwitchMagic.Update(timestamp);
+    mVulnerable.Update(timestamp);
 }
 
 void Player::Animate(const sf::Time &timestamp)
@@ -203,6 +205,15 @@ void Player::Animate(const sf::Time &timestamp)
     mAnimation->Update(timestamp);
     UpdateSequenceFrame();
     SetPosition(GetRectCenter(mHitBox) - .5f * GetSize());
+
+    if (mVulnerable.Value())
+    {
+        SetAlpha(255);
+    }
+    else
+    {
+        SetAlpha(WaveValue());
+    }
 }
 
 std::string Player::GetWeaponByIndex(size_t index) const

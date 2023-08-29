@@ -246,4 +246,9 @@ void Level::HandlePlayerAttack()
 
 void Level::DemagePlayer(uint16_t amount, std::string attackType)
 {
+    if (mPlayer->IsVulnerable())
+    {
+        mPlayer->TakeDemage(amount);
+        mPlayer->BecomeTemporarilyInvulnerable();
+    }
 }
