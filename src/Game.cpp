@@ -21,10 +21,10 @@ Game::Game()
 
 void Game::Setup()
 {
-    FontManager::Create("../config/fonts.cfg");
-    TextureManager::Create("../config/textures.cfg");
-    GUIStyleManager::Create("../config/styles.cfg");
-    AnimationManager::Create("../config/animations.cfg");
+    FontManager::Create("../../config/fonts.cfg");
+    TextureManager::Create("../../config/textures.cfg");
+    GUIStyleManager::Create("../../config/styles.cfg");
+    AnimationManager::Create("../../config/animations.cfg");
 
     auto level = std::make_unique<Level>();
     PushLayer(std::move(level));

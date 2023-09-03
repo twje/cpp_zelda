@@ -112,10 +112,10 @@ void Level::CreateMap()
 
     // layouts
     std::map<std::string, std::unique_ptr<CSVData>> layouts;
-    layouts.emplace("boundary", readCSV("../map/map_FloorBlocks.csv"));
-    layouts.emplace("grass", readCSV("../map/map_Grass.csv"));
-    layouts.emplace("object", readCSV("../map/map_Objects.csv"));
-    layouts.emplace("entities", readCSV("../map/map_Entities.csv"));
+    layouts.emplace("boundary", readCSV("../../map/map_FloorBlocks.csv"));
+    layouts.emplace("grass", readCSV("../../map/map_Grass.csv"));
+    layouts.emplace("object", readCSV("../../map/map_Objects.csv"));
+    layouts.emplace("entities", readCSV("../../map/map_Entities.csv"));
 
     for (const auto &layoutPair : layouts)
     {
