@@ -3,8 +3,9 @@
 // Core
 #include "Core/RectUtils.h"
 
-InflatableTextBox::InflatableTextBox(const std::shared_ptr<GuiStyle> &style, float inflateX, float inflateY, const std::string &text)
-    : mStyle(style),
+InflatableTextBox::InflatableTextBox(GroupManager& groupManager, const std::shared_ptr<GuiStyle> &style, float inflateX, float inflateY, const std::string &text)
+    : GameObject(groupManager),
+      mStyle(style),
       mInflateX(inflateX),
       mInflateY(inflateY),
       mText(style->GetFont(), text, style->GetTextSize())

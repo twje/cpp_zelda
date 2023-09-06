@@ -7,6 +7,7 @@
 
 // Core
 #include "Core/Layer.h"
+#include "Core/GroupManager.h"
 #include "Core/Group.h"
 #include "Core/Debug.h"
 
@@ -50,6 +51,7 @@ private:
 private:
     Ref<Player> mPlayer;
     Ref<Weapon> mCurrentAttack;
+    GroupManager mGroupManager;
     Group mEnemies;
     Group mVisibleGroup;
     Group mObstacleGroup;

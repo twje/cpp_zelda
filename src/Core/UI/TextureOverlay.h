@@ -9,7 +9,7 @@
 class TextureOverlay : public GameObject
 {
 public:
-    TextureOverlay(const std::shared_ptr<GuiStyle> &style, std::shared_ptr<sf::Texture> texture, float width, float height);
+    TextureOverlay(GroupManager& groupManager, const std::shared_ptr<GuiStyle> &style, std::shared_ptr<sf::Texture> texture, float width, float height);
 
     virtual void Draw(sf::RenderWindow &window);
 

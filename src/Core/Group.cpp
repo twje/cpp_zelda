@@ -4,10 +4,9 @@
 // Game
 #include "GameObject.h"
 
-void Group::Add(const std::shared_ptr<GameObject> &sprite)
+void Group::Add(std::shared_ptr<GameObject> sprite)
 {
-    mGameObjects.emplace_back(sprite);
-    sprite->RegisterGroup(this);
+    mGameObjects.emplace_back(sprite);    
 };
 
 void Group::YSortGameObjects()

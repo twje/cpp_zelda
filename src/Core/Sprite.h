@@ -10,8 +10,8 @@
 class Sprite : public GameObject
 {
 public:
-    Sprite(const std::shared_ptr<sf::Texture> &texture);
-    Sprite();
+    Sprite(GroupManager& groupManager, const std::shared_ptr<sf::Texture> &texture);
+    Sprite(GroupManager& groupManager);
 
     void Draw(sf::RenderWindow &window) override { window.draw(mSprite, GetTransform()); }
 

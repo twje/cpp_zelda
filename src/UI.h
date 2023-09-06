@@ -14,7 +14,7 @@ class Player;
 class UI : public Layer
 {
 public:
-    UI(const Level &level);
+    UI(GroupManager& groupManager, const Level &level);
 
     virtual void Update(const sf::Time &timestamp);
     virtual void Draw(sf::RenderWindow &window);

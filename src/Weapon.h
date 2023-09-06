@@ -9,5 +9,5 @@
 class Weapon : public Sprite
 {
 public:
-    Weapon(const Player &player);
+    Weapon(GroupManager& groupManager, const Player &player);
 };

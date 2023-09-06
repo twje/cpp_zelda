@@ -1,18 +1,18 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+
 #include "Core/Component.h"
-
-// Forward class declaration
-class Group;
-
-using GroupVector = std::vector<Group *>;
+#include "Core/GroupManager.h"
 
 class GameObject : private sf::Transformable
 {
     friend Group;
 
 public:
+    GameObject(GroupManager& groupManager);
+    virtual ~GameObject() = default;
+
     bool CollidesWith(const GameObject &other);
 
     // Components
@@ -40,11 +40,10 @@ public:
     // Resource management
     void Kill();
 
-private:
-    void RegisterGroup(Group *group) { mGroups.emplace_back(group); };
+    bool IsDead() { return false; }
 
 private:
-    GroupVector mGroups;
+    GroupManager& mGroupManager;    
     std::vector<std::unique_ptr<Component>> mCmponents;
 };
 

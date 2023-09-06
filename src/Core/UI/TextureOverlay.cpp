@@ -3,8 +3,9 @@
 // Core
 #include "Core/RectUtils.h"
 
-TextureOverlay::TextureOverlay(const std::shared_ptr<GuiStyle> &style, std::shared_ptr<sf::Texture> texture, float width, float height)
-    : mStyle(style),
+TextureOverlay::TextureOverlay(GroupManager& groupManager, const std::shared_ptr<GuiStyle> &style, std::shared_ptr<sf::Texture> texture, float width, float height)
+    : GameObject(groupManager),
+      mStyle(style),
       mTexture(texture),
       mSprite(*texture),
       mIsActive(false)

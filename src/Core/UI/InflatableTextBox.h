@@ -10,7 +10,7 @@
 class InflatableTextBox : public GameObject
 {
 public:
-    InflatableTextBox(const std::shared_ptr<GuiStyle> &style, float inflateX, float inflateY, const std::string &text);
+    InflatableTextBox(GroupManager& groupManager, const std::shared_ptr<GuiStyle> &style, float inflateX, float inflateY, const std::string &text);
 
     virtual void Draw(sf::RenderWindow &window);
 

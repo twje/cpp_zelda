@@ -8,8 +8,8 @@ class Moveable
 {
 };
 
-Entity::Entity(const Group &obstacles)
-    : Sprite(),
+Entity::Entity(GroupManager& groupManager, const Group& obstacles)
+    : Sprite(groupManager),
       mObstacles(obstacles),
       mDirection(0, 0)
 {

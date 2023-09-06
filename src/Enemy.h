@@ -35,7 +35,7 @@ class Enemy : public Entity
     friend EnemyAttackableComponent;    
 
 public:
-    Enemy(const std::string &name, sf::Vector2f position, const Group &obstacles, IEnemyCallbacks& callbacks);
+    Enemy(GroupManager& groupManager, const std::string &name, sf::Vector2f position, const Group &obstacles, IEnemyCallbacks& callbacks);
 
     void Update(const sf::Time &timestamp) override;
     void HitReaction();

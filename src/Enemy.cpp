@@ -40,8 +40,8 @@ bool EnemyAttackableComponent::IsDead()
 // -----
 // Enemy
 // -----
-Enemy::Enemy(const std::string& name, sf::Vector2f position, const Group& obstacles, IEnemyCallbacks& callbacks)
-    : Entity(obstacles),
+Enemy::Enemy(GroupManager& groupManager, const std::string& name, sf::Vector2f position, const Group& obstacles, IEnemyCallbacks& callbacks)
+    : Entity(groupManager, obstacles),
       mName(name),
       mCallbacks(callbacks),
       mSpriteType(SpriteType::ENEMY),

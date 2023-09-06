@@ -62,6 +62,8 @@ add_library(ZeldaLibrary STATIC
     src/Core/Debug.cpp    
     src/Core/Group.h
     src/Core/Group.cpp
+    src/Core/GroupManager.h
+    src/Core/GroupManager.cpp
     src/Core/Sprite.h
     src/Core/Sprite.cpp    
     src/Core/Toggles.h
@@ -108,6 +110,8 @@ add_library(ZeldaLibrary STATIC
     src/Player.cpp
     src/Tile.h
     src/Tile.cpp
+    src/Particles.h
+    src/Particles.cpp
 )
 
 target_link_libraries(ZeldaLibrary PUBLIC

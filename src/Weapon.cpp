@@ -11,8 +11,8 @@
 // Game
 #include "Components.h"
 
-Weapon::Weapon(const Player &player)
-    : Sprite()
+Weapon::Weapon(GroupManager& groupManager, const Player &player)
+    : Sprite(groupManager)
 {
     SetTexture(player.GetWeaponTexture(), true);
 

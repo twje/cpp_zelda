@@ -11,9 +11,10 @@
 
 namespace Factory
 {
-    static std::unique_ptr<Bar> CreateHealthBar(const Player &player)
+    static std::unique_ptr<Bar> CreateHealthBar(GroupManager& groupManager, const Player &player)
     {
         return std::make_unique<Bar>(
+            groupManager,
             GUIStyleManager::GetInstance().GetResource("health_bar"),
             HEALTH_BAR_WIDTH,
             BAR_HEIGHT,
@@ -21,9 +22,10 @@ namespace Factory
             PLAYER_STATS.at("health"));
     }
 
-    static std::unique_ptr<Bar> CreateEnergyBar(const Player &player)
+    static std::unique_ptr<Bar> CreateEnergyBar(GroupManager& groupManager, const Player &player)
     {
         return std::make_unique<Bar>(
+            groupManager,
             GUIStyleManager::GetInstance().GetResource("energy_bar"),
             ENERGY_BAR_WIDTH,
             BAR_HEIGHT,
@@ -31,27 +33,30 @@ namespace Factory
             PLAYER_STATS.at("energy"));
     }
 
-    static std::unique_ptr<InflatableTextBox> CreateEXPTextbox(const Player &player)
+    static std::unique_ptr<InflatableTextBox> CreateEXPTextbox(GroupManager& groupManager, const Player &player)
     {
         return std::make_unique<InflatableTextBox>(
+            groupManager,
             GUIStyleManager::GetInstance().GetResource("player_exp_textbox"),
             20.0f,
             20.0f,
             std::to_string(player.GetEXP()));
     }
 
-    static std::unique_ptr<TextureOverlay> CreateWeaponOverlay(const Player &player)
+    static std::unique_ptr<TextureOverlay> CreateWeaponOverlay(GroupManager& groupManager, const Player &player)
     {
         return std::make_unique<TextureOverlay>(
+            groupManager,
             GUIStyleManager::GetInstance().GetResource("overlay"),
             player.GetWeaponIconTexture(),
             ITEM_BOX_SIZE,
             ITEM_BOX_SIZE);
     }
 
-    static std::unique_ptr<TextureOverlay> CreateMagicOverlay(const Player &player)
+    static std::unique_ptr<TextureOverlay> CreateMagicOverlay(GroupManager& groupManager, const Player &player)
     {
         return std::make_unique<TextureOverlay>(
+            groupManager,
             GUIStyleManager::GetInstance().GetResource("overlay"),
             player.GetMagicIconTexture(),
             ITEM_BOX_SIZE,
@@ -59,13 +64,13 @@ namespace Factory
     }
 }
 
-UI::UI(const Level &level)
+UI::UI(GroupManager& groupManager, const Level &level)
     : mLevel(level),
-      mHealthBar(Factory::CreateHealthBar(level.GetPlayer())),
-      mEnergyBar(Factory::CreateEnergyBar(level.GetPlayer())),
-      mPlayerExp(Factory::CreateEXPTextbox(level.GetPlayer())),
-      mWeaponOverlay(Factory::CreateWeaponOverlay(level.GetPlayer())),
-      mMagicOverlay(Factory::CreateMagicOverlay(level.GetPlayer()))
+      mHealthBar(Factory::CreateHealthBar(groupManager, level.GetPlayer())),
+      mEnergyBar(Factory::CreateEnergyBar(groupManager, level.GetPlayer())),
+      mPlayerExp(Factory::CreateEXPTextbox(groupManager, level.GetPlayer())),
+      mWeaponOverlay(Factory::CreateWeaponOverlay(groupManager, level.GetPlayer())),
+      mMagicOverlay(Factory::CreateMagicOverlay(groupManager, level.GetPlayer()))
 {
 }
 

@@ -5,17 +5,56 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "Core/Iterator.h"
+#include <Core/GameObject.h>
+#include <iostream>
 
-// Forward declared class
-class GameObject;
+// Type Alias
+using GameObjectVector = std::vector<std::shared_ptr<GameObject>>;
+
+// Iterator
+class GroupIterator
+{
+public:
+    GroupIterator(typename GameObjectVector::iterator iter, typename GameObjectVector::iterator end)
+        : mIter(iter), mEnd(end)
+    {
+        AdvanceIteratorToNextAliveObject();
+    }
+
+    auto& operator*()
+    {
+        return *mIter;
+    }
+
+    GroupIterator& operator++()
+    {
+        ++mIter;
+        AdvanceIteratorToNextAliveObject();
+        return *this;
+    }
+
+    bool operator!=(const GroupIterator& other) const
+    {
+        return mIter != other.mIter;
+    }
+
+private:
+    void AdvanceIteratorToNextAliveObject()
+    {
+        while (mIter != mEnd && (*mIter)->IsDead()) {
+            ++mIter;
+        }
+    }
+
+private:
+    GameObjectVector::iterator mIter;
+    GameObjectVector::iterator mEnd;
+};
 
 class Group
 {
-public:
-    using GameObjectVector = std::vector<std::shared_ptr<GameObject>>;
-
-    void Add(const std::shared_ptr<GameObject> &sprite);
+public:    
+    void Group::Add(std::shared_ptr<GameObject> sprite);
     const GameObjectVector &GetGameObjects() const { return mGameObjects; }
     GameObjectVector &GetGameObjects() { return mGameObjects; }
     void YSortGameObjects();
@@ -23,8 +62,8 @@ public:
     void RemoveSprite(const GameObject &sprite);
 
     // Iterator
-    Iterator<GameObjectVector> begin() { return Iterator<GameObjectVector>(mGameObjects.begin()); }
-    Iterator<GameObjectVector> end() { return Iterator<GameObjectVector>(mGameObjects.end()); }
+    GroupIterator begin() { return GroupIterator(mGameObjects.begin(), mGameObjects.end()); }
+    GroupIterator end() { return GroupIterator(mGameObjects.end(), mGameObjects.end()); }
 
 private:
     GameObjectVector mGameObjects;

@@ -15,8 +15,8 @@
 #include "Player.h"
 #include "Settings.h"
 
-Player::Player(sf::Vector2f position, const Group& obstacles, IPlayerCallbacks& callbacks)
-    : Entity(obstacles),
+Player::Player(GroupManager& groupManager, sf::Vector2f position, const Group& obstacles, IPlayerCallbacks& callbacks)
+    : Entity(groupManager, obstacles),
       mStatus("down"),
       mIsAttacking(400, false),
       mCanSwitchWeapons(TOGGLE_COOLDONW_MS, true),

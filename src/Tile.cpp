@@ -10,8 +10,8 @@
 // ----
 // Tile
 // ----
-Tile::Tile(sf::Vector2f position, SpriteType spriteType, const std::shared_ptr<sf::Texture> &texture)
-    : Sprite(texture),
+Tile::Tile(GroupManager& groupManager, sf::Vector2f position, SpriteType spriteType, const std::shared_ptr<sf::Texture> &texture)
+    : Sprite(groupManager, texture),
       mSpriteType(spriteType)
 {
     SetPosition(position);
