@@ -20,20 +20,8 @@
 #include "LevelView.h"
 #include "UI.h"
 
-namespace Factory
+class Level : public Layer, public IPlayerCallbacks, public IEnemyCallbacks
 {
-    class LevelFriend
-    {
-    public:
-        static std::shared_ptr<Player> CreatePlayer(Level *level, float x, float y, const Group &obstacles);
-        static std::shared_ptr<Enemy> CreateEnemy(Level *level, std::string name, float x, float y, const Group &obstacles);
-    };
-}
-
-class Level : public Layer
-{
-    friend class Factory::LevelFriend;
-
 public:
     Level();
 
@@ -49,13 +37,15 @@ public:
 
 private:
     void CreateMap();
-
-    // Callbacks
-    void CreateAttack();
-    void CreateMagic(std::string style, uint16_t strength, uint16_t cost);
-    void DestroyAttack();
     void HandlePlayerAttack();
-    void DemagePlayer(uint16_t amount, std::string attackType);
+
+    // IPlayerCallbacks
+    virtual void CreateAttack() override;
+    virtual void DestroyAttack() override;
+    virtual void CreateMagic(std::string style, uint16_t strength, uint16_t cost) override;
+
+    // IEntityCallbacks
+    virtual void DemagePlayer(uint16_t amount, std::string attackType) override;
 
 private:
     Ref<Player> mPlayer;

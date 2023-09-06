@@ -40,10 +40,10 @@ bool EnemyAttackableComponent::IsDead()
 // -----
 // Enemy
 // -----
-Enemy::Enemy(const std::string &name, sf::Vector2f position, const Group &obstacles, DemagePlayerCB demagePlayer)
+Enemy::Enemy(const std::string& name, sf::Vector2f position, const Group& obstacles, IEnemyCallbacks& callbacks)
     : Entity(obstacles),
       mName(name),
-      mDemagePlayer(demagePlayer),
+      mCallbacks(callbacks),
       mSpriteType(SpriteType::ENEMY),
       mAnimation(AnimationManager::GetInstance().LoadUnique(name)),
       mStatus("idle"),
@@ -183,7 +183,7 @@ void Enemy::Actions(const Player &player)
     {
         // restart attack cooldown
         mCanAttack.ToggleForCooldownTime(true);
-        mDemagePlayer(mAttackDamage, mAttackType);
+        mCallbacks.DemagePlayer(mAttackDamage, mAttackType);        
     }
     else if (mStatus == "move")
     {

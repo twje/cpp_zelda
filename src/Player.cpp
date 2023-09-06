@@ -15,7 +15,7 @@
 #include "Player.h"
 #include "Settings.h"
 
-Player::Player(sf::Vector2f position, const Group &obstacles, CreateAttackCB createAttack, CreateMagicCB createMagic, DestroyAttackCB destroyAttack)
+Player::Player(sf::Vector2f position, const Group& obstacles, IPlayerCallbacks& callbacks)
     : Entity(obstacles),
       mStatus("down"),
       mIsAttacking(400, false),
@@ -23,9 +23,7 @@ Player::Player(sf::Vector2f position, const Group &obstacles, CreateAttackCB cre
       mCanSwitchMagic(TOGGLE_COOLDONW_MS, true),
       mVulnerable(500, true),
       mAnimation(AnimationManager::GetInstance().LoadUnique("player")),
-      mCreateAttack(createAttack),
-      mCreateMagic(createMagic),
-      mDestroyAttack(destroyAttack),
+      mCallbacks(callbacks),
       mWeaponIndex(0),
       mMagicIndex(0),
       mHealth(PLAYER_STATS.at("health") * 0.5),
@@ -123,7 +121,7 @@ void Player::Input()
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
         {
             mIsAttacking.ToggleForCooldownTime();
-            mCreateAttack();
+            mCallbacks.CreateAttack();            
         }
 
         // Magic input
@@ -188,7 +186,7 @@ void Player::Cooldowns(const sf::Time &timestamp)
 {
     if (mIsAttacking.Update(timestamp))
     {
-        mDestroyAttack();
+        mCallbacks.DestroyAttack();        
     }
     mCanSwitchWeapons.Update(timestamp);
     mCanSwitchMagic.Update(timestamp);
@@ -240,7 +238,7 @@ void Player::CreateMagicAttack()
     std::string style = it->first;
     float strength = it->second.mStrength + PLAYER_STATS.at("magic");
     float cost = it->second.mCost;
-    mCreateMagic(style, strength, cost);
+    mCallbacks.CreateMagic(style, strength, cost);    
 }
 
 void Player::UpdateSequenceFrame()

@@ -24,13 +24,18 @@ private:
     Enemy &mOwner;
 };
 
+class IEnemyCallbacks
+{
+public:
+    virtual void DemagePlayer(uint16_t amount, std::string attackType) = 0;
+};
+
 class Enemy : public Entity
 {
-    friend EnemyAttackableComponent;
-    using DemagePlayerCB = std::function<void(uint16_t, std::string)>;
+    friend EnemyAttackableComponent;    
 
 public:
-    Enemy(const std::string &name, sf::Vector2f position, const Group &obstacles, DemagePlayerCB demagePlayer);
+    Enemy(const std::string &name, sf::Vector2f position, const Group &obstacles, IEnemyCallbacks& callbacks);
 
     void Update(const sf::Time &timestamp) override;
     void HitReaction();
@@ -66,5 +71,5 @@ private:
     std::string mAttackType;
     CooldownToggle mCanAttack;
     CooldownToggle mIsVulnerable;
-    DemagePlayerCB mDemagePlayer;
+    IEnemyCallbacks& mCallbacks;
 };

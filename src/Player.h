@@ -18,17 +18,21 @@
 // Forward Declarations
 class Group;
 
+class IPlayerCallbacks
+{
+public:
+    virtual void CreateAttack() = 0;
+    virtual void DestroyAttack() = 0;
+    virtual void CreateMagic(std::string style, uint16_t strength, uint16_t cost) = 0;
+};
+
 class Player : public Entity
 {
-    using CreateAttackCB = std::function<void()>;
-    using CreateMagicCB = std::function<void(std::string, uint16_t, uint16_t)>;
-    using DestroyAttackCB = std::function<void()>;
-
 private:
     static constexpr int TOGGLE_COOLDONW_MS = 200;
 
 public:
-    Player(sf::Vector2f position, const Group &obstacles, CreateAttackCB createAttack, CreateMagicCB createMagic, DestroyAttackCB destroyAttack);
+    Player(sf::Vector2f position, const Group &obstacles, IPlayerCallbacks& callbacks);
 
     void Update(const sf::Time &timestamp) override;
     bool CanSwitchWeapon() const { return mCanSwitchWeapons.Value(); }
@@ -69,9 +73,7 @@ private:
     CooldownToggle mCanSwitchMagic;
     CooldownToggle mVulnerable;
     std::unique_ptr<Animation> mAnimation;
-    CreateAttackCB mCreateAttack;
-    CreateMagicCB mCreateMagic;
-    DestroyAttackCB mDestroyAttack;
+    IPlayerCallbacks& mCallbacks;    
     size_t mWeaponIndex;
     size_t mMagicIndex;
     float mHealth;
