@@ -11,7 +11,7 @@
 // Tile
 // ----
 Tile::Tile(GroupManager& groupManager, sf::Vector2f position, SpriteType spriteType, const std::shared_ptr<sf::Texture> &texture)
-    : Sprite(groupManager, texture),
+    : EntityBase(groupManager, texture),
       mSpriteType(spriteType)
 {
     SetPosition(position);
@@ -20,7 +20,5 @@ Tile::Tile(GroupManager& groupManager, sf::Vector2f position, SpriteType spriteT
         // 2x the height of normal tiles
         Move(sf::Vector2f(0, -TILESIZE));
     }
-    mHitBox = InflateRect(GetGlobalBounds(), 0, -10);
-
-    AddComponent(std::make_unique<TileAttackableComponent>());
+    mHitBox = InflateRect(GetGlobalBounds(), 0, -10);    
 }

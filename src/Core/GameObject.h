@@ -2,8 +2,11 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "Core/Component.h"
 #include "Core/GroupManager.h"
+
+// TEMP CODE
+class Player;
+class GameObject;
 
 class GameObject : private sf::Transformable
 {
@@ -14,12 +17,6 @@ public:
     virtual ~GameObject() = default;
 
     bool CollidesWith(const GameObject &other);
-
-    // Components
-    void AddComponent(std::unique_ptr<Component> component);
-
-    template <typename ComponentType>
-    ComponentType *GetComponent();
 
     // Hooks
     virtual void Draw(sf::RenderWindow &window) {}
@@ -39,26 +36,9 @@ public:
 
     // Resource management
     void Kill();
-    bool IsAlive() { return mIsAlive; }
+    bool IsMarkedForDeletion() { return mIsMarkedForDeletion; }
 
 private:
-    GroupManager& mGroupManager;    
-    std::vector<std::unique_ptr<Component>> mCmponents;
-    bool mIsAlive{ true };
+    GroupManager& mGroupManager;        
+    bool mIsMarkedForDeletion{ false };
 };
-
-// -------------------------------
-// Template Method Implementations
-// -------------------------------
-template <typename ComponentType>
-ComponentType *GameObject::GetComponent()
-{
-    for (auto &component : mCmponents)
-    {
-        if (auto typedComponent = dynamic_cast<ComponentType *>(component.get()))
-        {
-            return typedComponent;
-        }
-    }
-    return nullptr;
-}

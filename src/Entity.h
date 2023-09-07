@@ -6,15 +6,16 @@
 
 // Core
 #include "Settings.h"
-#include "Core/Sprite.h"
+#include "EntityBase.h"
 
-class Entity : public Sprite
+
+class Entity : public EntityBase
 {
 public:
     Entity(GroupManager& groupManager, const Group &obstacles);
 
     void Move(const sf::Time &timestamp, float pixelsPerFrame);
-    void Collision(Direction direction);
+    void Collision(Direction direction);    
     uint8_t WaveValue();
 
 private:

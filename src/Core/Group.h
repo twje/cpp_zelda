@@ -41,7 +41,7 @@ public:
 private:
     void AdvanceIteratorToNextAliveObject()
     {
-        while (mIter != mEnd && !(*mIter)->IsAlive()) {
+        while (mIter != mEnd && (*mIter)->IsMarkedForDeletion()) {
             ++mIter;
         }
     }

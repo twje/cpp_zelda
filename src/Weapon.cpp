@@ -8,9 +8,6 @@
 #include "Core/RectUtils.h"
 #include "Core/ResourceManager/TextureManager.h"
 
-// Game
-#include "Components.h"
-
 Weapon::Weapon(GroupManager& groupManager, const Player &player)
     : Sprite(groupManager)
 {
@@ -33,6 +30,4 @@ Weapon::Weapon(GroupManager& groupManager, const Player &player)
     {
         SetPosition(GetRectMidTop(player.GetGlobalBounds()) - GetRectMidBottom(GetLocalBounds()) + sf::Vector2f(-10, 0));
     }
-
-    AddComponent(std::make_unique<TypeComponent>(SpriteType::WEAPON));
 }

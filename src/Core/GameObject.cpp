@@ -8,11 +8,6 @@ GameObject::GameObject(GroupManager& groupManager)
 {
 }
 
-void GameObject::AddComponent(std::unique_ptr<Component> component)
-{
-    mCmponents.push_back(std::move(component));
-}
-
 bool GameObject::CollidesWith(const GameObject &other)
 {
     return GetHitbox().findIntersection(other.GetHitbox()) ? true : false;
@@ -20,6 +15,6 @@ bool GameObject::CollidesWith(const GameObject &other)
 
 void GameObject::Kill()
 {
-    mIsAlive = false;
+    mIsMarkedForDeletion = true;
     mGroupManager.RemoveFromGroups(this);
 }

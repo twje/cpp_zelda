@@ -8,21 +8,9 @@
 
 // Game
 #include "Entity.h"
-#include "Components.h"
 
 class Group;
 class Enemy;
-
-class EnemyAttackableComponent : public AttackableComponent
-{
-public:
-    EnemyAttackableComponent(Enemy &owner);
-    void InflictDemage(const Player &player, GameObject &attacker) override;
-    bool IsDead() override;
-
-private:
-    Enemy &mOwner;
-};
 
 class IEnemyCallbacks
 {
@@ -32,11 +20,10 @@ public:
 
 class Enemy : public Entity
 {
-    friend EnemyAttackableComponent;    
-
 public:
     Enemy(GroupManager& groupManager, const std::string &name, sf::Vector2f position, const Group &obstacles, IEnemyCallbacks& callbacks);
 
+    virtual void Accept(EntityVisitor& visitor) { visitor.Visit(*this); }
     void Update(const sf::Time &timestamp) override;
     void HitReaction();
     void Animate(const sf::Time &timestamp);
@@ -48,8 +35,9 @@ public:
     sf::FloatRect GetHitbox() const override { return mHitBox; }
     uint16_t GetHealth() { return mHealth; }
 
-private:
     void InflictDemage(const Player &player, uint16_t demage);
+
+private:
     bool IsAttackAnimationPlaying();
     bool IsAllowedToAttack();
     std::pair<float, sf::Vector2f> GetPlayerDistanceDirection(const Player &player);

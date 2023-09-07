@@ -84,10 +84,10 @@ add_library(ZeldaLibrary STATIC
     src/Core/UI/TextureOverlay.h
     src/Core/UI/TextureOverlay.cpp
     src/Core/UI/Bar.h
-    src/Core/UI/Bar.cpp
-    src/Core/Component.h    
-    src/Core/Iterator.h
-    src/Components.h
+    src/Core/UI/Bar.cpp     
+    src/Core/Iterator.h    
+    src/EntityBase.h
+    src/EntityBase.cpp
     src/Entity.h
     src/Entity.cpp
     src/Enemy.h
@@ -111,7 +111,7 @@ add_library(ZeldaLibrary STATIC
     src/Tile.h
     src/Tile.cpp
     src/Particles.h
-    src/Particles.cpp
+    src/Particles.cpp    
 )
 
 target_link_libraries(ZeldaLibrary PUBLIC

@@ -13,30 +13,6 @@
 #include "Settings.h"
 #include "Player.h"
 
-// ----------
-// Components
-// ----------
-EnemyAttackableComponent::EnemyAttackableComponent(Enemy &owner)
-    : mOwner(owner)
-{
-}
-
-void EnemyAttackableComponent::InflictDemage(const Player &player, GameObject &attacker)
-{
-    if (auto typeComponent = attacker.GetComponent<TypeComponent>())
-    {
-        if (typeComponent->GetSpriteType() == SpriteType::WEAPON)
-        {
-            mOwner.InflictDemage(player, player.GetFullWeaponDamage());
-        }
-    }
-}
-
-bool EnemyAttackableComponent::IsDead()
-{
-    return mOwner.GetHealth() <= 0;
-}
-
 // -----
 // Enemy
 // -----
@@ -62,8 +38,6 @@ Enemy::Enemy(GroupManager& groupManager, const std::string& name, sf::Vector2f p
     UpdateSequenceFrame();
     SetPosition(position);
     mHitBox = InflateRect(GetGlobalBounds(), 0, -10);
-
-    AddComponent(std::make_unique<EnemyAttackableComponent>(*this));
 }
 
 void Enemy::Update(const sf::Time &timestamp)

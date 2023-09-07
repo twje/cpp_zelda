@@ -6,7 +6,7 @@
 
 void Group::Add(std::shared_ptr<GameObject> sprite)
 {
-    mGameObjects.emplace_back(sprite);    
+    mGameObjects.emplace_back(sprite);
 };
 
 void Group::YSortGameObjects()

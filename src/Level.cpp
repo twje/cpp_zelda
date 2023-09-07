@@ -10,7 +10,6 @@
 // Game
 #include "Level.h"
 #include "Enemy.h"
-#include "Components.h"
 
 namespace Factory
 {
@@ -188,6 +187,31 @@ void Level::CreateMap()
 
 void Level::HandlePlayerAttack()
 {        
+    class InflictDemage : public EntityVisitor
+    {
+    public:
+        InflictDemage(Player& player)
+            : mPlayer(player)
+        {}
+
+        virtual void Visit(Tile& tile) override
+        {
+            tile.Kill();
+        }
+        
+        virtual void Visit(Enemy& enemy) override
+        {
+            enemy.InflictDemage(mPlayer, mPlayer.GetFullWeaponDamage());
+            if (enemy.GetHealth() <= 0)
+            {
+                enemy.Kill();
+            }
+        }
+
+    private:
+        Player& mPlayer;
+    };
+
     for (auto& attacker : mAttackGroup)
     {
         for (auto& attacked : mAttackableGroup)
@@ -195,17 +219,10 @@ void Level::HandlePlayerAttack()
             if (!attacker->CollidesWith(*attacked))
             {
                 continue;
-            }
-            
-            // tile and enemy
-            if (auto attackableComponent = attacked->GetComponent<AttackableComponent>())
-            {
-                attackableComponent->InflictDemage(*mPlayer, *attacker);
-                if (attackableComponent->IsDead())
-                {
-                    attacked->Kill();
-                }
-            }
+            }           
+
+            auto entity = std::dynamic_pointer_cast<EntityBase>(attacked);
+            entity->Accept(InflictDemage(*mPlayer));
         }
     }    
 }
