@@ -7,10 +7,23 @@ void GroupManager::TrackGroup(Group& group)
 	mGroups.emplace_back(&group);
 }
 
-void GroupManager::RemoveFromGroups(const GameObject& gameObject)
+void GroupManager::RemoveFromGroups(GameObject* gameObject)
 {
-	for (auto group : mGroups)
+	auto it = std::find(mDeadList.begin(), mDeadList.end(), gameObject);
+	if (it == mDeadList.end())
 	{
-		group->RemoveSprite(gameObject);
+		mDeadList.emplace_back(gameObject);
 	}
+}
+
+void GroupManager::CleanupDeadObjects()
+{
+	for (auto gameObject : mDeadList)
+	{
+		for (auto group : mGroups)
+		{
+			group->RemoveSprite(*gameObject);
+		}
+	}
+	mDeadList.clear();
 }

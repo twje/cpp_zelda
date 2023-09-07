@@ -20,5 +20,6 @@ bool GameObject::CollidesWith(const GameObject &other)
 
 void GameObject::Kill()
 {
-    mGroupManager.RemoveFromGroups(*this);
+    mIsAlive = false;
+    mGroupManager.RemoveFromGroups(this);
 }

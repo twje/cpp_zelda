@@ -39,12 +39,12 @@ public:
 
     // Resource management
     void Kill();
-
-    bool IsDead() { return false; }
+    bool IsAlive() { return mIsAlive; }
 
 private:
     GroupManager& mGroupManager;    
     std::vector<std::unique_ptr<Component>> mCmponents;
+    bool mIsAlive{ true };
 };
 
 // -------------------------------

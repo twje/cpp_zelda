@@ -70,7 +70,8 @@ void Level::Update(const sf::Time &timestamp)
     mVisibleGroup.Update(timestamp);
     mUI->Update(timestamp);
     UpdateEnemies(timestamp);
-    HandlePlayerAttack();    
+    HandlePlayerAttack();
+    mGroupManager.CleanupDeadObjects();
 }
 
 void Level::UpdateEnemies(const sf::Time &timestamp)
@@ -186,10 +187,7 @@ void Level::CreateMap()
 }
 
 void Level::HandlePlayerAttack()
-{
-    std::vector<GameObject*> killed;
-
-    // Detect killed sprites
+{        
     for (auto& attacker : mAttackGroup)
     {
         for (auto& attacked : mAttackableGroup)
@@ -198,23 +196,18 @@ void Level::HandlePlayerAttack()
             {
                 continue;
             }
-
+            
+            // tile and enemy
             if (auto attackableComponent = attacked->GetComponent<AttackableComponent>())
             {
                 attackableComponent->InflictDemage(*mPlayer, *attacker);
                 if (attackableComponent->IsDead())
                 {
-                    killed.emplace_back(attacked.get());
+                    attacked->Kill();
                 }
             }
         }
-    }
-
-    // Kill sprites
-    for (GameObject* attacked : killed)
-    {
-        attacked->Kill();
-    }
+    }    
 }
 
 void Level::CreateAttack()
