@@ -57,7 +57,8 @@ ResourcePtr<T> ResourceManager<typename Derived, typename T>::Load(const std::st
 template <typename Derived, typename T>
 std::unique_ptr<T> ResourceManager<typename Derived, typename T>::LoadUnique(const std::string &resourceID)
 {
-    return static_cast<Derived *>(this)->LoadUnique(resourceID);
+    auto resource = GetResource(resourceID);    
+    return resource->Clone();
 }
 
 // Getters
@@ -77,6 +78,8 @@ std::shared_ptr<T> ResourceManager<typename Derived, typename T>::GetResource(co
 
     ResourcePtr<T> resource = Load(mManifest[resourceID]);
     mResources[resourceID] = resource;
+
+    mCachedResources.insert(resource);  // HACK: Keep shared pointer in memory to avoid a disk read
     return resource;
 }
 

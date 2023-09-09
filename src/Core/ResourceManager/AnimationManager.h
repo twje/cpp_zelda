@@ -13,7 +13,9 @@ class AnimationManager : public ResourceManager<AnimationManager, Animation>
 public:
     std::shared_ptr<Animation> Load(const std::string &filePath)
     {
-        throw std::runtime_error("Not implemented");
+        auto animation = std::make_shared<Animation>();
+        animation->LoadFromFile(filePath);
+        return animation;
     }
 
     std::unique_ptr<Animation> LoadUnique(const std::string resourceID)

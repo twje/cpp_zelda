@@ -216,7 +216,7 @@ void Level::AttackTile(Tile& tile)
 {
     if (tile.GetSpriteType() == SpriteType::GRASS)
     {
-        size_t particleCount = std::rand() % 4 + 3;
+        size_t particleCount = 50; // std::rand() % 4 + 3;
         for (size_t i = 0; i < particleCount; ++i)
         {
             mParticleFactory.CreateLeafParticle(GetRectCenter(tile.GetGlobalBounds()), mVisibleGroup);

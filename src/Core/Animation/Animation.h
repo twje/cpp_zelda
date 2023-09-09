@@ -28,6 +28,7 @@ public:
     void SaveToFile(const std::string &filePath);
     void Serialize(YAML::Emitter &emitter) override;
     void Deserialize(const YAML::Node &node) override;
+    std::unique_ptr<Animation> Clone();
 
 private:
     std::string mSequenceID;

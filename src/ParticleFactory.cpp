@@ -23,6 +23,7 @@ void ParticleFactory::CreateLeafParticle(sf::Vector2f position, Group& group)
 		"leaf_4",
 		"leaf_5"
 	};
-	auto effect = std::make_shared<SpriteAnimation>(mGroupManager, "leaf", getRandomElement(sequenceIDs), position);
+	//auto effect = std::make_shared<SpriteAnimation>(mGroupManager, "leaf", getRandomElement(sequenceIDs), position);
+	auto effect = std::make_shared<SpriteAnimation>(mGroupManager, "leaf", "leaf_0", position);
 	group.Add(effect);
 }

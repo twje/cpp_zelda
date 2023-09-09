@@ -89,3 +89,14 @@ void Animation::Deserialize(const YAML::Node &node)
         }
     }
 }
+
+std::unique_ptr<Animation> Animation::Clone()
+{
+    YAML::Emitter emitter;
+    Serialize(emitter);
+    YAML::Node node = YAML::Load(emitter.c_str());
+    auto other = std::make_unique<Animation>();
+    other->Deserialize(node);
+
+    return other;
+}

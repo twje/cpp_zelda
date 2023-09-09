@@ -3,6 +3,7 @@
 #include <filesystem>
 #include <functional>
 #include <map>
+#include <set>
 #include <cassert>
 #include <fstream>
 #include <filesystem>
@@ -45,6 +46,7 @@ protected:
 
 private:
     std::map<std::string, std::weak_ptr<T>> mResources;
+    std::set<std::shared_ptr<T>> mCachedResources;
 };
 
 #include "Core/ResourceManager/ResourceManager.inl"
