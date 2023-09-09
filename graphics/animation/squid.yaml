@@ -23,3 +23,14 @@
         - squid_move_1
         - squid_move_2
         - squid_move_3
+- key: death
+  frames:
+    TextureAnimationSequence:
+      framesPerSecond: 8
+      textures:
+        - smoke_orange_0
+        - smoke_orange_1
+        - smoke_orange_2
+        - smoke_orange_3
+        - smoke_orange_4
+        - smoke_orange_5

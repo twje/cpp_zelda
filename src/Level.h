@@ -40,8 +40,7 @@ public:
 private:
     void CreateMap();
     void HandlePlayerAttack();
-    void AttackTile(Tile& tile);
-    void AttackEnemy(Enemy& enemy);
+    void AttackTile(Tile& tile);    
 
     // IPlayerCallbacks
     virtual void CreateAttack() override;
@@ -50,6 +49,7 @@ private:
 
     // IEntityCallbacks
     virtual void DemagePlayer(uint16_t amount, std::string attackType) override;
+    virtual void TriggerDeathParticles(sf::Vector2f position, std::string ParticleEffectID) override;
 
 private:
     Ref<Player> mPlayer;

@@ -175,10 +175,10 @@ void Level::CreateMap()
                             name = "raccoon";
                             break;
                         }
-                        /*auto enemy = Factory::CreateEnemy(mGroupManager , *this, name, x, y, mObstacleGroup);
+                        auto enemy = Factory::CreateEnemy(mGroupManager , *this, name, x, y, mObstacleGroup);
                         mVisibleGroup.Add(enemy);
                         mEnemies.Add(enemy);
-                        mAttackableGroup.Add(enemy);*/
+                        mAttackableGroup.Add(enemy);
                     }
                 }
             }
@@ -206,7 +206,7 @@ void Level::HandlePlayerAttack()
             auto enemy = std::dynamic_pointer_cast<Enemy>(attacked);
             if (enemy)
             {
-                AttackEnemy(*enemy);
+                enemy->InflictDemage(*mPlayer, mPlayer->GetFullWeaponDamage());
             }            
         }
     }    
@@ -216,21 +216,12 @@ void Level::AttackTile(Tile& tile)
 {
     if (tile.GetSpriteType() == SpriteType::GRASS)
     {
-        size_t particleCount = 50; // std::rand() % 4 + 3;
+        size_t particleCount = std::rand() % 4 + 3;
         for (size_t i = 0; i < particleCount; ++i)
         {
             mParticleFactory.CreateLeafParticle(GetRectCenter(tile.GetGlobalBounds()), mVisibleGroup);
         }
         tile.Kill();
-    }
-}
-
-void Level::AttackEnemy(Enemy& enemy)
-{
-    enemy.InflictDemage(*mPlayer, mPlayer->GetFullWeaponDamage());
-    if (enemy.GetHealth() <= 0)
-    {
-        enemy.Kill();
     }
 }
 
@@ -263,5 +254,12 @@ void Level::DemagePlayer(uint16_t amount, std::string attackType)
     {
         mPlayer->TakeDemage(amount);
         mPlayer->BecomeTemporarilyInvulnerable();
+        std::cout << attackType << std::endl;
+        mParticleFactory.CreateEnemyAttackParticles(attackType, GetRectCenter(mPlayer->GetGlobalBounds()), mVisibleGroup);
     }
+}
+
+void Level::TriggerDeathParticles(sf::Vector2f position, std::string ParticleEffectID)
+{
+    mParticleFactory.CreateEnemyDeathParticles(ParticleEffectID, position, mVisibleGroup);
 }

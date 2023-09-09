@@ -46,6 +46,7 @@ void Enemy::Update(const sf::Time &timestamp)
     Move(timestamp, mSpeed);
     Animate(timestamp);
     Cooldown(timestamp);
+    CheckDeath();
 }
 
 void Enemy::HitReaction()
@@ -89,6 +90,15 @@ void Enemy::Cooldown(const sf::Time &timestamp)
 {
     mCanAttack.Update(timestamp);
     mIsVulnerable.Update(timestamp);
+}
+
+void Enemy::CheckDeath()
+{
+    if (mHealth <= 0)
+    {
+        Kill();
+        mCallbacks.TriggerDeathParticles(GetRectCenter(GetGlobalBounds()), mName);
+    }
 }
 
 void Enemy::EnemyUpdate(const Player &player)

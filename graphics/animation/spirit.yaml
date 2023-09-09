@@ -25,3 +25,14 @@
         - spirit_move_1
         - spirit_move_2
         - spirit_move_3
+- key: death
+  frames:
+    TextureAnimationSequence:
+      framesPerSecond: 8
+      textures:
+        - nova_0
+        - nova_1
+        - nova_2
+        - nova_3
+        - nova_4
+        - nova_5

@@ -22,3 +22,10 @@
         - bamboo_move_1
         - bamboo_move_2
         - bamboo_move_3
+- key: death
+  frames:
+    TextureAnimationSequence:
+      framesPerSecond: 8
+      textures:
+        - bamboo_0
+        - bamboo_1

@@ -28,3 +28,14 @@
         - raccoon_move_2
         - raccoon_move_3
         - raccoon_move_4
+- key: death
+  frames:
+    TextureAnimationSequence:
+      framesPerSecond: 8
+      textures:           
+        - raccoon_0
+        - raccoon_1
+        - raccoon_2
+        - raccoon_3
+        - raccoon_4
+        - raccoon_5

@@ -16,6 +16,7 @@ class IEnemyCallbacks
 {
 public:
     virtual void DemagePlayer(uint16_t amount, std::string attackType) = 0;
+    virtual void TriggerDeathParticles(sf::Vector2f position, std::string ParticleEffectID) = 0;
 };
 
 class Enemy : public Entity
@@ -28,6 +29,7 @@ public:
     void Animate(const sf::Time &timestamp);
     void UpdateSequenceFrame();
     void Cooldown(const sf::Time &timestamp);
+    void CheckDeath();
     void EnemyUpdate(const Player &player);
 
     // Getter

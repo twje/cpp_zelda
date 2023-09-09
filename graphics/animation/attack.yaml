@@ -1,0 +1,53 @@
+- key: claw
+  frames:
+    TextureAnimationSequence:
+      framesPerSecond: 8
+      textures:        
+        - claw_0
+        - claw_1
+        - claw_2
+        - claw_3
+- key: slash
+  frames:
+    TextureAnimationSequence:
+      framesPerSecond: 8
+      textures:
+        - slash_0
+        - slash_1
+        - slash_2
+        - slash_3
+- key: sparkle
+  frames:
+    TextureAnimationSequence:
+      framesPerSecond: 8
+      textures:
+        - sparkle_0
+        - sparkle_1
+        - sparkle_2
+        - sparkle_3
+        - sparkle_4
+- key: leaf_attack
+  frames:
+    TextureAnimationSequence:
+      framesPerSecond: 8
+      textures:
+        - leaf_attack_0
+        - leaf_attack_1
+        - leaf_attack_2
+        - leaf_attack_3
+        - leaf_attack_4
+        - leaf_attack_5
+        - leaf_attack_6
+- key: thunder
+  frames:
+    TextureAnimationSequence:
+      framesPerSecond: 8
+      textures:        
+        - thunder_0
+        - thunder_1
+        - thunder_2
+        - thunder_3
+        - thunder_4
+        - thunder_5
+        - thunder_6
+        - thunder_7
