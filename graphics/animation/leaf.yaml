@@ -1,0 +1,97 @@
+- key: leaf_0
+  frames:
+    TextureAnimationSequence:
+      framesPerSecond: 10
+      textures:
+        - leaf1_00000
+        - leaf1_00001
+        - leaf1_00002
+        - leaf1_00003
+        - leaf1_00004
+        - leaf1_00005
+        - leaf1_00006
+        - leaf1_00007
+        - leaf1_00008
+        - leaf1_00009
+        - leaf1_00010
+        - leaf1_00011
+- key: leaf_1
+  frames:
+    TextureAnimationSequence:
+      framesPerSecond: 10
+      textures:
+        - leaf2_00000
+        - leaf2_00001
+        - leaf2_00002
+        - leaf2_00003
+        - leaf2_00004
+        - leaf2_00005
+        - leaf2_00006
+        - leaf2_00007
+        - leaf2_00008
+        - leaf2_00009
+        - leaf2_00010
+        - leaf2_00011
+- key: leaf_2
+  frames:
+    TextureAnimationSequence:
+      framesPerSecond: 10
+      textures:
+        - leaf3_00000
+        - leaf3_00001
+        - leaf3_00002
+        - leaf3_00003
+        - leaf3_00004
+        - leaf3_00005
+        - leaf3_00006
+        - leaf3_00007
+        - leaf3_00008
+        - leaf3_00009
+- key: leaf_3
+  frames:
+    TextureAnimationSequence:
+      framesPerSecond: 10
+      textures:
+        - leaf4_00000
+        - leaf4_00001
+        - leaf4_00002
+        - leaf4_00003
+        - leaf4_00004
+        - leaf4_00005
+        - leaf4_00006
+        - leaf4_00007
+        - leaf4_00008
+        - leaf4_00009
+        - leaf4_00010        
+- key: leaf_4
+  frames:
+    TextureAnimationSequence:
+      framesPerSecond: 10
+      textures:
+        - leaf5_00000
+        - leaf5_00001
+        - leaf5_00002
+        - leaf5_00003
+        - leaf5_00004
+        - leaf5_00005
+        - leaf5_00006
+        - leaf5_00007
+        - leaf5_00008
+        - leaf5_00009        
+- key: leaf_5
+  frames:
+    TextureAnimationSequence:
+      framesPerSecond: 10
+      textures:
+        - leaf6_00000
+        - leaf6_00001
+        - leaf6_00002
+        - leaf6_00003
+        - leaf6_00004
+        - leaf6_00005
+        - leaf6_00006
+        - leaf6_00007
+        - leaf6_00008
+        - leaf6_00009
+        - leaf6_00010
+        - leaf6_00011

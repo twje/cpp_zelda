@@ -22,8 +22,7 @@ class Enemy : public Entity
 {
 public:
     Enemy(GroupManager& groupManager, const std::string &name, sf::Vector2f position, const Group &obstacles, IEnemyCallbacks& callbacks);
-
-    virtual void Accept(EntityVisitor& visitor) { visitor.Visit(*this); }
+    
     void Update(const sf::Time &timestamp) override;
     void HitReaction();
     void Animate(const sf::Time &timestamp);

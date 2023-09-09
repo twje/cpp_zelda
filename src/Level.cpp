@@ -52,6 +52,7 @@ namespace Factory
 }
 
 Level::Level()
+    : mParticleFactory(mGroupManager)
 {
     mGroupManager.TrackGroup(mEnemies);
     mGroupManager.TrackGroup(mVisibleGroup);
@@ -174,10 +175,10 @@ void Level::CreateMap()
                             name = "raccoon";
                             break;
                         }
-                        auto enemy = Factory::CreateEnemy(mGroupManager , *this, name, x, y, mObstacleGroup);
+                        /*auto enemy = Factory::CreateEnemy(mGroupManager , *this, name, x, y, mObstacleGroup);
                         mVisibleGroup.Add(enemy);
                         mEnemies.Add(enemy);
-                        mAttackableGroup.Add(enemy);
+                        mAttackableGroup.Add(enemy);*/
                     }
                 }
             }
@@ -186,32 +187,7 @@ void Level::CreateMap()
 }
 
 void Level::HandlePlayerAttack()
-{        
-    class InflictDemage : public EntityVisitor
-    {
-    public:
-        InflictDemage(Player& player)
-            : mPlayer(player)
-        {}
-
-        virtual void Visit(Tile& tile) override
-        {
-            tile.Kill();
-        }
-        
-        virtual void Visit(Enemy& enemy) override
-        {
-            enemy.InflictDemage(mPlayer, mPlayer.GetFullWeaponDamage());
-            if (enemy.GetHealth() <= 0)
-            {
-                enemy.Kill();
-            }
-        }
-
-    private:
-        Player& mPlayer;
-    };
-
+{
     for (auto& attacker : mAttackGroup)
     {
         for (auto& attacked : mAttackableGroup)
@@ -221,10 +197,41 @@ void Level::HandlePlayerAttack()
                 continue;
             }           
 
-            auto entity = std::dynamic_pointer_cast<EntityBase>(attacked);
-            entity->Accept(InflictDemage(*mPlayer));
+            auto tile = std::dynamic_pointer_cast<Tile>(attacked);
+            if (tile)
+            {
+                AttackTile(*tile);                
+            }
+
+            auto enemy = std::dynamic_pointer_cast<Enemy>(attacked);
+            if (enemy)
+            {
+                AttackEnemy(*enemy);
+            }            
         }
     }    
+}
+
+void Level::AttackTile(Tile& tile)
+{
+    if (tile.GetSpriteType() == SpriteType::GRASS)
+    {
+        size_t particleCount = std::rand() % 4 + 3;
+        for (size_t i = 0; i < particleCount; ++i)
+        {
+            mParticleFactory.CreateLeafParticle(GetRectCenter(tile.GetGlobalBounds()), mVisibleGroup);
+        }
+        tile.Kill();
+    }
+}
+
+void Level::AttackEnemy(Enemy& enemy)
+{
+    enemy.InflictDemage(*mPlayer, mPlayer->GetFullWeaponDamage());
+    if (enemy.GetHealth() <= 0)
+    {
+        enemy.Kill();
+    }
 }
 
 void Level::CreateAttack()

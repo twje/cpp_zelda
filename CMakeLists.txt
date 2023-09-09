@@ -40,6 +40,8 @@ set(ZeldaIncludes
 )
 
 add_library(ZeldaLibrary STATIC
+    src/Core/SpriteAnimation.h
+    src/Core/SpriteAnimation.cpp
     src/Core/ResourceManager/ResourceManager.h
     src/Core/ResourceManager/ResourceManager.inl
     src/Core/ResourceManager/ResourceManagerUtils.h
@@ -86,8 +88,8 @@ add_library(ZeldaLibrary STATIC
     src/Core/UI/Bar.h
     src/Core/UI/Bar.cpp     
     src/Core/Iterator.h    
-    src/EntityBase.h
-    src/EntityBase.cpp
+    src/ParticleFactory.h
+    src/ParticleFactory.cpp
     src/Entity.h
     src/Entity.cpp
     src/Enemy.h

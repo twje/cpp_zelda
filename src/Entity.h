@@ -6,10 +6,10 @@
 
 // Core
 #include "Settings.h"
-#include "EntityBase.h"
+#include "Core/Sprite.h"
 
 
-class Entity : public EntityBase
+class Entity : public Sprite
 {
 public:
     Entity(GroupManager& groupManager, const Group &obstacles);

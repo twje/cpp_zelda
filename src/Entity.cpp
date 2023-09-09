@@ -9,7 +9,7 @@ class Moveable
 };
 
 Entity::Entity(GroupManager& groupManager, const Group& obstacles)
-    : EntityBase(groupManager),
+    : Sprite(groupManager),
       mObstacles(obstacles),
       mDirection(0, 0)
 {

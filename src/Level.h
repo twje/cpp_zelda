@@ -20,6 +20,7 @@
 #include "Weapon.h"
 #include "LevelView.h"
 #include "UI.h"
+#include "ParticleFactory.h"
 
 class Level : public Layer, public IPlayerCallbacks, public IEnemyCallbacks
 {
@@ -39,6 +40,8 @@ public:
 private:
     void CreateMap();
     void HandlePlayerAttack();
+    void AttackTile(Tile& tile);
+    void AttackEnemy(Enemy& enemy);
 
     // IPlayerCallbacks
     virtual void CreateAttack() override;
@@ -62,4 +65,5 @@ private:
     TexturePtr mFloor;
     std::unique_ptr<LevelView> mLevelView;
     std::unique_ptr<UI> mUI;
+    ParticleFactory mParticleFactory;
 };

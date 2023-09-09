@@ -4,6 +4,7 @@
 #include <memory>
 #include <vector>
 #include <filesystem>
+#include <random>
 
 #include "SFML/Graphics.hpp"
 
@@ -16,17 +17,17 @@ std::unique_ptr<CSVData> readCSV(const std::string &csvFilepath);
 
 template <typename T>
 const T &getRandomElement(const std::vector<T> &vec)
-{
-    std::srand(static_cast<unsigned int>(std::time(nullptr)));
-
+{    
     if (vec.empty())
     {
         throw std::runtime_error("Error: Vector is empty.");
     }
 
-    std::size_t randomIndex = std::rand() % vec.size();
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> distribution(0, vec.size() - 1); 
 
-    return vec[randomIndex];
+    return vec[distribution(gen)];
 }
 
 bool isSubstring(const std::string &source, const std::string &substring);

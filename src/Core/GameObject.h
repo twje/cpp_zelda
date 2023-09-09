@@ -33,6 +33,7 @@ public:
     sf::Vector2f GetCenter() const { return getPosition() + 0.5f * GetSize(); }
     sf::FloatRect GetGlobalBounds() const { return getTransform().transformRect(GetLocalBounds()); }
     const sf::Transform &GetTransform() const { return getTransform(); };
+    sf::Vector2f GetPosition() { return getPosition(); }
 
     // Resource management
     void Kill();

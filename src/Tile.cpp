@@ -11,7 +11,7 @@
 // Tile
 // ----
 Tile::Tile(GroupManager& groupManager, sf::Vector2f position, SpriteType spriteType, const std::shared_ptr<sf::Texture> &texture)
-    : EntityBase(groupManager, texture),
+    : Sprite(groupManager, texture),
       mSpriteType(spriteType)
 {
     SetPosition(position);
