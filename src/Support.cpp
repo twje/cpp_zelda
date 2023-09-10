@@ -35,6 +35,14 @@ std::unique_ptr<CSVData> readCSV(const std::string &csvFilepath)
     return std::move(data);
 }
 
+int16_t GetRandomInt(int16_t start, int16_t end)
+{
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> distribution(start, end);
+    return distribution(gen);
+}
+
 bool isSubstring(const std::string &source, const std::string &substring)
 {
     size_t foundPos = source.find(substring);

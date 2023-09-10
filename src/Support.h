@@ -30,6 +30,8 @@ const T &getRandomElement(const std::vector<T> &vec)
     return vec[distribution(gen)];
 }
 
+int16_t GetRandomInt(int16_t start, int16_t end);
+
 bool isSubstring(const std::string &source, const std::string &substring);
 
 void replaceSubstring(std::string &source, const std::string &substringToReplace, const std::string &newSubstring);

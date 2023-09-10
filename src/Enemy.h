@@ -16,7 +16,7 @@ class IEnemyCallbacks
 {
 public:
     virtual void DemagePlayer(uint16_t amount, std::string attackType) = 0;
-    virtual void TriggerDeathParticles(sf::Vector2f position, std::string ParticleEffectID) = 0;
+    virtual void TriggerDeathParticles(const sf::FloatRect& initiatorBounds, std::string ParticleEffectID) = 0;
 };
 
 class Enemy : public Entity
@@ -35,7 +35,6 @@ public:
     // Getter
     sf::FloatRect GetHitbox() const override { return mHitBox; }
     uint16_t GetHealth() { return mHealth; }
-
     void InflictDemage(const Player &player, uint16_t demage);
 
 private:

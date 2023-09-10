@@ -8,6 +8,9 @@
 #include "Core/RectUtils.h"
 #include "Core/ResourceManager/TextureManager.h"
 
+// Game
+#include "Settings.h"
+
 Weapon::Weapon(GroupManager& groupManager, const Player &player)
     : Sprite(groupManager)
 {
@@ -29,5 +32,5 @@ Weapon::Weapon(GroupManager& groupManager, const Player &player)
     else
     {
         SetPosition(GetRectMidTop(player.GetGlobalBounds()) - GetRectMidBottom(GetLocalBounds()) + sf::Vector2f(-10, 0));
-    }
+    }    
 }

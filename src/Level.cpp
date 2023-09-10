@@ -11,6 +11,8 @@
 #include "Level.h"
 #include "Enemy.h"
 
+#include <iostream>
+
 namespace Factory
 {
     static std::shared_ptr<Player> CreatePlayer(GroupManager& groupManager, Level& level, float x, float y, const Group &obstacles)
@@ -205,8 +207,15 @@ void Level::HandlePlayerAttack()
 
             auto enemy = std::dynamic_pointer_cast<Enemy>(attacked);
             if (enemy)
-            {
-                enemy->InflictDemage(*mPlayer, mPlayer->GetFullWeaponDamage());
+            {                
+                if (mPlayer->GetAttackStatus() == AttackStatus::PHYSICAL)
+                {
+                    enemy->InflictDemage(*mPlayer, mPlayer->GetFullWeaponDamage());
+                }                
+                else if (mPlayer->GetAttackStatus() == AttackStatus::MAGIC)
+                {
+                    enemy->InflictDemage(*mPlayer, mPlayer->GetFullMagicDamage());
+                }
             }            
         }
     }    
@@ -219,7 +228,7 @@ void Level::AttackTile(Tile& tile)
         size_t particleCount = std::rand() % 4 + 3;
         for (size_t i = 0; i < particleCount; ++i)
         {
-            mParticleFactory.CreateLeafParticle(GetRectCenter(tile.GetGlobalBounds()), mVisibleGroup);
+            mParticleFactory.CreateLeafParticle(tile.GetGlobalBounds(), mVisibleGroup);
         }
         tile.Kill();
     }
@@ -243,9 +252,16 @@ void Level::DestroyAttack()
 
 void Level::CreateMagic(std::string style, uint16_t strength, uint16_t cost)
 {
-    std::cout << style << std::endl;
-    std::cout << strength << std::endl;
-    std::cout << cost << std::endl;
+    if (style == "heal")
+    {
+        mPlayer->AddHealth(strength);
+        mPlayer->AddEnergy(-cost);
+        mParticleFactory.CreateHealParticles(mPlayer->GetGlobalBounds(), mVisibleGroup);
+    }
+    else if (style == "flame")
+    {
+        mParticleFactory.CreateFlameParticles(mPlayer->GetGlobalBounds(), mPlayer->GetDirection(), mVisibleGroup, mAttackGroup);
+    }   
 }
 
 void Level::DemagePlayer(uint16_t amount, std::string attackType)
@@ -253,13 +269,12 @@ void Level::DemagePlayer(uint16_t amount, std::string attackType)
     if (mPlayer->IsVulnerable())
     {
         mPlayer->TakeDemage(amount);
-        mPlayer->BecomeTemporarilyInvulnerable();
-        std::cout << attackType << std::endl;
-        mParticleFactory.CreateEnemyAttackParticles(attackType, GetRectCenter(mPlayer->GetGlobalBounds()), mVisibleGroup);
+        mPlayer->BecomeTemporarilyInvulnerable();        
+        mParticleFactory.CreateEnemyAttackParticles(attackType, mPlayer->GetGlobalBounds(), mVisibleGroup);
     }
 }
 
-void Level::TriggerDeathParticles(sf::Vector2f position, std::string ParticleEffectID)
+void Level::TriggerDeathParticles(const sf::FloatRect& initiatorBounds, std::string ParticleEffectID)
 {
-    mParticleFactory.CreateEnemyDeathParticles(ParticleEffectID, position, mVisibleGroup);
+    mParticleFactory.CreateEnemyDeathParticles(ParticleEffectID, initiatorBounds, mVisibleGroup);
 }

@@ -49,7 +49,7 @@ private:
 
     // IEntityCallbacks
     virtual void DemagePlayer(uint16_t amount, std::string attackType) override;
-    virtual void TriggerDeathParticles(sf::Vector2f position, std::string ParticleEffectID) override;
+    virtual void TriggerDeathParticles(const sf::FloatRect& initiatorBounds, std::string ParticleEffectID) override;
 
 private:
     Ref<Player> mPlayer;

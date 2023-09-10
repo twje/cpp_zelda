@@ -97,7 +97,7 @@ void Enemy::CheckDeath()
     if (mHealth <= 0)
     {
         Kill();
-        mCallbacks.TriggerDeathParticles(GetRectCenter(GetGlobalBounds()), mName);
+        mCallbacks.TriggerDeathParticles(GetGlobalBounds(), mName);
     }
 }
 

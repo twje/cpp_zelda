@@ -9,6 +9,7 @@ class SpriteAnimation : public Sprite
 {
 public:
 	SpriteAnimation(GroupManager& groupManager, std::string particleID, std::string sequenceID, sf::Vector2f position);
+	SpriteAnimation(GroupManager& groupManager, std::string particleID, std::string sequenceID);
 
 	virtual void Update(const sf::Time& timestamp) override;
 

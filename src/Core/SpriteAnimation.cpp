@@ -7,9 +7,13 @@ SpriteAnimation::SpriteAnimation(GroupManager& groupManager, std::string particl
 	  mAnimation{ AnimationManager::GetInstance().LoadUnique(particleID) }
 {
 	mAnimation->SetAnimationSequence(sequenceID);
-	Animate(sf::Time::Zero);
-	SetPosition(position - 0.5f * GetSize());
+	Animate(sf::Time::Zero);	
+	SetPosition(position);
 }
+
+SpriteAnimation::SpriteAnimation(GroupManager& groupManager, std::string particleID, std::string sequenceID)
+	: SpriteAnimation(groupManager, particleID, sequenceID, sf::Vector2f())
+{}
 
 void SpriteAnimation::Update(const sf::Time& timestamp) 
 {

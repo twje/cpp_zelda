@@ -5,15 +5,18 @@
 // Forward declarations
 class GroupManager;
 class Group;
+class Player;
 
 class ParticleFactory
 {
 public:
 	ParticleFactory(GroupManager& groupManager);
 
-	void CreateLeafParticle(sf::Vector2f position, Group& group);
-	void CreateEnemyDeathParticles(std::string enemyName, sf::Vector2f position, Group& group);
-	void CreateEnemyAttackParticles(std::string attackName, sf::Vector2f position, Group& group);
+	void CreateLeafParticle(const sf::FloatRect& initiatorBounds, Group& group);
+	void CreateEnemyDeathParticles(std::string enemyName, const sf::FloatRect& initiatorBounds, Group& group);
+	void CreateEnemyAttackParticles(std::string attackName, const sf::FloatRect& initiatorBounds, Group& group);
+	void CreateHealParticles(const sf::FloatRect& initiatorBounds, Group& group);
+	void CreateFlameParticles(const sf::FloatRect& initiatorBounds, const std::string& initiatorDirection, Group& visibleGroup, Group& attackGroup);
 
 private:
 	GroupManager& mGroupManager;

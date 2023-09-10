@@ -18,6 +18,7 @@
 Player::Player(GroupManager& groupManager, sf::Vector2f position, const Group& obstacles, IPlayerCallbacks& callbacks)
     : Entity(groupManager, obstacles),
       mStatus("down"),
+      mAttackStatus(AttackStatus::NONE),
       mIsAttacking(400, false),
       mCanSwitchWeapons(TOGGLE_COOLDONW_MS, true),
       mCanSwitchMagic(TOGGLE_COOLDONW_MS, true),
@@ -30,6 +31,7 @@ Player::Player(GroupManager& groupManager, sf::Vector2f position, const Group& o
       mEnergy(PLAYER_STATS.at("energy") * 0.8),
       mSpeed(PLAYER_STATS.at("speed")),
       mAttack(PLAYER_STATS.at("attack")),
+      mMagic(PLAYER_STATS.at("magic")),
       mEXP(123)
 {
     mAnimation->SetAnimationSequence(mStatus);
@@ -45,6 +47,7 @@ void Player::Update(const sf::Time &timestamp)
     UpdateStatus();
     Animate(timestamp);
     Move(timestamp, mSpeed);
+    RecoverEnergy();
 }
 
 std::string Player::GetDirection() const
@@ -60,6 +63,23 @@ std::string Player::GetDirection() const
 uint16_t Player::GetFullWeaponDamage() const
 {
     return mAttack + WEAPON_DATA.at(GetWeaponName()).mDamage;
+}
+
+uint16_t Player::GetFullMagicDamage() const
+{
+    return mMagic + MAGIC_DATA.at(GetMagicName()).mStrength;
+}
+
+void Player::AddHealth(float value)
+{
+    mHealth += value;
+    mHealth = std::max(0.0f, std::min(mHealth, static_cast<float>(PLAYER_STATS.at("health"))));
+}
+
+void Player::AddEnergy(float value)
+{
+    mEnergy += value;
+    mEnergy = std::max(0.0f, std::min(mEnergy, static_cast<float>(PLAYER_STATS.at("energy"))));
 }
 
 std::shared_ptr<sf::Texture> Player::GetWeaponTexture() const
@@ -119,16 +139,14 @@ void Player::Input()
 
         // Attack input
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
-        {
-            mIsAttacking.ToggleForCooldownTime();
-            mCallbacks.CreateAttack();            
+        {            
+            CreatePhysicalAttack();
         }
 
         // Magic input
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
-        {
-            mIsAttacking.ToggleForCooldownTime();
-            CreateMagicAttack();
+        {            
+            CreateMagicAttack();         
         }
 
         // Switch weapon
@@ -182,15 +200,29 @@ void Player::UpdateStatus()
     }
 }
 
+void Player::RecoverEnergy()
+{
+    if (mEnergy <= PLAYER_STATS.at("energy"))
+    {
+        mEnergy += 0.1f * PLAYER_STATS.at("magic");
+    }
+    else
+    {
+        mEnergy = PLAYER_STATS.at("energy");
+    }
+}
+
 void Player::Cooldowns(const sf::Time &timestamp)
 {
     if (mIsAttacking.Update(timestamp))
     {
-        mCallbacks.DestroyAttack();        
+        mCallbacks.DestroyAttack();    
+        mAttackStatus = AttackStatus::NONE;
     }
+
     mCanSwitchWeapons.Update(timestamp);
     mCanSwitchMagic.Update(timestamp);
-    mVulnerable.Update(timestamp);
+    mVulnerable.Update(timestamp);    
 }
 
 void Player::Animate(const sf::Time &timestamp)
@@ -230,15 +262,29 @@ std::string Player::GetMagicByIndex(size_t index) const
     return it->first;
 }
 
+void Player::CreatePhysicalAttack()
+{
+    mIsAttacking.ToggleForCooldownTime();
+    mCallbacks.CreateAttack();
+    mAttackStatus = AttackStatus::PHYSICAL;
+}
+
 void Player::CreateMagicAttack()
 {
+    mIsAttacking.ToggleForCooldownTime();    
+    mAttackStatus = AttackStatus::MAGIC;
+
     auto it = MAGIC_DATA.begin();
     std::advance(it, mMagicIndex);
 
     std::string style = it->first;
     float strength = it->second.mStrength + PLAYER_STATS.at("magic");
     float cost = it->second.mCost;
-    mCallbacks.CreateMagic(style, strength, cost);    
+
+    if (mEnergy >= cost)
+    {
+        mCallbacks.CreateMagic(style, strength, cost);
+    }
 }
 
 void Player::UpdateSequenceFrame()

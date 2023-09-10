@@ -1,0 +1,36 @@
+- key: flame
+  frames:
+    TextureAnimationSequence:
+      framesPerSecond: 8
+      textures:                
+        - frames_0
+        - frames_01
+        - frames_02
+        - frames_03
+        - frames_04
+        - frames_05
+        - frames_06
+        - frames_07
+        - frames_08
+        - frames_09
+        - frames_10
+        - frames_11
+- key: aura
+  frames:
+    TextureAnimationSequence:
+      framesPerSecond: 8
+      textures:                
+        - aura_0
+        - aura_1
+        - aura_2
+        - aura_3
+- key: heal
+  frames:
+    TextureAnimationSequence:
+      framesPerSecond: 8
+      textures:                
+        - heal_frames_0
+        - heal_frames_1
+        - heal_frames_2
+        - heal_frames_3
+        - heal_frames_4
