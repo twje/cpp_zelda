@@ -1,3 +1,6 @@
+## Screenshot
+![Screenshot](docs/Screenshot.PNG)
+
 ## About The Project
 
 This project is a hobby endeavor aimed at porting the Zelda game from a Python repository to C++, with the purpose of facilitating learning and development.
