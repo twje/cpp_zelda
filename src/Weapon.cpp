@@ -16,16 +16,16 @@ Weapon::Weapon(GroupManager& groupManager, const Player &player)
 {
     SetTexture(player.GetWeaponTexture(), true);
 
-    std::string direction = player.GetDirection();
-    if (direction == "right")
+    PlayerDirection direction = player.GetDirection();
+    if (direction == PlayerDirection::RIGHT)
     {
         SetPosition(GetRectMidRight(player.GetGlobalBounds()) - GetRectMidLeft(GetLocalBounds()) + sf::Vector2f(0, 16));
     }
-    else if (direction == "left")
+    else if (direction == PlayerDirection::LEFT)
     {
         SetPosition(GetRectMidLeft(player.GetGlobalBounds()) - GetRectMidRight(GetLocalBounds()) + sf::Vector2f(0, 16));
     }
-    else if (direction == "down")
+    else if (direction == PlayerDirection::DOWN)
     {
         SetPosition(GetRectMidBottom(player.GetGlobalBounds()) - GetRectMidTop(GetLocalBounds()) + sf::Vector2f(-10, 0));
     }

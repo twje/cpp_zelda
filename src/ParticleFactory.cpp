@@ -60,23 +60,23 @@ void ParticleFactory::CreateHealParticles(const sf::FloatRect& initiatorBounds, 
 	group.Add(effect2);
 }
 
-void ParticleFactory::CreateFlameParticles(const sf::FloatRect& initiatorBounds, const std::string& initiatorDirection, Group& visibleGroup, Group& attackGroup)
+void ParticleFactory::CreateFlameParticles(const sf::FloatRect& initiatorBounds, const PlayerDirection initiatorDirection, Group& visibleGroup, Group& attackGroup)
 {			
 	auto effect = std::make_shared<SpriteAnimation>(mGroupManager, "magic", "flame");		
 	
 	sf::Vector2f startPosition;
 	sf::Vector2f direction;
-	if (initiatorDirection == "right")
+	if (initiatorDirection == PlayerDirection::RIGHT)
 	{		
 		startPosition = GetRectMidRight(initiatorBounds) - GetRectMidLeft(effect->GetLocalBounds());
 		direction = sf::Vector2f(1, 0);
 	}
-	else if (initiatorDirection == "left")
+	else if (initiatorDirection == PlayerDirection::LEFT)
 	{
 		startPosition = GetRectMidLeft(initiatorBounds) - GetRectMidRight(effect->GetLocalBounds());
 		direction = sf::Vector2f(-1, 0);
 	}
-	else if (initiatorDirection == "down")
+	else if (initiatorDirection == PlayerDirection::DOWN)
 	{
 		startPosition = GetRectMidBottom(initiatorBounds) - GetRectMidTop(effect->GetLocalBounds());
 		direction = sf::Vector2f(0, 1);

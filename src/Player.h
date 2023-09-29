@@ -15,6 +15,7 @@
 #include "Support.h"
 #include "Settings.h"
 #include "Entity.h"
+#include "PlayerStatus.h"
 
 enum class AttackStatus
 {
@@ -51,7 +52,7 @@ public:
 
     // Getters
     virtual sf::FloatRect GetHitbox() const override { return mHitBox; }
-    std::string GetDirection() const;
+    PlayerDirection GetDirection() const;
     uint16_t GetHealth() const { return mHealth; }
     uint16_t GetEnergy() const { return mEnergy; }
     uint16_t GetEXP() const { return mEXP; }
@@ -84,7 +85,7 @@ private:
     void UpdateSequenceFrame();
 
 private:
-    std::string mStatus;
+    PlayerStatus mStatus;
     AttackStatus mAttackStatus;
     CooldownToggle mIsAttacking;
     CooldownToggle mCanSwitchWeapons;
