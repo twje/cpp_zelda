@@ -11,7 +11,7 @@ enum class PlayerDirection
 
 enum class PlayerActiveStatus {
     IDLE,
-    MOVING, // Should this be "moving"?
+    MOVING,
     ATTACKING
 };
 
@@ -19,16 +19,16 @@ class PlayerStatus {
 private:
     PlayerDirection mPlayerDirection;
     PlayerActiveStatus mPlayerActiveStatus;
-    std::string PlayerStatus::GetPlayerActoveStatusPostfix() const;
+    std::string PlayerStatus::GetPlayerActiveStatusPostfix() const;
 
 public:
 
     PlayerStatus(PlayerDirection playerDirection);
-    PlayerDirection GetPlayerDirection() const;
-    PlayerActiveStatus GetPlayerActiveStatus() const;
+    PlayerDirection GetPlayerDirection() const { return mPlayerDirection; };
+    PlayerActiveStatus GetPlayerActiveStatus() const { return mPlayerActiveStatus; };
     void UpdatePlayerDirection(PlayerDirection playerDirection);
-    void SetPlayerToIdle();
-    void SetPlayerToAttacking();
+    void SetPlayerToIdle() { mPlayerActiveStatus = PlayerActiveStatus::IDLE; };
+    void SetPlayerToAttacking() { mPlayerActiveStatus = PlayerActiveStatus::ATTACKING; };
     std::string PlayerStatus::GetDirectionAsString() const;
     std::string PlayerStatus::AsCompatString() const;
 };

@@ -60,7 +60,7 @@ void ParticleFactory::CreateHealParticles(const sf::FloatRect& initiatorBounds, 
 	group.Add(effect2);
 }
 
-void ParticleFactory::CreateFlameParticles(const sf::FloatRect& initiatorBounds, const PlayerDirection initiatorDirection, Group& visibleGroup, Group& attackGroup)
+void ParticleFactory::CreateFlameParticles(const sf::FloatRect& initiatorBounds, PlayerDirection initiatorDirection, Group& visibleGroup, Group& attackGroup)
 {			
 	auto effect = std::make_shared<SpriteAnimation>(mGroupManager, "magic", "flame");		
 	

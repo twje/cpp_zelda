@@ -1,17 +1,10 @@
 #include "PlayerStatus.h"
+#include <stdexcept>
 
 PlayerStatus::PlayerStatus(PlayerDirection playerDirection) :
 	mPlayerDirection(playerDirection),
 	mPlayerActiveStatus(PlayerActiveStatus::IDLE)
 {
-}
-
-PlayerDirection PlayerStatus::GetPlayerDirection() const {
-	return mPlayerDirection;
-}
-
-PlayerActiveStatus PlayerStatus::GetPlayerActiveStatus() const {
-	return mPlayerActiveStatus;
 }
 
 void PlayerStatus::UpdatePlayerDirection(PlayerDirection playerDirection)
@@ -20,28 +13,20 @@ void PlayerStatus::UpdatePlayerDirection(PlayerDirection playerDirection)
 	mPlayerDirection = playerDirection;
 }
 
-void PlayerStatus::SetPlayerToIdle()
+std::string PlayerStatus::GetDirectionAsString() const
 {
-	mPlayerActiveStatus = PlayerActiveStatus::IDLE;
-}
-
-void PlayerStatus::SetPlayerToAttacking()
-{
-	mPlayerActiveStatus = PlayerActiveStatus::ATTACKING;
-}
-
-std::string PlayerStatus::GetDirectionAsString() const {
 	switch (mPlayerDirection) {
 	case PlayerDirection::UP: return "up";
 	case PlayerDirection::DOWN: return "down";
 	case PlayerDirection::LEFT: return "left";
 	case PlayerDirection::RIGHT: return "right";
+	default: 
+		throw std::runtime_error("Unexpected enum value in GetDirectionAsString");
 	}
-	// What do?
-	return "up";
 }
 
-std::string PlayerStatus::GetPlayerActoveStatusPostfix() const {
+std::string PlayerStatus::GetPlayerActiveStatusPostfix() const
+{
 	switch (mPlayerActiveStatus)
 	{
 	case PlayerActiveStatus::IDLE:
@@ -57,6 +42,7 @@ std::string PlayerStatus::GetPlayerActoveStatusPostfix() const {
 	return "";
 }
 
-std::string PlayerStatus::AsCompatString() const {
-	return GetDirectionAsString() + GetPlayerActoveStatusPostfix();
+std::string PlayerStatus::AsCompatString() const
+{
+	return GetDirectionAsString() + GetPlayerActiveStatusPostfix();
 }
