@@ -37,9 +37,8 @@ std::string PlayerStatus::GetPlayerActiveStatusPostfix() const
 		return "_attack";
 		break;
 	default:
-		break;
+		throw std::runtime_error("Unexpected enum value in GetPlayerActiveStatusPostfix");
 	}
-	return "";
 }
 
 std::string PlayerStatus::AsCompatString() const
