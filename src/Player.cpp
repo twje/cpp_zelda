@@ -17,12 +17,12 @@
 
 Player::Player(GroupManager& groupManager, sf::Vector2f position, const Group& obstacles, IPlayerCallbacks& callbacks)
     : Entity(groupManager, obstacles),
-      mStatus("down"),
+      mStatus(PlayerDirection::DOWN),
       mAttackStatus(AttackStatus::NONE),
       mIsAttacking(400, false),
       mCanSwitchWeapons(TOGGLE_COOLDONW_MS, true),
       mCanSwitchMagic(TOGGLE_COOLDONW_MS, true),
-      mVulnerable(500, true),
+      mVulnerable(1, true),
       mAnimation(AnimationManager::GetInstance().LoadUnique("player")),
       mCallbacks(callbacks),
       mWeaponIndex(0),
@@ -34,7 +34,7 @@ Player::Player(GroupManager& groupManager, sf::Vector2f position, const Group& o
       mMagic(PLAYER_STATS.at("magic")),
       mEXP(123)
 {
-    mAnimation->SetAnimationSequence(mStatus);
+    mAnimation->SetAnimationSequence(mStatus.AsCompatString());
     UpdateSequenceFrame();
     SetPosition(position);
     mHitBox = InflateRect(GetGlobalBounds(), 0, -26);
@@ -50,14 +50,9 @@ void Player::Update(const sf::Time &timestamp)
     RecoverEnergy();
 }
 
-std::string Player::GetDirection() const
+PlayerDirection Player::GetDirection() const
 {
-    size_t index = mStatus.find('_');
-    if (index == std::string::npos)
-    {
-        return mStatus;
-    }
-    return mStatus.substr(0, index);
+    return mStatus.GetPlayerDirection();
 }
 
 uint16_t Player::GetFullWeaponDamage() const
@@ -85,13 +80,12 @@ void Player::AddEnergy(float value)
 std::shared_ptr<sf::Texture> Player::GetWeaponTexture() const
 {
     std::ostringstream oss;
-    oss << GetWeaponName() << "_" << GetDirection();
+    oss << GetWeaponName() << "_" << mStatus.GetDirectionAsString();
     return TextureManager::GetInstance().GetResource(oss.str());
 }
 
 std::shared_ptr<sf::Texture> Player::GetWeaponIconTexture() const
 {
-    std::string direction = GetDirection();
     std::ostringstream oss;
     oss << GetWeaponName() << "_full";
     return TextureManager::GetInstance().GetResource(oss.str());
@@ -110,12 +104,12 @@ void Player::Input()
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
         {
             mDirection.y = -1;
-            mStatus = "up";
+            mStatus.UpdatePlayerDirection(PlayerDirection::UP);
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
         {
             mDirection.y = 1;
-            mStatus = "down";
+            mStatus.UpdatePlayerDirection(PlayerDirection::DOWN);
         }
         else
         {
@@ -125,12 +119,12 @@ void Player::Input()
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
         {
             mDirection.x = 1;
-            mStatus = "right";
+            mStatus.UpdatePlayerDirection(PlayerDirection::RIGHT);
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
         {
             mDirection.x = -1;
-            mStatus = "left";
+            mStatus.UpdatePlayerDirection(PlayerDirection::LEFT);
         }
         else
         {
@@ -169,9 +163,8 @@ void Player::UpdateStatus()
 {
     if (mDirection.lengthSq() == 0)
     {
-        if (!isSubstring(mStatus, "idle") && !isSubstring(mStatus, "attack"))
-        {
-            mStatus += "_idle";
+        if (mStatus.GetPlayerActiveStatus() == PlayerActiveStatus::MOVING) {
+            mStatus.SetPlayerToIdle();
         }
     }
 
@@ -179,23 +172,16 @@ void Player::UpdateStatus()
     {
         mDirection.x = 0;
         mDirection.y = 0;
-        if (!isSubstring(mStatus, "attack"))
+        if (mStatus.GetPlayerActiveStatus() != PlayerActiveStatus::ATTACKING)
         {
-            if (isSubstring(mStatus, "idle"))
-            {
-                replaceSubstring(mStatus, "_idle", "_attack");
-            }
-            else
-            {
-                mStatus += "_attack";
-            }
+            mStatus.SetPlayerToAttacking();
         }
     }
     else
     {
-        if (isSubstring(mStatus, "attack"))
+        if (mStatus.GetPlayerActiveStatus() == PlayerActiveStatus::ATTACKING)
         {
-            replaceSubstring(mStatus, "_attack", "");
+            mStatus.SetPlayerToIdle();
         }
     }
 }
@@ -227,9 +213,9 @@ void Player::Cooldowns(const sf::Time &timestamp)
 
 void Player::Animate(const sf::Time &timestamp)
 {
-    if (mStatus != mAnimation->GetSequenceID())
+    if (mStatus.AsCompatString() != mAnimation->GetSequenceID())
     {
-        mAnimation->SetAnimationSequence(mStatus);
+        mAnimation->SetAnimationSequence(mStatus.AsCompatString());
     }
 
     mAnimation->Update(timestamp);

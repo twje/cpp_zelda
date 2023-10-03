@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "PlayerStatus.h"
 
 // Forward declarations
 class GroupManager;
@@ -16,7 +17,7 @@ public:
 	void CreateEnemyDeathParticles(std::string enemyName, const sf::FloatRect& initiatorBounds, Group& group);
 	void CreateEnemyAttackParticles(std::string attackName, const sf::FloatRect& initiatorBounds, Group& group);
 	void CreateHealParticles(const sf::FloatRect& initiatorBounds, Group& group);
-	void CreateFlameParticles(const sf::FloatRect& initiatorBounds, const std::string& initiatorDirection, Group& visibleGroup, Group& attackGroup);
+	void CreateFlameParticles(const sf::FloatRect& initiatorBounds, PlayerDirection initiatorDirection, Group& visibleGroup, Group& attackGroup);
 
 private:
 	GroupManager& mGroupManager;

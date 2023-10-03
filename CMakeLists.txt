@@ -114,7 +114,8 @@ add_library(ZeldaLibrary STATIC
     src/Tile.cpp
     src/Particles.h
     src/Particles.cpp    
-)
+    src/PlayerStatus.h
+    src/PlayerStatus.cpp)
 
 target_link_libraries(ZeldaLibrary PUBLIC
     sfml-system
